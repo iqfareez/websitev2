@@ -1,38 +1,39 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
-  author: 'Tails Azimuth',
-  headerTitle: 'TailwindBlog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  title: 'Muhammad Fareez Website',
+  author: 'Muhammad Fareez Iqmal',
+  headerTitle: 'iqfareez',
+  description:
+    'Explore my personal website for blogs, projects, and more on software engineering, hardware development, tecnologies and programming. Currently a sofware engineer, coming from Mechatronics Engineering background.',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://website-v2-iqfareez.vercel.app/',
+  siteRepo: 'https://github.com/iqfareez/websitev2',
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',
-  mastodon: 'https://mastodon.social/@mastodonuser',
-  email: 'address@yoursite.com',
-  github: 'https://github.com',
-  twitter: 'https://twitter.com/Twitter',
-  facebook: 'https://facebook.com',
-  youtube: 'https://youtube.com',
-  linkedin: 'https://www.linkedin.com',
+  // mastodon: 'https://mastodon.social/@mastodonuser',
+  email: 'hello@iqfareez.com',
+  github: 'https://github.com/iqfareez',
+  twitter: 'https://twitter.com/iqfareez',
+  facebook: 'https://facebook.com/iqfareez',
+  // youtube: 'https://youtube.com',
+  linkedin: 'https://www.linkedin.com/in/iqfareez',
   locale: 'en-US',
   analytics: {
     // If you want to use an analytics provider you have to add it to the
     // content security policy in the `next.config.js` file.
     // supports Plausible, Simple Analytics, Umami, Posthog or Google Analytics.
-    umamiAnalytics: {
-      // We use an env variable for this site to avoid other users cloning our analytics ID
-      umamiWebsiteId: process.env.NEXT_UMAMI_ID, // e.g. 123e4567-e89b-12d3-a456-426614174000
-    },
+    // umamiAnalytics: {
+    //   // We use an env variable for this site to avoid other users cloning our analytics ID
+    //   umamiWebsiteId: process.env.NEXT_UMAMI_ID, // e.g. 123e4567-e89b-12d3-a456-426614174000
+    // },
     // plausibleAnalytics: {
     //   plausibleDataDomain: '', // e.g. tailwind-nextjs-starter-blog.vercel.app
     // },
     // simpleAnalytics: {},
-    // posthogAnalytics: {
-    //   posthogProjectApiKey: '', // e.g. 123e4567-e89b-12d3-a456-426614174000
-    // },
+    posthogAnalytics: {
+      posthogProjectApiKey: process.env.NEXT_PUBLIC_POSTHOG_ID, // e.g. 123e4567-e89b-12d3-a456-426614174000
+    },
     // googleAnalytics: {
     //   googleAnalyticsId: '', // e.g. G-XXXXXXX
     // },
