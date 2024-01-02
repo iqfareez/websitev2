@@ -1,10 +1,19 @@
-import projectsData from '@/data/projectsData'
+import projectsDataHighlights from '@/data/projects/highlights'
+import projectsDataApps from '@/data/projects/apps'
+import projectsDataUni from '@/data/projects/uni'
+import projectsDataOthers from '@/data/projects/others'
 import Card from '@/components/Card'
 import { genPageMetadata } from 'app/seo'
 
 export const metadata = genPageMetadata({ title: 'Projects' })
 
 export default function Projects() {
+  const projectData = [
+    { title: 'Highlights', data: projectsDataHighlights },
+    { title: 'Apps', data: projectsDataApps },
+    { title: 'University', data: projectsDataUni },
+    { title: 'Others', data: projectsDataOthers },
+  ]
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -16,20 +25,28 @@ export default function Projects() {
             Showcase your projects with a hero image (16 x 9)
           </p>
         </div>
-        <div className="container py-12">
-          <div className="-m-4 flex flex-wrap">
-            {projectsData.map((d) => (
-              <Card
-                key={d.title}
-                title={d.title}
-                description={d.description}
-                imgSrc={d.imgSrc}
-                href={d.href}
-              />
-            ))}
+        <div className="space-y-2 pb-6 pt-6 md:space-y-5"></div>
+      </div>
+      {projectData.map((d) => (
+        <div key={d.title}>
+          <h2 className="text-2xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-3xl sm:leading-10 md:text-4xl md:leading-14">
+            {d.title}
+          </h2>
+          <div className="container py-12">
+            <div className="-m-4 flex flex-wrap">
+              {d.data.map((e) => (
+                <Card
+                  key={e.title}
+                  title={e.title}
+                  description={e.description}
+                  imgSrc={e.imgSrc}
+                  href={e.href}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ))}
     </>
   )
 }
