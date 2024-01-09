@@ -5,7 +5,7 @@ const projectsDataHighlights = [
       will be played during prayer time. Other useful features including monthly prayer timetable, 
       qibla compass, tasbih and many more.`,
     imgSrc: '/static/images/projects/mptsolat.png',
-    href: 'https://play.google.com/store/apps/details?id=live.iqfareez.waktusolatmalaysia',
+    href: 'https://waktusolat.app',
   },
   {
     title: 'Flutree',

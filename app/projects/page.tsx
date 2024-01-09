@@ -22,7 +22,7 @@ export default function Projects() {
             Projects
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            Showcase your projects with a hero image (16 x 9)
+            “Everyone needs a hobby.” - Tony Stark (Iron Man 3)
           </p>
         </div>
         <div className="space-y-2 pb-6 pt-6 md:space-y-5"></div>
