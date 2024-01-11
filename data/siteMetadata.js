@@ -15,7 +15,7 @@ const siteMetadata = {
   email: 'hello@iqfareez.com',
   github: 'https://github.com/iqfareez',
   twitter: 'https://twitter.com/iqfareez',
-  facebook: 'https://facebook.com/iqfareez',
+  // facebook: 'https://facebook.com/iqfareez',
   // youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com/in/iqfareez',
   locale: 'en-US',
