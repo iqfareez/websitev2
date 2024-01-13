@@ -5,6 +5,10 @@ import type { MDXComponents } from 'mdx/types'
 import Image from './Image'
 import CustomLink from './Link'
 import TableWrapper from './TableWrapper'
+import Carousel from './Carousel'
+import ReactPlayer from './ReactPlayer'
+import Admonition from './Admonition'
+import Mermaid from './Mermaid'
 
 export const components: MDXComponents = {
   Image,
@@ -13,4 +17,8 @@ export const components: MDXComponents = {
   pre: Pre,
   table: TableWrapper,
   BlogNewsletterForm,
+  Carousel,
+  ReactPlayer,
+  Admonition,
+  Mermaid,
 }
