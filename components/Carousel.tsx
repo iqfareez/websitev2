@@ -1,10 +1,14 @@
 'use client'
 import React from 'react'
-import { useKeenSlider } from 'keen-slider/react'
+import { MutableRefObject } from 'react'
+import Image from 'next/image'
+import 'keen-slider/keen-slider.min.css'
+import { useKeenSlider, KeenSliderPlugin, KeenSliderInstance } from 'keen-slider/react'
+import styles from '../css/carousel.module.css'
 
 export default Carousel
 
-function ThumbnailPlugin(mainRef) {
+function ThumbnailPlugin(mainRef: MutableRefObject<KeenSliderInstance | null>): KeenSliderPlugin {
   return (slider) => {
     function removeActive() {
       slider.slides.forEach((slide) => {
@@ -57,17 +61,19 @@ function Carousel({ images }) {
       <div ref={sliderRef} className="keen-slider">
         {images.map((image, index) => (
           <div key={index} className="keen-slider__slide">
-            <div className={'aspect-4x3'}>
-              <img className="fit-image" src={image} alt={`Slide ${index + 1}`} />
+            <div className={styles.aspect43}>
+              {/* <img className={styles.fitImage} src={image} alt={`Slide ${index + 1}`} /> */}
+              <Image className={styles.fitImage} src={image} alt={`Slide ${index + 1}`} fill />
             </div>
           </div>
         ))}
       </div>
       <div ref={thumbnailRef} className="keen-slider thumbnail">
         {images.map((image, index) => (
-          <div key={index} className="keen-slider__slide">
-            <div className={'aspect-4x3'}>
-              <img className={'fit-image'} src={image} alt={`Slide ${index + 1}`} />
+          <div key={index} className="keen-slider__slide transition-opacity [&.active]:opacity-80">
+            <div className={styles.aspect43}>
+              {/* <img className={styles.fitImage} src={image} alt={`Slide ${index + 1}`} /> */}
+              <Image className={styles.fitImage} src={image} alt={`Slide ${index + 1}`} fill />
             </div>
           </div>
         ))}
