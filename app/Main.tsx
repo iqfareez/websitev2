@@ -12,8 +12,8 @@ const MAX_DISPLAY = 3
 export default function Home({ posts }) {
   return (
     <>
-      <div className="relative flex h-96 w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-zinc-50 dark:bg-black">
-        <div className="pointer-events-none absolute inset-0 z-20 h-full w-full bg-zinc-50 [mask-image:radial-gradient(transparent,white)] dark:bg-black" />
+      <div className="relative flex h-96 w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-zinc-50 dark:bg-zinc-950">
+        <div className="pointer-events-none absolute inset-0 z-10 h-full w-full bg-zinc-50 [mask-image:radial-gradient(transparent,white)] dark:bg-zinc-950" />
 
         <Boxes />
         <h1
