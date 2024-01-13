@@ -7,7 +7,7 @@ import React from 'react'
 import { Boxes } from '@/components/ui/background-boxes'
 import { cn } from '@/utils/cn'
 
-const MAX_DISPLAY = 5
+const MAX_DISPLAY = 3
 
 export default function Home({ posts }) {
   return (
