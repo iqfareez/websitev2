@@ -58,6 +58,8 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // https://github.com/hiimnit/tailwindcss-dotted-background
+  const dotBackgroundClassname = 'bg-dotted-spacing-8 bg-dotted-gray-300 dark:bg-dotted-gray-800'
   return (
     <html
       lang={siteMetadata.language}
@@ -73,7 +75,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-      <body className="bg-zinc-50 text-black antialiased dark:bg-zinc-950 dark:text-white">
+      <body
+        className={`bg-zinc-50 text-black antialiased dark:bg-zinc-950 dark:text-white ${dotBackgroundClassname}`}
+      >
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
