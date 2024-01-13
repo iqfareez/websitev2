@@ -3,15 +3,33 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
+import React from 'react'
+import { Boxes } from '@/components/ui/background-boxes'
+import { cn } from '@/utils/cn'
 
 const MAX_DISPLAY = 5
 
 export default function Home({ posts }) {
   return (
     <>
+      <div className="relative flex h-96 w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-zinc-50 dark:bg-black">
+        <div className="pointer-events-none absolute inset-0 z-20 h-full w-full bg-zinc-50 [mask-image:radial-gradient(transparent,white)] dark:bg-black" />
+
+        <Boxes />
+        <h1
+          className={cn(
+            'relative z-20 bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent dark:bg-gradient-to-l dark:from-emerald-500 dark:to-lime-600 md:text-6xl'
+          )}
+        >
+          Welcome Aboard
+        </h1>
+        <p className="relative z-20 mt-2 text-center text-neutral-900 dark:text-zinc-50">
+          iqfareez is awesome!
+        </p>
+      </div>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-2xl sm:leading-10 md:text-4xl md:leading-14">
             Latest
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">

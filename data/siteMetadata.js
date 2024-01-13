@@ -4,7 +4,7 @@ const siteMetadata = {
   author: 'Muhammad Fareez Iqmal',
   headerTitle: 'iqfareez',
   description:
-    'Explore my personal website for blogs, projects, and more on software engineering, hardware development, tecnologies and programming. Currently a sofware engineer, coming from Mechatronics Engineering background.',
+    'Explore my personal website for blogs, projects, and more on software engineering, hardware development, tecnologies and programming.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://website-v2-iqfareez.vercel.app/',
