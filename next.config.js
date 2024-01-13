@@ -81,6 +81,25 @@ module.exports = () => {
         },
       ]
     },
+    async redirects() {
+      return [
+        {
+          source: '/phone',
+          destination: 'tel:+60193988956',
+          permanent: true,
+        },
+        {
+          source: '/gh',
+          destination: 'https://github.com/iqfareez',
+          permanent: true,
+        },
+        {
+          source: '/analytics',
+          destination: 'https://umami.iqfareez.com/share/P7AbNs879VRQqNYr/iqfareez.com',
+          permanent: true,
+        },
+      ]
+    },
     webpack: (config, options) => {
       config.module.rules.push({
         test: /\.svg$/,
