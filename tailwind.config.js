@@ -48,6 +48,18 @@ module.exports = {
             },
             code: {
               color: theme('colors.indigo.500'),
+              backgroundColor: theme('colors.indigo.50'),
+              paddingLeft: '4px',
+              paddingRight: '4px',
+              paddingTop: '2px',
+              paddingBottom: '2px',
+              borderRadius: '0.25rem',
+            },
+            'code::before': {
+              content: 'none',
+            },
+            'code::after': {
+              content: 'none',
             },
           },
         },
