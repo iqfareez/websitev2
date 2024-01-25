@@ -7,7 +7,7 @@ const siteMetadata = {
     'Explore my personal website for blogs, projects, and more on software engineering, hardware development, tecnologies and programming.',
   language: 'en-us',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://website-v2-iqfareez.vercel.app/',
+  siteUrl: 'https://iqfareez.com',
   siteRepo: 'https://github.com/iqfareez/websitev2',
   siteLogo: '/static/images/logo.png',
   socialBanner: '/static/images/twitter-card.png',
