@@ -1,0 +1,250 @@
+---
+title: 'My final year project: A journey & post mortem'
+date: '2024-02-15'
+tags: ['AR', 'navigation', 'unity', 'hierarchical localization']
+draft: false
+summary: Finished just-in-time. I wish I had more time to focus on my FYP with less commitment on other things
+images: []
+layout: PostSimple
+authors: ['default']
+---
+
+When the list of titles for the final year project (fyp) released for us to select, there were several titles that I was interested in. But, seeing the title
+**"Development of turn-by-turn navigation in Kulliyyah of Engineering (KOE) building using natural landmark detection"** have caught my eyes. Because the nature of myself
+leaning towards software development, I thought this project would be a good fit for me.
+
+![Fyp released title my title](/static/blog/fyp-ar-navigation/fyp-my-title-list.png)
+
+<Admonition type="tip">
+  For mechatronics juniors, [click
+  here](https://docs.google.com/spreadsheets/d/1m3WvIcbPspN9yIdeG3P7v3xT2gXILNqg/edit?usp=sharing&ouid=100112357446104260446&rtpof=true&sd=true)
+  to view the list of FYP titles during my time for your reference (Lecturer's names and emails are
+  redacted for privacy)
+</Admonition>
+
+Upon further meeting with my supervisor, the requirements have been refined as follows:
+
+- Develop a **mobile application using Unity** with AR Foundation for the navigation system.
+- Localization system using **natural landmark detection** - Visual based without use of markers like QR code or something.
+
+## Past projects
+
+One student from last year (2021/2022) FYP's, Hidayat Sohif have done similar project, but with different objectives (See [Post 1](https://www.linkedin.com/posts/azharmohdibrahim_augmentedreality-indoornavigation-fuzzylogic-activity-7023879916509163520-MFKK?utm_source=share&utm_medium=member_desktop) & [Post 2](https://www.linkedin.com/posts/azharmohdibrahim_koe-iium-activity-7051446897596645376-bdsY?utm_source=share&utm_medium=member_desktop)).
+The navigation system is quite the similar, but the localization system is different. He used QR code as the marker for the localization system, meanwhile I'm using features that are already exist in the building. See [types of AR navigation](#types-of-ar-navigation).
+
+![Screenshot of Hidayat Sohif's work](/static/blog/fyp-ar-navigation/screenshot-hidayat-sohif-AR.png)
+
+I also found a good working demo of [indoor navigation with AR in a hospital](https://youtu.be/CGphw9r__5k) by [Joshua Drewlow](https://www.linkedin.com/in/joshua-drewlow/). He
+explained greatly the [development process](https://www.youtube.com/playlist?list=PLcYgptwJHxUE7Q9ymWEX0zDs3SDgMarxu). I can follow his methods right? Haha no becase they used
+[Vuforia SDK](https://developer.vuforia.com/) with 3D camera to map the environment which I don't have any of it and it cost a lot of $$$.
+
+After conducting thorough Google searches, I was delighted to discover that my chosen project was relatively uncommon and hadn't been extensively explored by others before. But the trends is increasing, more and more people are interested in developing AR navigation system.
+
+## Types of AR navigation
+
+Generally, there are two types of navigation, which are:
+
+- **Location-based** navigation - using GPS
+- **Vision/Visual-based** navigation - using camera
+
+My project is targeted to be used within/inside a building, GPS is not suitable for this project since the walls and building structure
+will disrupt the GPS signal. It is also crucial to ensure the position is accurate within 1-2 meters, which is hard to obtain using
+GPS. So, a suitable option to use indoor is vision-based navigation.
+
+In visual based, there are another two types of localization.
+
+- **Marker-based** - Using markers like QR code, AR tags, etc.
+- **Markerless** - Using features that are already exist in the building.
+
+![markerbased vs markerless example](/static/blog/fyp-ar-navigation/markerbased-vs-markerless-comparison.png)
+
+We are choosing marker-less detection using natural landmark detection. It is more convenient since we don't need to put markers everywhere, but also quite challenging compared
+to marker-based detection.
+
+So far so good, I was excited to start the project. We were given two semesters (14 weeks each) to complete the project. I thought it was enough time to complete the project. Let's start!
+
+## In semester 1
+
+### Research & data collection
+
+I first learnt Unity about 2-3 years ago from this moment. I'm not worry much about learning Unity for my fyp as I quite understand the basics of it. This
+gives me an advanced head start compared to my other friends who are not familiar with Unity. It just that, I have totally **no idea** how to
+implement AR in Unity.
+
+AR is not my expertise nor my interest. I have never done any AR projects before. So I look everywhere ie Reddit, StackOverflow, journal sites, YouTube and so much
+more to get the general idea. [AR Foundation Samples](https://github.com/Unity-Technologies/arfoundation-samples) repo is a great way to start and learn. But, it is not easy to understand.
+
+To reduce the scope, I choose the KOE Building Block E1, Level 2 only. I started to collect image data from the
+building for several pre-determined landmarks to build the localization model. I captured the landmark images from different angles and distances.
+
+![fyp-image-data-collection](/static/blog/fyp-ar-navigation/fyp-raw-data-collection.png)
+
+After that, I'm looking for a tool/algorithm to train the data. I had idea to use pytorch or tensorflow, like a normal image classification project. But, upon
+further research, I found a method called [Hierarchical Localization](https://github.com/cvg/Hierarchical-Localization) project to localize the image and predict where the image is. It sounds
+like a suitable method for my AR Navigation project.
+
+I won't go into details on how the Hierarchical Localization works, but in short, it uses a two alogorithm, [SuperPoint](https://arxiv.org/abs/1712.07629) and [SuperGlue](https://psarlin.com/superglue/). SuperPoint is used to extract
+features from the image, while SuperGlue is used to match the features from the image to the map.
+
+![HL pipeline](https://github.com/cvg/Hierarchical-Localization/raw/master/doc/hloc.png)
+
+The project provide a sample code and even a Google Colab script to demonstrate Hierarchical Localization. I yoinked the code and run it on my own image data.
+It works and it looks promising. After this point, I was slowly making progress into finishing the report (part 1) and presentation slides.
+
+### Presentation
+
+Still completely unclear what I want or need to do, I just throw whatever I think is suitable
+for the presentation slides. Not much I can share about the project progress aside from the research and data collection I did so far. Compare
+to my colleagues, I feel like I quite behind in terms of progress, but I'm not worried much (yeah it's weird, I know).
+
+![fy1 slide pp](/static/blog/fyp-ar-navigation/presentation-fyp1-pp.png)
+
+<Admonition type="tip">
+  If you're interested, you can get the presentation files (and other related files) in [All
+  files](#all-files) section at the end of this blogpost.
+</Admonition>
+
+On week 15 of the semester, we had a presentation session for FYP 1. Hoping for best and with tawakkal, I presented my project. The presentation
+went well (at least in my opinion).
+
+> You're the best presenter I have today
+
+Upon concluding my presentation, to my pleasant surprise, one of the examiners commended me for delivering the best
+presentation of the day _(See image below, first image from left)_. As I was the final presenter during the FYP1 session, receiving such praise from him made me immensely
+proud. Haha, it was truly a delightful moment! (Of course, I'm not the best of all, it's just coincidentally & relatively better that the persons before me)
+
+![fyp1-whatsapp-screenshot](/static/blog/fyp-ar-navigation/fyp-screenshots-kawan.png)
+
+Then of course, there is 'sesi bantai-membantai' with the examiners (basically it's just QnA session with some spices 🌶️️), but Alhamdulillah I was able to answer it quite OK.
+
+### Continue the prototype
+
+I found this [YouTube tutorial](https://youtube.com/playlist?list=PLOIYTfRd0Ho7iOI_cnUZxXK6KiCFGhU1s) on how to develop basic navigation in AR. His
+video is great, demonstrating how to navigate from A to B using QR code as its localization method. So, below is the
+early test video of the prototype I made using the tutorial.
+
+<ReactPlayer url="https://i.imgur.com/HqzGfVK.mp4" playing={true} controls={true} />
+
+Hurmm.. Seems like it deosn't align with the room. And even worse, it direct me to the
+window like it asking me to jump off. 😂😂
+
+<ReactPlayer url="https://i.imgur.com/EHLXYfV.mp4" playing={true} controls={true} />
+
+Testing outside my room. But nahh, something's not working correctly.
+
+First I started to understand the navigation system in Unity ie walking etc. There was a good tutorial [on YouTube]() about developing basic AR navigation system using Unity. The tutorial
+have provided me some basic understanding on how the overall navigation system would work. So, the next part is to develop the localization system.
+
+cerita la sem 1 buat apa sem 2 buat apa
+tunjuk skit result
+
+will disrupt the GPS signal. It is also crucial to ensure the position is accurate within 1-2 meters, which is hard to obtain using
+
+![Unity remote](/static/blog/fyp-ar-navigation/unity-remote-yes-phone.jpg)
+
+I wish I have more time and no other commitment to fully commit and enjoy my FYP project.
+aku bnyak program dan projek
+boleh la nak recaall projek2 aku, masjidTV
+workshop 8j8a
+ukm
+mcm2 lagi
+
+ckp aku menyesal satu sem tak buat apa,
+include
+screenshot 3 bulan tak bukak hahha, time bukak ni lagi semiggu nak submkit
+
+![Unity dah 3 bulan tak bukak project](/static/blog/fyp-ar-navigation/unity-3bulan-screenshot.png)
+
+Point yang nak tulis:
+
+- Overestimate diri sendiri
+- Overestimate masa
+- Overestimate kemampuan
+
+## In semester 2
+
+When entering semester 2, I realized that I need to complete the project in 15 weeks
+no matter what. So, I target **at least** I touch the project once a week.
+
+Well, guess what? The project was dormant for about 2+ months (~10-ish weeks) 🤡
+
+So, what pro-gamer move that did I did in semester?? Hm, I was so busy. Like super-busy. I
+was involved in several projects and activities. Let me list a few:
+
+[//] # (TODO: Cross check the timeline)
+
+- Entreprenurship Digital Competition - This program take place early in the semester
+- 8 Jam 8 Apps Workshop - This is the first Fluter workshop we plan to conduct for the masses. Of course
+  it took a lot of preparation for meeting and discussion prior to the program. Not to forgot we had to create the module
+  and notes for the workshop (No, I'm not saying that I regret it anyway)
+- Study worload - Yup, similar to the semester 1 problem. The study workload and projects does reduce the chance I can have to
+  do the FYP project
+
+[//] # (TODO: Kaitkan dgn yg atas. Klw ada motivation yang atas tk jadi masalah)
+Aside from that, one major problem that I discovered is I lack of motication.
+
+Tak enjoiy buat, tktau kenapa
+lecturer tak bagi bantuan, tak push
+
+This is me two days before submitting the FYP report. I just finished developing the server and now I'm collecting data
+using the app.
+
+2 hari sebelum submit report:
+
+![AR Server codespace](/static/blog/fyp-ar-navigation/ar-server-codespace-construction.png)
+
+CKp bersyukur masa saat2 akhir tkade jatuh sakit etc.
+
+I'm glad the examiners liked my project. However, they also have commented on some aspects particularly about the localization
+results.
+
+Below are the real questions asked by the examiners during the presentation:
+
+1. Using your project, I only be able to go from and to the destination that have been listed only. Am I right?
+1. How do you know that the user is in the correct path?
+1. Is the navigation path shown is the optimized shortest path?
+1. Can I navigate between different floors?
+1. How is your project is different from [Hidayat Sohif's project](#past-projects)?
+1. etc.
+
+I am able to answer all the questions asked, because I know what I'm doing, but I don't think it is satisfying enough
+for them.
+
+## Future work
+
+Of course, there was a very big room of improvement for this project to make it production ready.
+
+If time is critical, i.e. you don't want to spend much time on developing the localization system, then you can use
+AR navigation SDK out there, it is just you need a big capital to use it. Below are some examples:
+
+- [Vuforia Engine](https://developer.vuforia.com/)
+- [Wikitude](https://www.wikitude.com/showcase/wikitude-navigation/)
+- [Unity Mars](https://unity.com/products/unity-mars)
+
+If you have time & resources, then you can continue my project by improving the overall system. Here are my suggestions:
+
+- Add more landmark to the localization system
+- Improve the speed of the localization system (need change in both code and hardware)
+- Add accessibility features (ie read out the instruction "turn left", "turn right", etc)
+- Add more features to the app (ie. search for destination, etc)
+- etc.
+
+Some more advanced improvements I could think of:
+
+- Employ Wifi access points to improve the localization system within the indoor environment. See repo [Triangulation_script](https://github.com/Batman787/Triangulation_script)
+  or [wifi-localisation](https://github.com/yxiao92/wifi-localisation)
+  ![image wifi positioning](https://hackster.imgix.net/uploads/attachments/1062768/illustrations_ambient-wifi-site-survey2.jpg?auto=compress%2Cformat&w=830&h=466.875&fit=min&dpr=2.625)
+  _Image credit: [Hackster](https://www.hackster.io/news/indoor-positioning-using-arduino-and-machine-learning-in-4-easy-steps-295d39e5e7c9)_
+
+## Closing thoughts
+
+So, if I were to start over again, I would do the following:
+
+- Keep the consistency in developing the project
+- Manage priorities
+- Don't overestimate myself
+- Don't overestimate the time
+
+## All files
+
+- FYP1 Presentation: https://www.slideshare.net/MuhammadFareezIqmal/fyp1-presentation-development-of-interactive-turnbyturn-navigation-in-kulliyyah-of-engineeringpdf
