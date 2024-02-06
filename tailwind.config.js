@@ -75,6 +75,10 @@ module.exports = {
             'h1,h2,h3,h4,h5,h6': {
               color: theme('colors.gray.100'),
             },
+            code: {
+              color: theme('colors.indigo.100'),
+              backgroundColor: theme('colors.indigo.900/50'),
+            },
           },
         },
       }),
