@@ -9,24 +9,23 @@ layout: PostLayout
 authors: ['default']
 ---
 
-The lab tasks given was to count from 00-99 using 7 Segment Display, and must code in [Assembly](https://youtu.be/4gwYkEK0gOk). Fortunately, the decoder was not enough for
-everyone, so the tasks are simplified **to count from 0-9 only, and repeats**.
+The lab task assigned to us was to count from 00-99 using 7 Segment Display, the program must be written in [Assembly](https://youtu.be/4gwYkEK0gOk). Fortunately, the 7 segment decoder was not enough for
+everyone in the lab, so the tasks are simplified **to count from 0-9 only, and repeats**.
 
-Code in assembly in awful (sorry), probably we are too exposed to that sweet high-level programming language like Java,
-Python or whatever our favourites is. The sweet side is, Assembly allows us to 'talk' directly to the bare metal, solve
-performance issues and understand how the hardware works.
+As someone who familiar with high-level programming language like Java, Python, etc, coding in assembly is infuriating 😂. The sweet side is about Assembly allows us to 'talk' directly to the bare metal, removing
+the unnecessary abstraction, solve performance issues, code like a chad and understand how the hardware works.
 
 ![Arduino 7 Segment cover photo](/static/blog/assembly-counter/IMG_20221116_215635.jpg)
 
 In this article, we're going to dive into how the programs work on [ATMega328P](https://www.microchip.com/en-us/product/ATmega328P).
 
-## What you'll need (to make your own)
+## What you'll need
 
 ### Hardware
 
 - Arduino Uno (ATMega328P)
 - 7-Segment Display
-- BCD to 7-Segment Decoder (eg: HD74LS47 (for common anode) or HD74LS48 (for common cathode))
+- BCD to 7-Segment Decoder. Eg: HD74LS47 (for common anode) or HD74LS48 (for common cathode)
 - Breadboard & some jumper wires
 
 ### Software
@@ -34,7 +33,7 @@ In this article, we're going to dive into how the programs work on [ATMega328P](
 - [Microchip Studio](https://www.microchip.com/en-us/tools-resources/develop/microchip-studio) (aka Atmel Studio 7)
 - [XLoader](https://drive.google.com/file/d/1BTLT7Clmqs_WUpZJBSc3pkpbzsU62Ep4/view?usp=share_link) (to upload the program to Arduino)
 
-### Manual (Nice to have)
+### Manual (Must have for reference)
 
 - [AVR Instruction Set Manual](http://ww1.microchip.com/downloads/en/devicedoc/atmel-0856-avr-instruction-set-manual.pdf)
 
@@ -235,7 +234,9 @@ I enjoy making this to work using Assembly. I hope you've learnt something from 
 Believe it or not;
 [this code](https://github.com/iqfareez/microp-lab3/blob/973b0a67983af0e33a4b7ecbdeac03df3d5e07ec/Exp2-Task3/Exp2-Task3/main.asm)
 was my first attempt to complete this task as I don't have any idea how to do counter.
-I know, it is an awful code to look at it, consisting of 100+ LOC.
-Probably belong to [r/programminghorror](https://www.reddit.com/r/programminghorror/) 😆
+I know, it is an awful code to look at it, consisting of 100+ LOC, but technically works 😆
 
-Thank you for reading, for any thoughts or suggestions, please leave a comment below.
+Thank you for reading, for any thoughts or suggestions, please leave a comment below. I'll leave you with this
+meme from [r/ProgrammerHumor](https://www.reddit.com/r/ProgrammerHumor/comments/mwx8o5/assembly_meme/).
+
+![stop doing assembly](https://imgur.com/qJxu1gk.png)
