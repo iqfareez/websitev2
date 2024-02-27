@@ -1,0 +1,63 @@
+---
+title: Controling monitor OSD using ESP32 over DDC/CI interface (Part 1)
+date: '2024-03-17'
+tags: ['monitor', 'esp32', 'arduino', 'ddc']
+draft: false
+summary: My first laptop I got in 2010; Acer Aspire 4738Z cannot cope with the latest OS anymore due to its hardware. Why not upgrading it to give it extra life?
+images: ['/static/blog/laptop-aspire-upgrade/laptop-og-image.png']
+layout: PostSimple
+authors: ['default']
+---
+
+I just learnt that it is possible to control the monitor settings using **software**. I even posted a [tweet](https://x.com/iqfareez/status/1761718415113560531) about my 
+discovery. Usually we change the setting through the OSD (On Screen Display) menu. It is the menu that shows up when you 
+press the monitor button.
+
+![Acer SA240Y](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1708994824/website/monitor%20control%20DDC/IMG_1752_hscvtf.jpg)
+
+*Fyi*, I'm using Acer SA240Y monitor. I only know about this after finishing up my post [**Macbook on thumbshell mode**](./using-macbook-thumbshell), turns out
+I may have the same opinion as him about using only primary external monitor with the laptop's turned off. In his blogpost [**Reverse engineering the MacBook clamshell mode**](https://alinpanaitiu.com/blog/turn-off-macbook-display-clamshell/), he 
+mentioned something about DDC. This is the point where I've learnt that we can use DDC to control the monitor (Wow 🤩). I quickly check my monitor in the OSD menu, hoping that my 
+monitor support DDC (as I'm dying to try it already!).
+
+Boom! There it is. Already enabled my default. We are in the game, boys!
+
+The **Display Data Channel**, or **DDC**, is a protocol that allows monitor and computer exchange information to each other over an [I²C](https://learn.sparkfun.com/tutorials/i2c/all) busses.
+For example, monitor can informs the computer about it capabilites, resolutions, model number, manufacturer name and what not. This is the reason your computer can identify and show you the correct model number and automagically select the
+correct resolution. DDC is not something modern, it appears as early in 1994. The current version is DDC/CI (CI stands for **Command Interface**).
+
+## How DDC works
+
+> I will not go into much details here, just the basics.
+
+The computer will send some specialized messages, or commands, to the monitor. But, both computer and the monitor need to have mutual agreement about the commands will be used, right?. Fortunately, we have MCCS! *(Duh.. what is MCCS?)*
+
+MCSS, or [Monitor Control Command Set](https://www.ddcutil.com/mccs_background/), is a standard developed by [VESA](https://vesa.org/) that defines a set of commands for controlling various aspects of a monitor's functionality.
+
+Within this framework, users can employ a set of predefined commands to adjust monitor settings such as brightness, contrast, and color balance. These adjustments are 
+facilitated through what's known as the Virtual Control Panel (VCP), which organizes monitor features into manageable 
+categories. Each feature within the VCP is assigned a numerical identifier for ease of reference.
+
+## Enough theories, let's start hacking!
+
+As mentioned earlier, DDC is nothing but an I²C busses, or known as Two-Wire interface. It uses two wire to communicate, DATA & CLOCK. Below
+is the basic example of I²C *(Image credit [CircitBasics](https://www.circuitbasics.com/basics-of-the-i2c-communication-protocol))* 
+
+![Basic i2c](/static/blog/monitor-ddc/Introduction-to-I2C-Single-Master-Single-Slave.png)
+
+DDC is implemented on common video interface like HDMI, DP, VGA etc. So, look to their pinouts to look where the DDC is implemented. Below is the example of
+VGA PORT.
+
+Why VGA? Because my monitor have two inputs, HDMI & VGA. HDMI is already used, empty port is VGA.
+
+![VGA pinout for DDC](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1708994080/website/monitor%20control%20DDC/DDC_VGA_Pinout_djhh79.png)
+
+<div className="-mx-2 flex flex-wrap overflow-hidden xl:-mx-2">
+  <div className="my-1 w-full overflow-hidden px-2 xl:my-1 xl:w-1/2 xl:px-2">
+   Gambar 1
+  </div>
+  <div className="my-1 w-full overflow-hidden px-2 xl:my-1 xl:w-1/2 xl:px-2">
+    Gambar 2
+  </div>
+</div>
+
