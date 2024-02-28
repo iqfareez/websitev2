@@ -40,24 +40,41 @@ categories. Each feature within the VCP is assigned a numerical identifier for e
 
 ## Enough theories, let's start hacking!
 
-As mentioned earlier, DDC is nothing but an I²C busses, or known as Two-Wire interface. It uses two wire to communicate, DATA & CLOCK. Below
+As mentioned earlier, DDC is nothing but an I²C busses, or known as [Two-Wire interface](https://ww1.microchip.com/downloads/en/DeviceDoc/90003181A.pdf). It uses two wire to communicate, DATA & CLOCK. Below
 is the basic example of I²C *(Image credit [CircitBasics](https://www.circuitbasics.com/basics-of-the-i2c-communication-protocol))* 
 
 ![Basic i2c](/static/blog/monitor-ddc/Introduction-to-I2C-Single-Master-Single-Slave.png)
 
-DDC is implemented on common video interface like HDMI, DP, VGA etc. So, look to their pinouts to look where the DDC is implemented. Below is the example of
+DDC is implemented on common video interface like HDMI, DP, VGA etc. So, look to their pinouts to find where the DDC is implemented. Below is the example of
 VGA PORT.
 
-Why VGA? Because my monitor have two inputs, HDMI & VGA. HDMI is already used, empty port is VGA.
+![VGA pinout for DDC](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1709076915/website/monitor%20control%20DDC/DDC_VGA_Pinout_1_koxqiq.png)
 
-![VGA pinout for DDC](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1708994080/website/monitor%20control%20DDC/DDC_VGA_Pinout_djhh79.png)
+My monitor have two inputs, **HDMI** & **VGA**. HDMI is already used, so I tap into VGA to access the DDC pinouts.
+
+![Monitor connection VGA HDMI illustration](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1709076930/website/monitor%20control%20DDC/Monitor_connection_wyfvrn.png)
+
+### Hardware Needed
+
+- Arduino (or Arduino compatible microcontroller) - I use ESP32 in this project
+- OLED display
+- Buttons
+- Some jumper cables
+
+Construct the circuit as follows:
 
 <div className="-mx-2 flex flex-wrap overflow-hidden xl:-mx-2">
   <div className="my-1 w-full overflow-hidden px-2 xl:my-1 xl:w-1/2 xl:px-2">
-   Gambar 1
+    ![Circuit graphics](https://github.com/iqfareez/esp-monitor-control/blob/main/fritzing/default_sketch_bb.png?raw=true)
   </div>
   <div className="my-1 w-full overflow-hidden px-2 xl:my-1 xl:w-1/2 xl:px-2">
-    Gambar 2
+  ![Circuit schematics](https://github.com/iqfareez/esp-monitor-control/blob/main/fritzing/default_sketch_schem.png?raw=true)
+    Schematics
   </div>
 </div>
 
+### Software 
+
+For IDE, I use [**Visual Studio Code**](https://code.visualstudio.com/) (aka VS Code) with [Visual Studio Code extension for Arduino](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.vscode-arduino).
+
+You can also use the usual Arduino IDE.
