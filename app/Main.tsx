@@ -14,17 +14,17 @@ export default function Home({ posts }) {
     // The z-index cannot be more than 10. To prevent interfere with Kbar component
     <>
       <div className="relative flex h-96 w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-zinc-50 dark:bg-zinc-950">
-        <div className="pointer-events-none absolute inset-0 z-8 h-full w-full bg-zinc-50 [mask-image:radial-gradient(transparent,white)] dark:bg-zinc-950" />
+        <div className="z-8 pointer-events-none absolute inset-0 h-full w-full bg-zinc-50 [mask-image:radial-gradient(transparent,white)] dark:bg-zinc-950" />
 
         <Boxes />
         <h1
           className={cn(
-            'relative z-6 bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent dark:bg-gradient-to-l dark:from-emerald-500 dark:to-lime-600 md:text-6xl'
+            'z-6 relative bg-gradient-to-r from-yellow-600 to-red-600 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent dark:bg-gradient-to-l dark:from-emerald-500 dark:to-lime-600 md:text-6xl'
           )}
         >
           Welcome Aboard
         </h1>
-        <p className="relative z-6 mt-2 text-center text-neutral-900 dark:text-zinc-50">
+        <p className="z-6 relative mt-2 text-center text-neutral-900 dark:text-zinc-50">
           iqfareez is awesome!
         </p>
       </div>
