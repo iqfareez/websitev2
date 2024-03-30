@@ -1,6 +1,7 @@
 ---
 title: Deploy Node-RED flows to the Cloud (Azure)
 date: '2023-02-15'
+lastmod: '2024-3-30'
 tags: ['node-red', 'azure', 'cloud', 'iot', 'tutorial', 'putty']
 draft: false
 summary: No more local server! Learn how to host your Node-RED flows in the cloud with Microsoft Azure
@@ -197,7 +198,7 @@ Before we proceed, let's define:
   to another
 </Admonition>
 
-We'll need our exported `.json` file first (learn how to export Node-RED flows to JSON is [previous article](../get-started-on-iot-with-nodered-esp32#export-flows)).
+We can create a new flows, but on this article, I will reuse the [flows.json](https://gist.github.com/iqfareez/80a9c3ae246ffcbcf58dc2ea6c4cb115) that we have created from the [previous article](./get-started-on-iot-with-nodered-esp32#conclusion).
 
 Then, we'll need to list out the palettes used in the current flows because we'll need to install them. So, on the Local Node-RED > Menu > Manage Palettes. Take
 notes of the installed palettes. In my case, I only have one additional palettes: `node-red-dashboard`.

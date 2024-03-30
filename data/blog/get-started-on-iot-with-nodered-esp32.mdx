@@ -1,12 +1,12 @@
 ---
 title: Get started on IoT with Node-RED & ESP32
 date: '2023-02-11'
+lastmod: '2024-3-30'
 tags: ['mqtt', 'iot', 'node-red', 'esp32', 'tutorial']
 draft: false
 summary: Learn to create an IoT project using Node-RED, ESP32 & MQTT. Control devices and synchronize LED status with Node-RED dashboard over the internet
 images: ['/static/blog/nodered-started-esp32/meta-nodered-esp32.png']
 layout: PostLayout
-canonicalUrl:
 authors: ['default']
 ---
 
@@ -283,6 +283,10 @@ MQTT << [mynode/led1] 0
 </div>
 
 ## Conclusion
+
+Here is the nodered flows JSON file for the above project. You can import it to your Node-RED instance:
+
+https://gist.github.com/iqfareez/80a9c3ae246ffcbcf58dc2ea6c4cb115
 
 You can make the UI more interesting by incorporating [LED indicator](https://flows.nodered.org/node/node-red-contrib-ui-led)
 for example. But, that's it I have time for now. Feel free to post comments to ask any question or you want something to add. In the next tutorial, I'll show how you can deploy
