@@ -7,8 +7,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 // You might need to insert additional domains in script-src if you are using external services
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app umami.iqfareez.com;
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' *.googletagmanager.com *.google-analytics.com;
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app *.googletagmanager.com *.google-analytics.com;
   style-src 'self' 'unsafe-inline';
   img-src * blob: data:;
   media-src *.imgur.com;
@@ -96,11 +95,6 @@ module.exports = () => {
         {
           source: '/gh',
           destination: 'https://github.com/iqfareez',
-          permanent: true,
-        },
-        {
-          source: '/analytics',
-          destination: 'https://umami.iqfareez.com/share/P7AbNs879VRQqNYr/iqfareez.com',
           permanent: true,
         },
       ]
