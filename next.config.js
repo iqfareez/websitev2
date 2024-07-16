@@ -97,6 +97,11 @@ module.exports = () => {
           destination: 'https://github.com/iqfareez',
           permanent: true,
         },
+        {
+          source: '/rw',
+          destination: 'https://hello.rocketweb.my/fareez',
+          permanent: true,
+        },
       ]
     },
     webpack: (config, options) => {
