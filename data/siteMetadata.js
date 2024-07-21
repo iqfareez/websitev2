@@ -4,7 +4,7 @@ const siteMetadata = {
   author: 'Muhammad Fareez Iqmal (iqfareez)',
   headerTitle: 'iqfareez',
   description:
-    'Explore my personal website for blogs, projects, and more on software engineering, hardware development, tecnologies and programming.',
+    'Explore blogs, projects, and more on software engineering, hardware development, technologies, programming, and a little bit about my personal life.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://iqfareez.com',
