@@ -1,6 +1,7 @@
 ---
 title: I installed LED lighting to my 3D printer
 date: '2022-10-24'
+lastmod: '2024-08-19'
 tags: ['3d print', 'electronics', 'diy', 'tutorial']
 draft: false
 summary: See better what your printer is printing with just $5 and some electronics skill
@@ -55,16 +56,26 @@ Then, slide the LED board to its casing
 ## Power supply
 
 At the beginning, I was planning to use the [printer's power supply module](https://images.squarespace-cdn.com/content/v1/5d88f1f13db677155dee50fa/1617719468295-I3YMBIDZQ6RI7GG86EPQ/P1299680.JPG?format=1000w), so that the light will automatically turned
-on when I turned on the printer. To access the module, it has no other way than to access from the bottom. Seeing this as
-time-consuming can probably be hard to maintain in the future, I decided to use a separate power supply - powerbank I had lying around.
+on when I turned on the printer. To access the module, it has no other way than to access from the bottom. I've tried to pry it open, but in the 
+middle of the process, I feel it is too difficult and not worth it.
 
 ![Hornet from below](/static/blog/led-lighting-hornet/1666101448445.jpg)
 
 There is a USB type B port at the side of the printer for data transmission purposes, so I'm
-not so sure if I can get 5V supply from there, plus I did not have much of its cable.
-In the end,
-I planned to just use one powerbank I have lying around.
+not so sure if I can get enough current from the port, plus I did not have the USB-B cable.
+
+At the end, I've decided to just use one powerbank I have lying around.
 The wiring should be straightforward; USB to LED.
+
+**Update 2024: Attempting to pull power from unused port from the printer. Spoiler:
+It didn't work** There was an unused Z-Probe connector on the side of the printer. I think if I can 
+get the power from there, it would make the setup cleaner and eliminate the need of the powerbank.
+
+So I shop for the JST XH2.54 XH connector and USB female and make the wiring. But after connecting to the LEDs, the
+light was very dim (which indicates there might be not enough current provided by the port). Seems like we
+just stick to the powerbank. 
+
+![Power from z-probe](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1724075295/website/3d%20print%20led/usb_z-probe_fv1rbd.jpg)
 
 ## Wiring
 
