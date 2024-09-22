@@ -12,8 +12,8 @@ yarn
 
 Please note, that if you are using Windows, you may need to run:
 
-```bash
-set PWD="$(pwd)"
+```powershell
+$env:PWD = $(Get-Location).Path
 ```
 
 ## Development
@@ -25,6 +25,9 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+> [!TIP]
+> If `yarn dev` fails, try with `yarn start`
 
 Edit the layout in `app` or content in `data`. With live reloading, the pages auto-updates as you edit them.
 
