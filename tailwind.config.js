@@ -55,6 +55,10 @@ module.exports = {
               paddingBottom: '2px',
               borderRadius: '0.25rem',
             },
+            pre: {
+              // This actually controls the code-block background color in Dark mode
+              backgroundColor: theme('colors.gray.800'),
+            },
             'code::before': {
               content: 'none',
             },
@@ -74,10 +78,6 @@ module.exports = {
             },
             'h1,h2,h3,h4,h5,h6': {
               color: theme('colors.gray.100'),
-            },
-            code: {
-              color: theme('colors.indigo.100'),
-              backgroundColor: theme('colors.indigo.900/50'),
             },
           },
         },
