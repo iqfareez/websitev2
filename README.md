@@ -4,7 +4,7 @@
 
 > Project scaffolded from https://github.com/timlrx/tailwind-nextjs-starter-blog
 
-## Installation
+## Getting Started
 
 ```bash
 yarn
@@ -16,9 +16,7 @@ Please note, that if you are using Windows, you may need to run:
 $env:PWD = $(Get-Location).Path
 ```
 
-## Development
-
-First, run the development server:
+Then, run the development server:
 
 ```bash
 yarn dev
