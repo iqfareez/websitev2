@@ -29,11 +29,11 @@ Before we begin, please prepare your machine with the following tools:
 
 ## Installing Node-RED
 
-There are [many method](https://nodered.org/docs/getting-started/) to run a Node-RED instances (eg, in cloud, local, or Raspberry Pi). I'm going to choose the local method.
+There are [many methods](https://nodered.org/docs/getting-started/) to run a Node-RED instance (eg, in the cloud, locally, or on a Raspberry Pi). I'm going to choose the local method.
 
 <Admonition type="note">
-  I'm using **Windows** OS. So, if you're using other than Windows, some command/software might
-  works a bit different. Please refer to the official documentation.
+  I'm using **Windows** OS. So, if you're using other than Windows, some commands/software might
+  work a bit differently. Please refer to the official documentation.
 </Admonition>
 
 Fire up your Terminal and run the command below to download and install Node-RED.
@@ -42,7 +42,7 @@ Fire up your Terminal and run the command below to download and install Node-RED
 npm install -g --unsafe-perm node-red
 ```
 
-Once Node-RED is successfully installed, you ca start the instance by running:
+Once Node-RED is successfully installed, you can start the instance by running:
 
 ```
 node-red
@@ -60,12 +60,12 @@ Once started. Open the instance URL (eg: `http://127.0.0.1:1880/`) in the browse
 
 ## Designing flow
 
-> A flow is represented as a tab within the editor workspace and is the main way to organise nodes.
+> A flow is represented as a tab within the editor workspace and is the main way to organize nodes.
 
-When you first started, it will start with **Flow 1**. We will define the nodes, workflow, etc. for a program
+When you first start, it will start with **Flow 1**. We will define the nodes, workflow, etc. for a program
 to run in this flow.
 
-You can drag and drop node from the left bar to the canvas. We'll begin by adding MQTT nodes to the flow
+You can drag and drop nodes from the left bar to the canvas. We'll begin by adding MQTT nodes to the flow
 
 ### Adding MQTT
 
@@ -85,13 +85,13 @@ Search for `mqtt` in the left sidebar. Drag the **mqtt in** nodes to your flow.
 
 ![nodered add mqtt](/static/blog/nodered-started-esp32/add-mqtt.png)
 
-Double-click the added nodes to edit its configuration.
+Double-click the added nodes to edit their configuration.
 
 ![edit mqtt nodered](/static/blog/nodered-started-esp32/edit-mqtt-node.png)
 
 To use MQTT, we need a **broker** and **topic**.
 
-If you're unfamiliar, **broker** is a server that facilitates communication between IoT devices. It receives published
+If you're unfamiliar, a **broker** is a server that facilitates communication between IoT devices. It receives published
 messages from devices, and then routes those messages to other devices that have subscribed to the same topic. The
 **topic** is a string identifier used to categorize and filter messages so that they can be efficiently routed to
 the correct devices.
@@ -100,13 +100,13 @@ We can set up the broker on our own, but it is much easier to use the public and
 or organizations. In this article, I'm going to use [HiveMq's public MQTT broker](https://www.hivemq.com/public-mqtt-broker/).
 
 On the Server field, click the pencil icon to add a new MQTT broker. Add `broker.hivemq.com` to the URL field. Leave the
-other fields as it is.
+other fields as they are.
 
 ![mqtt broker add](/static/blog/nodered-started-esp32/add-new-mqtt-broker.png)
 
 Click the <kbd>Add</kbd> button.
 
-Now, for the topic, we can give any String values. Let's put `mynode/led1`. For QoS, we will leave it as default.
+Now, for the topic, we can give any String value. Let's put `mynode/led1`. For QoS, we will leave it as default.
 
 <Admonition type="tip" title={'learn'}>
   **QoS** or **(Quality of Service)** is a property of MQTT that determines the reliability and
@@ -133,11 +133,11 @@ After installation. Close the manage palettes dialog. You can now see the **Dash
 
 ![Nodes sidebar](/static/blog/nodered-started-esp32/nodes-dashboard-sidebar.png)
 
-Now, search for **Text** nodes and add it to the flow. Connect mqtt node to the text node.
+Now, search for **Text** nodes and add them to the flow. Connect the mqtt node to the text node.
 
 ![Add Text node connecting](/static/blog/nodered-started-esp32/nodered-add-text.gif)
 
-Double-click the Text node to edit it properties. On the **Group** field, click the pencil icon, then, on the **Tab** field.
+Double-click the Text node to edit its properties. On the **Group** field, click the pencil icon, then, on the **Tab** field.
 click the pencil icon again. Then, click <kbd>Add</kbd>
 
 ![Add new dashboard nodered setup](/static/blog/nodered-started-esp32/add-new-dashboard.png)
@@ -166,7 +166,7 @@ Click on the arrow button to open the dashboard
 ![Open dashboard button](/static/blog/nodered-started-esp32/open-dashboard-button.png)
 
 Your dashboard will be opened in the new tab. The LED status text may be empty or showing some other values. This is because
-we haven't set up our ESP32 to publish message to this topic yet.
+we haven't set up our ESP32 to publish messages to this topic yet.
 
 ![Dashboard LED status](/static/blog/nodered-started-esp32/dashboard-led-status.png)
 
@@ -246,13 +246,13 @@ Below is the overall working principle of our sketch.
 `}
 />
 
-Note on the topic `mynode/led1`, it must be same as the topic we set up on the Node-RED [above](#designing-flow).
+Note on the topic `mynode/led1`, it must be the same as the topic we set up on the Node-RED [above](#designing-flow).
 
 Connect your board to start uploading. I'm using [ESP32 DOIT Devkit V1](https://my.cytron.io/p-nodemcu-esp32?ref=99Y7TxrNIn6Jo).
 
 ![arduino upload](/static/blog/nodered-started-esp32/arduino-ide-arduino.png)
 
-Open the **Serial Monitor** and see if the board has successfully established connection to the broker and publish the message.
+Open the **Serial Monitor** and see if the board has successfully established a connection to the broker and published the message.
 
 ```txt
 WiFi: Connected (226.262000s), ip : 192.168.235.63

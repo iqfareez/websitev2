@@ -11,19 +11,19 @@ authors: ['default']
 
 Welcome to this guide on how to enable CUDA on an [Nvidia MX130](https://www.nvidia.com/en-gb/geforce/gaming-laptops/nvidia-geforce-mx130/) GPU for machine vision inference on laptops. **CUDA** is a parallel computing platform and programming model developed by NVIDIA for general computing on graphical processing units (GPUs).
 
-The Nvidia MX130 is a dedicated GPU that is commonly found in laptops, it is not as powerful as the RTX GPU families, but it can still run some machine vision tasks efficiently. In this guide, we will cover the installation of necessary drivers and software, as well as any configuration required to properly utilize the GPU for these types of computations using [Pytorch](https://pytorch.org/). Keep in mind that the mileage may vary when using other frameworks.
+The Nvidia MX130 is a dedicated GPU that is commonly found in laptops. It is not as powerful as the RTX GPU families, but it can still run some machine vision tasks efficiently. In this guide, we will cover the installation of necessary drivers and software, as well as any configuration required to properly utilize the GPU for these types of computations using [Pytorch](https://pytorch.org/). Keep in mind that the mileage may vary when using other frameworks.
 
 At the end, I will demo the performance using [SuperGlue](https://github.com/magicleap/SuperGluePretrainedNetwork)'s demo script.
 
 ## Checking the GPU you have
 
-Usually, laptop with NVIDIA GPU already preinstalled with NVIDIA drivers along with NVIDIA Control Panel. So, open that to see your GPU version.
+Usually, a laptop with an NVIDIA GPU already has NVIDIA drivers preinstalled along with the NVIDIA Control Panel. So, open that to see your GPU version.
 
 ![Nvidia Control Panel Driver](/static/blog/cuda-mx130/Screenshot_2023-01-28_075046.png)
 
-I have MX130 drivers. From the [specs page](https://www.nvidia.com/en-gb/geforce/gaming-laptops/nvidia-geforce-mx130/specifications/), it says it can support CUDA. If you have other drivers, you can still follow along this guide but your mileage may vary.
+I have MX130 drivers. From the [specs page](https://www.nvidia.com/en-gb/geforce/gaming-laptops/nvidia-geforce-mx130/specifications/), it says it can support CUDA. If you have other drivers, you can still follow along with this guide but your mileage may vary.
 
-Optionally, you can verify the CUDA supports using Python (You need [**Python 3.9**.x](https://www.python.org/downloads/release/python-3913/) version, as PyTorch doesn't support the latest Python version yet).
+Optionally, you can verify the CUDA support using Python (You need [**Python 3.9**.x](https://www.python.org/downloads/release/python-3913/) version, as PyTorch doesn't support the latest Python version yet).
 
 ```python
 from numba import cuda # run pip install numba
@@ -51,11 +51,10 @@ Process finished with exit code 0
 
 ### Checking CUDA availability using PyTorch
 
-Even though the script above says that our GPU supports CUDA, the PyTorch still cannot 'see' the GPU yet.
+Even though the script above says that our GPU supports CUDA, PyTorch still cannot 'see' the GPU yet.
 
 <Admonition type="tip">
-  I recommend you to create virtual environment to easily manage your packages and python version
-  per project
+  I recommend you create a virtual environment to easily manage your packages and python version per project
 </Admonition>
 
 Try running the script below:
@@ -99,7 +98,7 @@ You may select Installer Type to **local**, and proceed with downloading.
 
 ### Install CUDA
 
-Once the file downloaded, double click it to begin installation.
+Once the file is downloaded, double-click it to begin the installation.
 
 Click the Express Installation. It will install the CUDA toolkit, some other things, and your display driver.
 
@@ -115,7 +114,7 @@ As the description said, it may not be related to CUDA so just hit Next and comp
 
 ### Verify the installation
 
-Open Command Prompt or Powershell, run the following command:
+Open Command Prompt or Powershell, and run the following command:
 
 ```ps
 nvidia-smi
@@ -128,8 +127,7 @@ Go to [PyTorch's Get Started](https://pytorch.org/get-started/locally/) page. Se
 ![PyTorch download selector](/static/blog/cuda-mx130/Screenshot_20230128_091934.png)
 
 <Admonition type="note">
-  You may need to uninstall the existing PyTorch installation (`pip uninstall torch`) before running
-  the command below.
+  You may need to uninstall the existing PyTorch installation (`pip uninstall torch`) before running the command below.
 </Admonition>
 
 Command:
@@ -139,7 +137,7 @@ pip3 install torch torchvision torchaudio --extra-index-url https://download.pyt
 ```
 
 If you re-run the code [previously](#checking-cuda-availability-using-pytorch). The output should be `True` indicating that
-PyTorch is now able to recognise the CUDA GPU.
+PyTorch is now able to recognize the CUDA GPU.
 
 ## Demo
 

@@ -10,7 +10,7 @@ authors: ['default']
 ---
 
 Ever wondered who's knocking at your house's door? Whether it is your family member, a friend or a stranger? You can now know who's at your door with this simple project.
-We will use **the ESP32 microcontroller** to detect the doorbell button press and send notification to you (a house owner) through **Telegram**.
+We will use **the ESP32 microcontroller** to detect the doorbell button press and send a notification to you (a house owner) through **Telegram**.
 
 ## Prerequisites
 
@@ -28,14 +28,14 @@ We'll start simple, which is to construct the doorbell circuit. The circuit show
 
 ![Real life circuit](https://imgur.com/9fiMs1X.png)
 
-**Each button represents a person.** For example, the first button is for family members, the second button is for a friend, and the third button is for delivery man (postman or pizza man or whatever).
+**Each button represents a person.** For example, the first button is for family members, the second button is for a friend, and the third button is for the delivery man (postman or pizza man or whatever).
 
 ## Setting up Telegram bot
 
 Go to [BotFather bot](https://t.me/BotFather) to create a new bot.
 Tap on the command `/newbot` and follow the instructions.
 
-At the end of the setup, you will get a link to bot with the **token**. We will need it later.
+At the end of the setup, you will get a link to the bot with the **token**. We will need it later.
 
 <div className="flex flex-wrap -mx-2 overflow-hidden xl:-mx-2">
   <div className="my-1 px-2 w-full overflow-hidden xl:my-1 xl:px-2 xl:w-1/2">
@@ -57,17 +57,17 @@ By `/start`-ing it, you'll allow the bot to send a message to you.
 Telegram bot API is a RESTful API that allows you to send a message
 (and many other [things](https://core.telegram.org/bots/api#available-types)) to your bot.
 
-Like many other REST API out there, Telegram bot API can be invoked by sending an **HTTP request** to the API endpoint. The request
-require a token to identify the bot identity. The token was created when we [created](#setting-up-telegram-bot) the bot using BotFather.
+Like many other REST APIs out there, Telegram bot API can be invoked by sending an **HTTP request** to the API endpoint. The request
+requires a token to identify the bot's identity. The token was created when we [created](#setting-up-telegram-bot) the bot using BotFather.
 
 The `chat_id` is the unique identifier for the target chat or group.
 The chat ID can be checked using [IDBot](https://t.me/myidbot).
 
-The diagram below showed an anatomy of a Telegram bot API request.
+The diagram below shows the anatomy of a Telegram bot API request.
 
 ![Telegram bot API request anatomy](/static/blog/esp-tele-simple/telegram-bot-url-structure.png)
 
-Let's try an **example**: Replace the `<BOTTOKEN>` with your token, and `<CHATID>` with your chat ID. Copy the URL and paste it in your browser. A message `Hello world` should arrive
+Let's try an **example**: Replace the `<BOTTOKEN>` with your token, and `<CHATID>` with your chat ID. Copy the URL and paste it into your browser. A message `Hello world` should arrive
 to your Telegram.
 
 `https://api.telegram.org/bot<BOTTOKEN>/sendMessage?chat_id=<CHATID>&text=Hello%20world`
@@ -90,7 +90,7 @@ To learn more about the Telegram API, kindly read the documentation [here](https
 
 ## Coding the ESP32
 
-Here's come the exciting part: coding the ESP32. First, create a new file using **Arduino IDE**.
+Here's the exciting part: coding the ESP32. First, create a new file using **Arduino IDE**.
 
 <Admonition type="note">
   If this is your first time programming ESP32, you can follow [this
@@ -116,7 +116,7 @@ const int friendPin = 5;
 const int postmanPin = 22;
 ```
 
-In `setup()` function, we configured the pins as `INPUT_PULLUP`. This mode will use the ESP32's
+In the `setup()` function, we configured the pins as `INPUT_PULLUP`. This mode will use the ESP32's
 **internal pull-up** resistor to pull the pin to high when the button is not pressed. This is useful since we don't need
 to connect the button to the 3.3V pin.
 
@@ -159,7 +159,7 @@ sent to the chat ID.
 ```cpp
 void sendMessage(String person)  {
   // WARNING: Don't expose your token to anyone
-  // I'll revoke this token after finishes this tutorial
+  // I'll revoke this token after finishing this tutorial
   String botToken = "5772967563:AAGwMe7xApmNTAQuwa-j9bj9AuiGYIczM-Y";
 
   // Chat id (can be also channel id or group id)
@@ -220,7 +220,7 @@ If everything goes well, we should see the following output in the serial monito
 
 ![Arduino Serial monitor](/static/blog/esp-tele-simple/Screenshot-2022-10-29-185140.jpg)
 
-Press the button, and you should see some notification coming from Telegram 😉.
+Press the button, and you should see some notifications coming from Telegram 😉.
 
 <div className="flex flex-wrap -mx-2 overflow-hidden xl:-mx-2">
   <div className="my-1 px-2 w-full overflow-hidden xl:my-1 xl:px-2 xl:w-1/2">

@@ -4,30 +4,30 @@ date: '2024-03-30'
 lastmod: '2024-05-08'
 tags: ['raspberry-pi', 'server', 'ssh', 'wifi']
 draft: false
-summary: Finally got one Raspberry to tinkering around. I want to make like a home server. Here's my way to setup the Pi in headless mode (without monitor, keyboard & mouse).
+summary: Finally got one Raspberry to tinker around. I want to make a home server. Here's my way to set up the Pi in headless mode (without monitor, keyboard & mouse).
 images: ['/static/blog/headless-pi/meta.png']
 layout: PostSimple
 authors: ['default']
 ---
 
-Today, my Raspberry Pi 4 arrived. Pretty exited to finally own one. I used Raspberry Pi 3 & 4 occasionally in my Uni days previously. Now, I would like to have a little server
-running at home for various projects. I didn't find the needs to make it like a 'computer', ie with monitor, mouse & keyboards attached. Controlling it via terminal using host machine is fine.
+Today, my Raspberry Pi 4 arrived. Pretty excited to finally own one. I used Raspberry Pi 3 & 4 occasionally in my Uni days previously. Now, I would like to have a little server
+running at home for various projects. I didn't find the need to make it like a 'computer', i.e., with monitor, mouse & keyboards attached. Controlling it via terminal using the host machine is fine.
 
 ![raspberry-pi-cytron](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1711797473/website/RaspberryPi/IMG_1964_ngns72.jpg)
 
-For the **host machine**, I'm using Windows 11. Connected to the same Wifi network as the Pi.
+For the **host machine**, I'm using Windows 11. Connected to the same Wi-Fi network as the Pi.
 
 ## Create boot media
 
-Grab a microSD card; 16-32Gb is fine. Download [Raspberry Pi Imager](https://www.raspberrypi.com/software/), or other imager tool like [Balena Etcher](https://www.balena.io/etcher/) to burn the OS Image to the microSD card. 
-I'm using latest Raspberry Pi Bookworm 64-bit OS. Before installing, customize the OS by set the hostname, Wifi SSID & Password, enabling SSH etc. For more info, read
+Grab a microSD card; 16-32Gb is fine. Download [Raspberry Pi Imager](https://www.raspberrypi.com/software/), or other imager tools like [Balena Etcher](https://www.balena.io/etcher/) to burn the OS Image to the microSD card. 
+I'm using the latest Raspberry Pi Bookworm 64-bit OS. Before installing, customize the OS by setting the hostname, Wi-Fi SSID & Password, enabling SSH, etc. For more info, read
 the docs [here](https://www.raspberrypi.com/documentation/computers/getting-started.html#raspberry-pi-imager).
 
-Once the OS is installed, remove the microSD card from the host and insert it to the Raspberry Pi. Power it up. Wait for a few minutes for the first boot.
+Once the OS is installed, remove the microSD card from the host and insert it into the Raspberry Pi. Power it up. Wait for a few minutes for the first boot.
 
 ## Connect over SSH
 
-The Raspberry Pi will automatically connect to the Wifi network. From the host machine, try pinging the Pi for confirmation.
+The Raspberry Pi will automatically connect to the Wi-Fi network. From the host machine, try pinging the Pi for confirmation.
 
 Open your Terminal and run:
 
@@ -61,21 +61,21 @@ ssh iqmal@raspi.local
 `iqmal` is the **username** I set when creating the boot media. 
 </Admonition>
 
-You will be prompted to enter the password. Enter the password you set when creating the boot media. For first time connection, you may be asked
-to trust the device etc. Then, you should now be connected to the Pi.
+You will be prompted to enter the password. Enter the password you set when creating the boot media. For the first time connection, you may be asked
+to trust the device, etc. Then, you should now be connected to the Pi.
 
 ![Login SSH raspberry pi](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1711806294/website/RaspberryPi/Screenshot_2024-03-30_214431_byjmrm.png)
 
-Great, now you access the the Pi terminal which you can install software, configure etc.
+Great, now you access the Pi terminal which you can install software, configure, etc.
 
 ### Enable VNC
 
-This is optional step if you want to use the Raspberry Pi by its GUI desktop interface. This desktop interface is what you'll see
-if you connect your Pi to the external monitor. Since, we don't have any monitor connected physically, we can access it remotely using VNC (Virtual 
+This is an optional step if you want to use the Raspberry Pi by its GUI desktop interface. This desktop interface is what you'll see
+if you connect your Pi to the external monitor. Since we don't have any monitor connected physically, we can access it remotely using VNC (Virtual 
 Network Computing). 
 
 Good to note that, in Bookworm, they migrated to [**Wayland** as the display system](https://www.raspberrypi.com/news/bookworm-the-new-version-of-raspberry-pi-os/#:~:text=notice%20some%20differences.-,Wayland,-The%20most%20important) rather 
-than X11 used in previous OS generation.
+than X11 used in the previous OS generation.
 
 > Similarly, the Wayland security model prevents traditional remote desktop access, and so a new VNC server, called wayvnc, is being used instead of 
 RealVNC. This is a bit more restrictive in terms of the client applications which can connect to it — we have had good results with the TigerVNC 
@@ -88,8 +88,8 @@ sudo raspi-config
 ```
 
 <Admonition type="warning">
-I notice that, when I enabling VNC **after** I do the [set default boot mode to CLI](#set-default-boot-mode-to-cli), it will create VNC config based 
-on X11 backend, not wayland. This will cause the VNC viewer to show blank screen.
+I notice that, when I enable VNC **after** I do the [set default boot mode to CLI](#set-default-boot-mode-to-cli), it will create VNC config based 
+on X11 backend, not wayland. This will cause the VNC viewer to show a blank screen.
 </Admonition>
 
 Navigate to `Interfacing Options` > `VNC` > `Yes`. Reboot the Pi.
@@ -112,7 +112,7 @@ You should now see the Raspberry Pi desktop interface.
 
 ## Set default boot mode to CLI
 
-This is also optional step since we are not using GUI interface that much. We can change the default boot mode
+This is also an optional step since we are not using the GUI interface that much. We can change the default boot mode
 to CLI (Command Line Interface) to save some resources. We can always start a GUI anytime.
 
 ```bash
@@ -123,7 +123,7 @@ Navigate to `System Options` > `Boot / Auto Login` > `Console Autologin`. Reboot
 
 ![boot mode raspi config](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1711809415/website/RaspberryPi/Screenshot_2024-03-30_223636_kbtcgo.png)
 
-To start the GUI interface if needed, from SSH terminal, run:
+To start the GUI interface if needed, from the SSH terminal, run:
 
 ```bash
 sudo systemctl start lightdm

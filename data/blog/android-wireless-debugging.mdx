@@ -1,5 +1,5 @@
 ---
-title: Easily debug mobile app on physical device wirelessly
+title: Easily debug mobile app on a physical device wirelessly
 date: '2024-06-23'
 tags: ['tutorial', 'android']
 draft: false
@@ -9,7 +9,7 @@ layout: PostBanner
 authors: ['default']
 ---
 
-In this tutorial, I'll show you how to enable & setup Android wireless debugging using command line for Android 11 or later (Android 10 and lower have a slightly different method). 
+In this tutorial, I'll show you how to enable & set up Android wireless debugging using the command line for Android 11 or later (Android 10 and lower have a slightly different method). 
 
 ## Prerequisites
 
@@ -21,13 +21,13 @@ In this tutorial, I'll show you how to enable & setup Android wireless debugging
 You can download adb from Android Studio or as standalone installations. Make sure the path to the adb executables is added to PATH. For example, if you're on Windows, adb
 is located in the `C:\Users\<User>\AppData\Local\Android\Sdk\platform-tools\adb.exe`.
 
-You can check is adb is ready by running the command `adb --version`.
+You can check if adb is ready by running the command `adb --version`.
 
-![check abd is installed](/static/blog/wireless-adb/terminal-1.png)
+![check adb is installed](/static/blog/wireless-adb/terminal-1.png)
 
 Please enable the Developer Options first if you haven't done so. See this [guide](https://www.digitaltrends.com/mobile/how-to-get-developer-options-on-android/).
 
-Both host machine and Android device need to be on the same Wifi network.
+Both the host machine and Android device need to be on the same Wifi network.
 
 <Admonition type="warning">
 
@@ -37,7 +37,7 @@ Some public/university wifi networks have restrictions and can't be used for wir
 
 ## Pairing
 
-On your Android device. Go to Settings > Developer Options. Scroll down and tap on Wireless Debugging section. 
+On your Android device. Go to Settings > Developer Options. Scroll down and tap on the Wireless Debugging section. 
 
 ![Setting Wireless Debugging](/static/blog/wireless-adb/developer-options.png)
 
@@ -45,7 +45,7 @@ Tap on **Pair Device with Pairing Code**.
 
 ![Wireless Debugging pair](/static/blog/wireless-adb/wireless-debugging-pair.png)
 
-Open Terminal on the host machine. Enter the the following command (Replace `IPADDRESS` & `PORT` with the IP address & Port shown on the Android device):
+Open Terminal on the host machine. Enter the following command (Replace `IPADDRESS` & `PORT` with the IP address & Port shown on the Android device):
 
 ```shell
 adb pair IPADDRESS:PORT
@@ -74,7 +74,5 @@ Check devices connected to ADB by running `adb devices`.
 </Admonition>
 
 ![Terminal 3](/static/blog/wireless-adb/terminal-3.png)
-
-
 
 That's it! Now you can debug your app on your Android device. Happy hacking!

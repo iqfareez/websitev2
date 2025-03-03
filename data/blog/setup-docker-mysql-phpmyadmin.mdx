@@ -27,7 +27,7 @@ Open terminal, run the command to create a Docker **network**.
 docker network create mynetwork1
 ```
 
-You can rename `mynetwork` with your own name, but make sure all the commands following uses the same name.
+You can rename `mynetwork` with your own name, but make sure all the commands following use the same name.
 
 <Admonition type="note">
 The `--network` flag is used to create and manage container networks. When you create 
@@ -43,7 +43,7 @@ docker run -d --name mysql-container --network mynetwork1 -e MYSQL_ALLOW_EMPTY_P
 
 You'll need to specify one of the following as an **environment variable** (the `-e` flag):
 - **MYSQL_ROOT_PASSWORD**
-- **MYSQL_ALLOW_EMPTY_PASSWORD** (Uses in example above to allow login to MySQL without password)
+- **MYSQL_ALLOW_EMPTY_PASSWORD** (Used in the example above to allow login to MySQL without a password)
 - **MYSQL_RANDOM_ROOT_PASSWORD**
 
 Read more about MySQL environment [here](https://hub.docker.com/_/mysql#:~:text=tag%20%2D%2Dverbose%20%2D%2Dhelp-,Environment%20Variables,-When%20you%20start).
@@ -56,7 +56,7 @@ docker run -d --name phpmyadmin-container --network mynetwork1 -e PMA_HOST=mysql
 
 In the `PMA_HOST` variable above, we set the name of the MySQL container we have created above.
 
-Now, both of the containers should've been running. You can check their status by running `docker ps`.
+Now, both of the containers should be running. You can check their status by running `docker ps`.
 ```bash
 CONTAINER ID   IMAGE          COMMAND                  CREATED        STATUS              PORTS                               NAMES
 11db916fa868   phpmyadmin     "/docker-entrypoint.…"   10 hours ago   Up About a minute   0.0.0.0:8080->80/tcp                phpmyadmin-container
@@ -90,7 +90,7 @@ It will show the container's filesystem files. Find the `home` folder, right-cli
 
 ![Docker files import](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1727601195/website/docker-mysql/Screenshot_2024-09-29_at_6.50.04_AM_lad5k1.png)
 
-Choose the `.sql` file you want to import. After, choosing, the file will appear under the `home` folder.
+Choose the `.sql` file you want to import. After choosing, the file will appear under the `home` folder.
 
 ![Docker Imported Files](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1727601196/website/docker-mysql/Screenshot_2024-09-29_at_6.50.58_AM_u5370m.png)
 
@@ -104,7 +104,7 @@ The `-p` flag is the table name, you can create one using PhpMyAdmin console.
 
 ![Docker Exec mysql](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1727601196/website/docker-mysql/Screenshot_2024-09-29_at_6.58.05_AM_kqlbua.png)
 
-Done! You can check your data from PhpMyAdmin console to verify that the import was success.
+Done! You can check your data from PhpMyAdmin console to verify that the import was successful.
 
 ## References
 
