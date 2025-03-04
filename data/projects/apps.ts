@@ -8,7 +8,7 @@ const projectsDataApps = [
   },
   {
     title: 'Tarbawi 2.0',
-    description: `Test your child a basic Islamic knowledge with quiz game.`,
+    description: `Test your child's basic Islamic knowledge with a quiz game.`,
     imgSrc: '/static/images/projects/tarbawi.png',
     href: 'https://play.google.com/store/apps/details?id=com.maplerr.tarbawiDua',
   },
