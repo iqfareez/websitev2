@@ -1,7 +1,7 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Muhammad Fareez Iqmal | Personal Website',
-  author: 'Muhammad Fareez Iqmal (iqfareez)',
+  title: 'Muhammad Fareez Iqmal | Software Engineer, Maker | Malaysia',
+  author: 'Muhammad Fareez Iqmal',
   headerTitle: 'iqfareez',
   description:
     'Explore blogs, projects, and more on software engineering, hardware development, technologies, programming, and a little bit about my personal life.',
