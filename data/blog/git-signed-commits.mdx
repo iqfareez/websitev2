@@ -1,10 +1,10 @@
 ---
-title: How to setup signed commits on Windows
+title: How to set up signed commits on Windows
 date: '2024-09-22'
-lastmod: '2024-09-29'
+lastmod: '2025-3-4'
 tags: ['tutorial', 'git', 'github']
 draft: false
-summary: Get a cool Verified badge on Github! Besides, it help verify the authenticity of your code changes, making sure they come from you.
+summary: Get a cool Verified badge on Github! Besides, it helps verify the authenticity of your code changes, making sure they come from you.
 images: ['/static/blog/git-signed-commits/meta-git-verified-commits.png']
 layout: PostBanner
 authors: ['default']
@@ -26,7 +26,7 @@ and trusted.
 
 ## Prerequisites
 
-Install the softwares below into your machine.
+Install the software below on your machine.
 
 - [git](https://git-scm.com/download/win)
 - [gpg4win](https://www.gpg4win.org/index.html) - Includes Kleopatra & GPG tools.
@@ -36,11 +36,11 @@ Install the softwares below into your machine.
 First, determine the email address you want to use with the key. Head to GitHub > Settings > Emails. You can use
 your public email or use your GitHub's private email.
 
-Launch **Kleopatra** and click on <kbd>New OpenPGPG Key Pair...</kbd>
+Launch **Kleopatra** and click on <kbd>New OpenPGP Key Pair...</kbd>
 
 ![Create new OpenPGP key pair](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1726977763/website/Git%20Signed%20commits/Screenshot_2024-09-22_120232_ox2la4.png)
 
-Fill in your **name** and **email address** you have choosen earlier. If you want to customize the key type or the expiry date, click on <kbd>Advanced Settings...</kbd>. Then, click <kbd>OK</kbd>.
+Fill in your **name** and **email address** you have chosen earlier. If you want to customize the key type or the expiry date, click on <kbd>Advanced Settings...</kbd>. Then, click <kbd>OK</kbd>.
 
 A success dialog will appear, click <kbd>OK</kbd> to close it. Don't worry about the fingerprint for now. A newly created key will appear
 in the dialog.
@@ -51,15 +51,15 @@ in the dialog.
 
 Go to your GitHub account > Settings > [SSH and GPG keys](https://github.com/settings/keys).
 
-On **GPG keys** section, click on <kbd>New GPG key</kbd>. It will ask for a title and key. For
+In the **GPG keys** section, click on <kbd>New GPG key</kbd>. It will ask for a title and key. For
 the **Title** field, you can put anything you would like. I usually put my computer name (to distinguish between other devices I own).
 
-To fill key **Key** field, you'll need the public key for the key you just created. Back to Kleopatra, double-click
+To fill the **Key** field, you'll need the public key for the key you just created. Back to Kleopatra, double-click
 on the key, and click <kbd>Export</kbd>
 
 ![Kleopatra Export](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1726978686/website/Git%20Signed%20commits/kleopatra_export_iz6iwv.png)
 
-A dialog will appear, copy everyhing in the dialog and paste it into the **Key** field.
+A dialog will appear, copy everything in the dialog and paste it into the **Key** field.
 
 ![Github Add new key](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1726978967/website/Git%20Signed%20commits/ADD_NEW_KEY_GITHUB_gj5spa.png)
 
@@ -73,14 +73,14 @@ Verify that the key is added.
 
 Open Terminal or Git Bash. 
 
-If you haven't setup your gti username and password yet, you can do it now.
+If you haven't set up your git username and password yet, you can do it now.
 
 ```bash
 git config --global user.name "myname"
 git config --global user.email myemail@example.com
 ```
 
-(Optional) Unset the previously set GPG key if you have setup before this.
+(Optional) Unset the previously set GPG key if you have set it up before this.
 
 ```bash
 git config --global --unset gpg.format
@@ -113,7 +113,7 @@ Replace the key ID with your own key ID. You can find the Key ID from Kleopatra 
 git config --global commit.gpgsign true
 ```
 
-That's it, how easy it is to setup a signed commits. Ask me any question you have. For more information, please consult
+That's it, how easy it is to set up signed commits. Ask me any questions you have. For more information, please consult
 the documentation.
 
 ## References
