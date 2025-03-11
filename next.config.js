@@ -107,6 +107,11 @@ module.exports = () => {
           destination: 'tel:+60108335913',
           permanent: true,
         },
+        {
+          source: '/analytics',
+          destination: 'https://umami.iqfareez.com/share/BUznIQbk5H0yaZIp/iqfareez.com',
+          permanent: true,
+        }
       ]
     },
     webpack: (config, options) => {
