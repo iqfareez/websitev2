@@ -102,6 +102,11 @@ module.exports = () => {
           destination: 'https://hello.rocketweb.my/fareez',
           permanent: true,
         },
+        {
+          source: '/najwa',
+          destination: 'tel:+60108335913',
+          permanent: true,
+        },
       ]
     },
     webpack: (config, options) => {
