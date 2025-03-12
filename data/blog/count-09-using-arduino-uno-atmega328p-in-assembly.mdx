@@ -1,20 +1,20 @@
 ---
 title: Count 0-9 using Arduino Uno (ATMega328P) in Assembly
 date: '2022-11-19'
-lastmod: '2024-2-15'
+lastmod: '2025-3-4'
 tags: ['assembly', 'arduino', 'avr']
 draft: false
-summary: Using Arduino with 7-Segment display to count number using Arduino IDE (C/Cpp) is too mainstream. How about we code using Assembly? Let's see how I put up the pieces together
+summary: Counter program using Arduino code (C/Cpp) is too mainstream. How about we code using Assembly? Let's see how I put up the pieces together
 images: ['/static/blog/assembly-counter/META-7seg-uno.png']
 layout: PostLayout
 authors: ['default']
 ---
 
-The lab task assigned to us was to count from 00-99 using 7 Segment Display, the program must be written in [Assembly](https://youtu.be/4gwYkEK0gOk). Fortunately, the 7 segment decoder was not enough for
+The lab task assigned to us was to count from 00-99 using a 7 Segment Display, the program must be written in [Assembly](https://youtu.be/4gwYkEK0gOk). Fortunately, the 7 segment decoder was not enough for
 everyone in the lab, so the tasks are simplified **to count from 0-9 only, and repeats**.
 
-As someone who familiar with high-level programming language like Java, Python, etc, coding in assembly is infuriating 😂. The sweet side is about Assembly allows us to 'talk' directly to the bare metal, removing
-the unnecessary abstraction, solve performance issues, code like a chad and understand how the hardware works.
+As someone who is familiar with high-level programming languages like Java, Python, etc., coding in assembly is infuriating 😂. The sweet side is that Assembly allows us to 'talk' directly to the bare metal, removing
+the unnecessary abstraction, solving performance issues, coding like a chad, and understanding how the hardware works.
 
 ![Arduino 7 Segment cover photo](/static/blog/assembly-counter/IMG_20221116_215635.jpg)
 
@@ -86,9 +86,9 @@ With all of that, it should be displaying digit 4 now:
 Maybe you were wondering, why `0x20`? `0x20` is equivalent to `0010 0000` in binary, representing which PD𝑥 in PORT𝑥
 to be set as HIGH. In this case, it's pin 5 (counting from 0).
 
-![explaination digit 4 binary](/static/blog/assembly-counter/example-digit-4.png)
+![explanation digit 4 binary](/static/blog/assembly-counter/example-digit-4.png)
 
-Ok, enough introductions, now back to our objective, which counts from **0 to 9** and display on the 7-Segment display.
+Ok, enough introductions, now back to our objective, which counts from **0 to 9** and displays on the 7-Segment display.
 
 ## Back to business
 
@@ -222,7 +222,7 @@ reset:
 ```
 
 That's all. I'm not going to explain about the `delay` and `L1` subroutines. But just keep in mind there are meant to be together, the `delay`
-depends on `L1` (or vise versa, I'm not sure). Let's see how the results.
+depends on `L1` (or vice versa, I'm not sure). Let's see how the results.
 
 ## Result
 
@@ -230,7 +230,7 @@ depends on `L1` (or vise versa, I'm not sure). Let's see how the results.
 
 ## Closing remarks
 
-I enjoy making this to work using Assembly. I hope you've learnt something from this article. Kindly visit [here](https://github.com/iqfareez/microp-lab3) for more Arduino - Assembly examples.
+I enjoy making this work using Assembly. I hope you've learned something from this article. Kindly visit [here](https://github.com/iqfareez/microp-lab3) for more Arduino - Assembly examples.
 
 Believe it or not;
 [this code](https://github.com/iqfareez/microp-lab3/blob/973b0a67983af0e33a4b7ecbdeac03df3d5e07ec/Exp2-Task3/Exp2-Task3/main.asm)
