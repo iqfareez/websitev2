@@ -12,11 +12,6 @@ export default function Footer() {
           <div>{` • `}</div>
           <div>{`© 2025`}</div>
         </div>
-        <div className="mb-8 text-sm text-gray-500 dark:text-gray-400">
-          <Link href="https://umami.iqfareez.com/share/BUznIQbk5H0yaZIp/iqfareez.com">
-            Analytics
-          </Link>
-        </div>
       </div>
     </footer>
   )
