@@ -1,7 +1,7 @@
 ---
 title: CUDA on Nvidia MX130 GPU
 date: '2023-01-28'
-lastmod: '2025-3-4'
+lastmod: '2025-3-19'
 tags: ['cuda', 'pytorch', 'superglue']
 draft: false
 summary: Guide to enabling CUDA on Nvidia MX130 GPU for machine vision inference on laptops
@@ -22,9 +22,9 @@ Usually, a laptop with an NVIDIA GPU already has NVIDIA drivers preinstalled alo
 
 ![Nvidia Control Panel Driver](/static/blog/cuda-mx130/Screenshot_2023-01-28_075046.png)
 
-I have MX130 drivers. From the [specs page](https://www.nvidia.com/en-gb/geforce/gaming-laptops/nvidia-geforce-mx130/specifications/), it says it can support CUDA. If you have other drivers, you can still follow along with this guide but your mileage may vary.
+From the [specs page](https://www.nvidia.com/en-us/geforce/gaming-laptops/mx130/specifications/), it says it can support CUDA. If you have other Nvidia GPUs, you can still follow along with this guide but your mileage may vary.
 
-Optionally, you can verify the CUDA support using Python (You need [**Python 3.9**.x](https://www.python.org/downloads/release/python-3913/) version, as PyTorch doesn't support the latest Python version yet).
+Optionally, you can verify the CUDA support using Python.
 
 ```python
 from numba import cuda # run pip install numba
@@ -58,7 +58,7 @@ Even though the script above says that our GPU supports CUDA, PyTorch still cann
   I recommend you create a virtual environment to easily manage your packages and python version per project
 </Admonition>
 
-Try running the script below:
+Create a new `.py` file and paste the following code:
 
 ```python
 import torch as torch # pip install torch
@@ -67,13 +67,13 @@ yes_cuda = torch.cuda.is_available()
 print(yes_cuda)
 ```
 
-Output:
+Run the code, you'll probbably get the following output:
 
 ```text
 False
 ```
 
-So, we need to install some tools to make our CUDA visible to PyTorch.
+If your output is `True`, you can skip to [Setup Pytorch](#setup-pytorch) section right away. If not, we'll need to install some tools to make our CUDA visible to PyTorch.
 
 ## Install Visual Studio
 
@@ -121,7 +121,7 @@ Open Command Prompt or Powershell, and run the following command:
 nvidia-smi
 ```
 
-## Setup Pytorch (correctly)
+## Setup Pytorch
 
 Go to [PyTorch's Get Started](https://pytorch.org/get-started/locally/) page. Select the setting accordingly, copy and run the command generated.
 
