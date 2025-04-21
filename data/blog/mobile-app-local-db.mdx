@@ -1,11 +1,30 @@
 ---
-title: Looking for local database for your mobile app? Choose Sqlite!
+title: Choosing the right local database for Flutter? Choose SQLite!
 date: 2025-03-24
 summary: Why SQLite should be your go-to choice for local mobile databases in Flutter, despite the allure of shiny new alternatives.
 tags: [Flutter, SQLite, Mobile, Database]
 ---
 
-When building mobile apps with Flutter, choosing the right local database solution is crucial. The Flutter ecosystem offers several options, including shiny new contenders like Isar and Hive. However, I argue that SQLite remains the superior choice for many projects due to its maturity, portability, and widespread support.
+When building mobile apps with Flutter, sometimes you may need Local Database to implement feature like offline-support, user management, etc. The Flutter ecosystem offers several options, including shiny new contenders like Isar and Hive. However, I argue that SQLite remains the superior choice for many projects due to its maturity, portability, and widespread support.
+
+I've tried many database packages in the past few years when developing Flutter App. So, I know each of the databases perks and quirks, some of which I like, some of which I don't. Here is inclusive list of databases I have tried:
+
+- GetStorage
+- SharedPreferences
+- Firebase Firestore
+- Hive
+- Isar
+- Drift (Sqlite ORM)
+
+First two items is more a key-value store than a database. It's great to store to user settings, feature flags, etc. But not suitable for storing large amounts of data or complex data structures.
+
+Firebase Firestore is a cloud-based database that is great for real-time data synchronization. I think it supports offline mode, but I haven't used it much. It's a document based database, which is great for storing unstructured data. It also great if you want to fully rely on cloud to store your data.
+
+Now we are left with three databases: Hive, Isar and Drift. Hive & Isar once were the good & easy options for local database. But now, I think they are not the best options anymore just because of a problem; maintainance. You see, Hive & Isar is maintained by a single person. 
+
+Problem https://github.com/iiumschedule/iium_schedule/releases/tag/1.1.0-pre.1%2B19
+https://github.com/isar/isar/issues/1219
+
 
 ## Why SQLite?
 
