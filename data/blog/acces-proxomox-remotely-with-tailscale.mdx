@@ -1,0 +1,447 @@
+---
+title: Install Tailscale on Proxmox
+date: '2025-06-10'
+tags: ['proxmox', 'tailscale', 'network', 'homelab']
+draft: false
+summary: How to install Tailscale VPN on Proxmox's LXC container and configure it as subnet routers .
+images: ['/static/blog/wireless-adb/adb-wireless-debugging-meta.jpg']
+layout: PostSimple
+authors: ['default']
+---
+
+Running a homelab is exciting, but accessing my Proxmox server and its services remotely when I'm out of home can be challenging. I want to be able to reach my Proxmox and the services installed from anywhere.
+
+In this guide, I'll show you how I properly installed Tailscale on Proxmox using an LXC container, running on my HP T610 thin client.
+
+[Tailscale](https://tailscale.com/) is a simple, secure mesh VPN built on WireGuard that lets you easily access your Proxmox server and home network from anywhere, without complex configuration. It's an ideal solution for homelab remote access because it works across devices, is easy to manage, and keeps your connections private.
+
+## Install Tailscale on LXC Container or on the Proxmox Host
+
+The topic of whether to install Tailscale directly on the Proxmox host or inside an LXC container is highly debated online. While some users go for the host installation due to its simplicity and direct integration, some others and community discussions discourage this approach, citing potential security risks and maintenance complexity. Installing Tailscale in an unprivileged LXC container is often recommended instead, as it isolates the service from the host, reduces the attack surface, and aligns with containerization best practices. 
+
+I prefer to install Tailscale in an LXC container. The steps is easy and not so complicated.
+
+## My Setup
+
+Before we begin, let me recall my setup of my mini homelab. The information would be useful when setting up lXC container and running Tailscale.
+
+{/* Add diagram */}
+
+## Creating the LXC Container
+
+First, we'll create a dedicated LXC container for Tailscale. I recommend using Ubuntu or Debian for this purpose due to their excellent Tailscale support.
+
+Log into your Proxmox web interface and navigate to your node.
+
+*[Screenshot placeholder: Proxmox web interface showing node selection]*
+
+Click on "Create CT" to start the container creation wizard.
+
+*[Screenshot placeholder: Create CT button in Proxmox interface]*
+
+### Container Configuration
+
+Configure your container with the following settings:
+
+**General Settings:**
+- **CT ID**: Choose an available ID (e.g., 100)
+- **Hostname**: `tailscale` or `tailscale-gateway`
+- **Resource Pool**: Leave default or assign to your preferred pool
+
+*[Screenshot placeholder: LXC General settings tab]*
+
+**Template:**
+- **Storage**: Select your container template storage
+- **Template**: Choose `ubuntu-22.04-standard` or `debian-12-standard`
+
+*[Screenshot placeholder: LXC Template selection]*
+
+**Root Disk:**
+- **Storage**: Select appropriate storage
+- **Disk size**: 8GB is sufficient for Tailscale
+- **ACLs**: Leave default
+
+*[Screenshot placeholder: LXC Root disk configuration]*
+
+**CPU:**
+- **Cores**: 1 core is sufficient
+- **CPU limit**: Leave unlimited for now
+
+**Memory:**
+- **Memory**: 2GB is adequate
+- **Swap**: 256MB
+
+*[Screenshot placeholder: LXC CPU and Memory settings]*
+
+**Network:**
+- **Bridge**: `vmbr0` (your main bridge)
+- **IPv4**: DHCP or static IP in your network range
+- **IPv6**: Leave default unless you use IPv6
+
+*[Screenshot placeholder: LXC Network configuration]*
+
+### Allow access to networking resource
+
+By default, unprivileged LXC containers do not have access to the /dev/tun device required for Tailscale to work, since this device is needed for creating network tunnels. To enable Tailscale in an unprivileged container, you must allow access to /dev/tun in the container's configuration file.
+
+Open the configuration file (Run this on the Proxmox host terminal):
+
+```shell
+nano /etc/pve/lxc/CONTAINER_ID.conf
+```
+
+Replace `CONTAINER_ID` with your LXC container ID. Then, add the following lines in the file
+
+```shell
+lxc.cgroup2.devices.allow: c 10:200 rwm
+lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file
+```
+
+Save the file, and now you can **start the container**. If the LXC is already running it will need to be shut down and started again for this change to take effect.
+
+## Container Initial Setup
+
+Open your LXC Container console.
+
+First, determine the IP address that is assigned to the container.
+
+```shell
+ip -a
+```
+
+Then, update the container options with the IP address. Change DHCP to Static and fill in the IP Address & Gateway IP.
+
+*[Screenshot placeholder: Starting LXC container and opening console]*
+
+After that, return to the console and update the system packages:
+
+```bash
+apt update && apt upgrade -y
+```
+
+Then, install curl and sudo:
+```bash
+apt install curl sudo -y
+```
+
+
+## Step 3: Installing Tailscale
+
+Tailscale provides an official installation script that handles repository setup and package installation.
+
+### Method 1: Official Installation Script (Recommended)
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+```
+
+This script will:
+- Add the Tailscale repository
+- Import the GPG key
+- Install the tailscale package
+- Set up the systemd service
+
+### Method 2: Manual Repository Setup
+
+If you prefer manual installation:
+
+```bash
+# Add Tailscale GPG key
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.noarmor.gpg | tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+
+# Add repository
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/jammy.tailscale-keyring.list | tee /etc/apt/sources.list.d/tailscale.list
+
+# Update and install
+apt update
+apt install tailscale -y
+```
+
+## Step 4: Configuring Tailscale
+
+### Enable and Start the Service
+
+```bash
+systemctl enable tailscaled
+systemctl start tailscaled
+```
+
+Verify the service is running:
+
+```bash
+systemctl status tailscaled
+```
+
+### Authenticate with Tailscale
+
+Connect your container to your Tailscale network:
+
+```bash
+tailscale up
+```
+
+This command will output a URL that you need to visit in your browser to authenticate the device.
+
+*[Screenshot placeholder: Tailscale authentication URL output]*
+
+Copy the URL and open it in your browser. You'll be prompted to log in to your Tailscale account and authorize the device.
+
+*[Screenshot placeholder: Tailscale web authorization page]*
+
+### Verify Connection
+
+After authorization, check your Tailscale status:
+
+```bash
+tailscale status
+```
+
+You should see your device listed with an assigned Tailscale IP address.
+
+*[Screenshot placeholder: Tailscale status output showing connected device]*
+
+## Step 5: Setting Up Subnet Routing (Optional but Recommended)
+
+One of Tailscale's powerful features is subnet routing, which allows devices on your Tailscale network to access your local network through this container.
+
+### Enable IP Forwarding
+
+Edit the sysctl configuration:
+
+```bash
+echo 'net.ipv4.ip_forward = 1' | tee -a /etc/sysctl.conf
+echo 'net.ipv6.conf.all.forwarding = 1' | tee -a /etc/sysctl.conf
+```
+
+Apply the changes:
+
+```bash
+sysctl -p
+```
+
+### Configure Subnet Routing
+
+Advertise your local network (adjust the subnet to match your network):
+
+```bash
+tailscale up --advertise-routes=192.168.1.0/24 --accept-routes
+```
+
+**Note**: Replace `192.168.1.0/24` with your actual network subnet.
+
+### Approve Subnet Routes
+
+Go to the Tailscale admin console (https://login.tailscale.com/admin/machines) and approve the subnet routes for your container.
+
+*[Screenshot placeholder: Tailscale admin console showing subnet route approval]*
+
+## Step 6: Accessing Proxmox Remotely
+
+Now you can access your Proxmox web interface from anywhere using the Tailscale IP.
+
+Find your Proxmox host's local IP and access it through Tailscale:
+
+```bash
+# From any device connected to Tailscale
+https://192.168.1.100:8006  # Your Proxmox host's local IP
+```
+
+Alternatively, if you set up subnet routing, all devices on your Tailscale network can access your local network resources.
+
+## Step 7: Advanced Configuration
+
+### Setting Up Exit Node (Optional)
+
+To route all internet traffic through your home network:
+
+```bash
+tailscale up --advertise-exit-node
+```
+
+Approve the exit node in the Tailscale admin console.
+
+### Automatic Updates
+
+Enable automatic updates for security:
+
+```bash
+# Create update script
+cat > /usr/local/bin/update-tailscale.sh << 'EOF'
+#!/bin/bash
+apt update
+apt upgrade tailscale -y
+systemctl restart tailscaled
+EOF
+
+chmod +x /usr/local/bin/update-tailscale.sh
+
+# Add to crontab for weekly updates
+echo "0 2 * * 0 /usr/local/bin/update-tailscale.sh" | crontab -
+```
+
+### Firewall Configuration
+
+Configure UFW for additional security:
+
+```bash
+apt install ufw -y
+
+# Allow Tailscale
+ufw allow in on tailscale0
+
+# Allow local network
+ufw allow from 192.168.1.0/24
+
+# Enable firewall
+ufw --force enable
+```
+
+## Troubleshooting Common Issues
+
+### Container Can't Access TUN/TAP
+
+If Tailscale fails to start with TUN/TAP errors:
+
+```bash
+# On Proxmox host, ensure container features are enabled
+pct set 100 -features nesting=1
+pct stop 100
+pct start 100
+```
+
+### Network Connectivity Issues
+
+Check if the container can reach the internet:
+
+```bash
+ping 8.8.8.8
+curl -I https://tailscale.com
+```
+
+### Tailscale Service Issues
+
+Check service logs:
+
+```bash
+journalctl -u tailscaled -f
+```
+
+Restart the service:
+
+```bash
+systemctl restart tailscaled
+```
+
+## Security Considerations
+
+### Regular Updates
+
+Keep your container and Tailscale updated:
+
+```bash
+apt update && apt upgrade -y
+```
+
+### Access Control
+
+Use Tailscale's ACL (Access Control Lists) to restrict access:
+
+```json
+{
+  "ACLs": [
+    {
+      "Action": "accept",
+      "Users": ["your-email@domain.com"],
+      "Ports": ["*:*"]
+    }
+  ]
+}
+```
+
+### Container Hardening
+
+Remove unnecessary packages and services:
+
+```bash
+apt autoremove -y
+systemctl disable unnecessary-service
+```
+
+## Monitoring and Maintenance
+
+### Container Resource Monitoring
+
+Monitor your container's resource usage:
+
+```bash
+# In Proxmox host
+pct exec 100 -- htop
+
+# Check container stats
+pct exec 100 -- df -h
+pct exec 100 -- free -m
+```
+
+### Tailscale Connection Monitoring
+
+Create a simple monitoring script:
+
+```bash
+cat > /usr/local/bin/tailscale-monitor.sh << 'EOF'
+#!/bin/bash
+if ! tailscale status >/dev/null 2>&1; then
+    echo "$(date): Tailscale is down, attempting restart" >> /var/log/tailscale-monitor.log
+    systemctl restart tailscaled
+fi
+EOF
+
+chmod +x /usr/local/bin/tailscale-monitor.sh
+
+# Add to crontab for every 5 minutes
+echo "*/5 * * * * /usr/local/bin/tailscale-monitor.sh" | crontab -
+```
+
+## Performance Considerations
+
+### HP T610 Specific Notes
+
+The HP T610 is a capable thin client for homelabs, but keep these points in mind:
+
+- **CPU**: AMD T56N dual-core is sufficient for Tailscale routing
+- **Memory**: 4GB RAM handles multiple LXC containers well
+- **Network**: Gigabit Ethernet provides adequate throughput
+- **Power**: Low power consumption makes it ideal for 24/7 operation
+
+### Optimizing for Low-Power Hardware
+
+```bash
+# Reduce CPU frequency scaling
+echo 'powersave' | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+
+# Optimize network settings for lower latency
+echo 'net.core.rmem_max = 16777216' >> /etc/sysctl.conf
+echo 'net.core.wmem_max = 16777216' >> /etc/sysctl.conf
+sysctl -p
+```
+
+## Conclusion
+
+Installing Tailscale in an LXC container on Proxmox provides a secure, manageable, and scalable solution for remote access to your homelab. This approach offers several advantages over installing directly on the host:
+
+- **Better security isolation**
+- **Easier management and updates**
+- **Clean separation of concerns**
+- **Simplified backup and recovery**
+
+With this setup, you can securely access your Proxmox environment and home network from anywhere in the world. The HP T610 handles this workload excellently, providing a reliable and power-efficient foundation for your homelab networking needs.
+
+Remember to regularly update both your container and Tailscale installation to maintain security and performance. Consider implementing monitoring and automated updates for a truly hands-off experience.
+
+Happy homelabbing! 🚀
+
+## References
+
+- [Tailscale Documentation](https://tailscale.com/kb/)
+- [Proxmox LXC Documentation](https://pve.proxmox.com/wiki/Linux_Container)
+- [WireGuard Protocol](https://www.wireguard.com/)
+- [Tailscale Subnet Routers](https://tailscale.com/kb/1019/subnets/)
