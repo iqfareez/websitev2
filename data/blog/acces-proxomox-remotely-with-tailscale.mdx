@@ -17,7 +17,7 @@ In this guide, I'll show you how I installed Tailscale on Proxmox using an LXC c
 
 ## Install Tailscale on LXC Container or on the Proxmox Host
 
-The topic of whether to install Tailscale directly on the Proxmox host or inside an LXC container is highly debated online. While some users go for the host installation due to its simplicity and direct integration, some others and community discussions discourage this approach (see [1](https://www.reddit.com/r/Proxmox/comments/17rpsgz/how_to_install_tailscale_on_proxmox_not_a_ct_or_vm/), [2](https://www.reddit.com/r/Proxmox/comments/1dmrca4/best_way_to_setup_tailscale/)), citing potential security risks and maintenance complexity. Installing Tailscale in an unprivileged LXC container is often recommended instead, as it isolates the service from the host, and reduces the attack surface.
+The topic of whether to install Tailscale directly on the Proxmox host, inside a VM, or inside an LXC container is highly debated online. While some users go for the host installation due to its simplicity and direct integration, some others and community discussions discourage this approach (see [1](https://www.reddit.com/r/Proxmox/comments/17rpsgz/how_to_install_tailscale_on_proxmox_not_a_ct_or_vm/), [2](https://www.reddit.com/r/Proxmox/comments/1dmrca4/best_way_to_setup_tailscale/)), citing potential security risks and maintenance complexity. Installing Tailscale in an unprivileged LXC container is often recommended instead, as it isolates the service from the host, and reduces the attack surface.
 
 I choose to install Tailscale on a LXC container. The steps is easy and not so complicated to follow.
 
@@ -25,7 +25,7 @@ I choose to install Tailscale on a LXC container. The steps is easy and not so c
 
 Before we begin, let me recall my setup of my homelab setup. The information would be useful when setting up lXC container and running Tailscale.
 
-{/* Add diagram */}
+{/* TODO: Add diagram */}
 
 ## Creating the LXC Container
 
@@ -164,17 +164,29 @@ Optionally, you can disable key expiry so that your Tailscale connection remains
 
 ## Accessing Proxmox Remotely
 
-Now you can access your Proxmox web interface from anywhere using the it's IP like you would do as if you're in your home network (by 'home network', I mean devices that connected to the same Wifi/Lan).
+Now for the interesting part. Install Tailscale on your device, eg smartphone, laptop and turn it on. By now, you should be able to access your Proxmox web interface using the it's IP like you would do as if you're in your home network (by 'home network', I mean devices that connected to the same Wifi/Lan).
 
 To test this out, use another device connected to a network other than your home network (e.g., mobile data or a different Wi-Fi). Connect to Tailscale on that device.
 
-Normally, without Tailscale, just the home network, I will access my Proxmox via `https://192.168.1.233:8006`. Now, on that test device, go to the same IP and you should be able to access your Proxmox Web!
+Normally, without Tailscale, just the home network, I will access my Proxmox via `https://192.168.1.233:8006`. Now, on that test device, go to the same IP and you should be able to access your Proxmox Web! Here I'm in a LRT on my way home after work.
 
-{/* TODO: letak proxmox dalam LRT eg */}
+![Proxmox remote access](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1749510222/website/tailscale-proxmox/IMG_5233_hedewr.jpg)
 
-Not just Proxmox, other services on that server too!
 
-{/* TODO: letak homeassistant */}
+Not just Proxmox, other services on that server too! Here is Home Assistant.
+
+![Home Assistant remote access](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1749510222/website/tailscale-proxmox/IMG_5234_ua7dhw.jpg)
+
+But *chop chop*.. I realise I can't use hostname to reach Home Assistant. See, when I'm home, I'll access Home Assistant via `http://homeassistant.local:8123`. But when using Tailscale, I can't do that. After reading few forums online, turns out that **mDNS is not supported** by Tailscale, or any VPN provider. Tailscale has [open issue](https://github.com/tailscale/tailscale/issues/1013) to track of this topic. Fortunately, we still can access the said service normally by its IP address instead.
+
+Some guy on [Reddit](https://www.reddit.com/r/Tailscale/comments/1ht6t4q/comment/m5bbu1h/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button):
+> Multicast UDP does not work across VPNs in general, and that includes tailscale. Anything that depends on multicast UDP, such as mDNS, isn't going to work.
+
+How to get the IP address you may ask? From the console of the VM or LXC container! For HomeAssistant, you can run the command `network info`. And for other services, you can run `ip a`.
+
+![Network info command output](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1749510970/website/tailscale-proxmox/Screenshot_2025-06-10_071355_sgrzcd.png)
+
+![ip a command output](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1749510970/website/tailscale-proxmox/Screenshot_2025-06-10_071535_vo7cg8.png)
 
 ## Conclusion
 
