@@ -94,12 +94,7 @@ module.exports = () => {
         },
         {
           source: '/gh',
-          destination: 'https://github.com/iqfareez',
-          permanent: true,
-        },
-        {
-          source: '/rw',
-          destination: 'https://hello.rocketweb.my/fareez',
+          destination: 'https://github.com/iqfareez/websitev2',
           permanent: true,
         },
         {
