@@ -108,7 +108,7 @@ module.exports = () => {
           permanent: true,
         },
         {
-          source: '/publickeys',
+          source: '/pk',
           destination: '/api/publickeys',
           permanent: true,
         },
