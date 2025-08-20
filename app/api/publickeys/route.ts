@@ -8,5 +8,11 @@ export async function GET() {
   const data = await res.json()
   // data is an array of objects with a 'key' property
   const keys = data.map((item: { key: string }) => item.key)
-  return NextResponse.json(keys)
+  const body = keys.join('\n')
+  return new Response(body, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+    },
+  })
 }
