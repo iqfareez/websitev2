@@ -1,10 +1,10 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Muhammad Fareez Iqmal | Personal Website',
-  author: 'Muhammad Fareez Iqmal (iqfareez)',
+  title: 'Muhammad Fareez Iqmal | Software Engineer, Maker | Malaysia',
+  author: 'Muhammad Fareez Iqmal',
   headerTitle: 'iqfareez',
   description:
-    'Explore my personal website for blogs, projects, and more on software engineering, hardware development, tecnologies and programming.',
+    'Explore blogs, projects, and more on software engineering, hardware development, technologies, programming, and a little bit about my personal life.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://iqfareez.com',
@@ -35,9 +35,9 @@ const siteMetadata = {
     // posthogAnalytics: {
     //   posthogProjectApiKey: process.env.NEXT_PUBLIC_POSTHOG_ID, // e.g. 123e4567-e89b-12d3-a456-426614174000
     // },
-    // googleAnalytics: {
-    //   googleAnalyticsId: '', // e.g. G-XXXXXXX
-    // },
+    googleAnalytics: {
+      googleAnalyticsId: 'G-7SSM63X5V5', // e.g. G-XXXXXXX
+    },
   },
   newsletter: {
     // supports mailchimp, buttondown, convertkit, klaviyo, revue, emailoctopus

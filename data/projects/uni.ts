@@ -3,7 +3,7 @@ const projectsDataUniversity = [
     title: 'KOEWayfinder - AR Navigation App',
     description: `A Final Year Project (FYP) to complete my bachelor degree. 
       The project aims to address the challenges of indoor navigation within faculty building
-      by using Augmented Reality technology. Utlizes SuperPoint & SuperGlue algorithm
+      by using Augmented Reality technology. Utilizes SuperPoint & SuperGlue algorithm
       to build localization pipeline.`,
     imgSrc: '/static/images/projects/koe-wayfinder.png',
     href: 'https://github.com/KOE-Wayfind/',
@@ -20,14 +20,14 @@ const projectsDataUniversity = [
   {
     title: 'IoT Weather Station',
     description: `DIY Weather Station that will keep track of the weather and notify you when 
-          it is time to pick up your clothes from cloths line. An Industrial Automation project.`,
+          it is time to pick up your clothes from clothesline. An Industrial Automation project.`,
     imgSrc: '/static/images/projects/ia-weather-station.jpg',
     href: 'https://github.com/iqfareez/IA-Project-Weather-Station',
   },
   {
     title: 'Parcel Safety Box',
     description: `Protect your parcel from thief in a PIN-protected slot. Receiver
-      can unlock the slot using PIN that has been send to Telegram. An Engineering Ethics project.`,
+      can unlock the slot using PIN that has been sent to Telegram. An Engineering Ethics project.`,
     imgSrc: '/static/images/projects/gene-parcel.png',
     href: 'https://youtu.be/KFbdNpS7P3A',
   },

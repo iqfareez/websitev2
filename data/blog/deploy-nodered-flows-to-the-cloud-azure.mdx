@@ -1,9 +1,10 @@
 ---
 title: Deploy Node-RED flows to the Cloud (Azure)
 date: '2023-02-15'
+lastmod: '2025-3-4'
 tags: ['node-red', 'azure', 'cloud', 'iot', 'tutorial', 'putty']
 draft: false
-summary: Ditch your PC! Learn how to host your Node-RED flows in the cloud with Microsoft Azure
+summary: No more local server! Learn how to host your Node-RED flows in the cloud with Microsoft Azure
 images: ['/static/blog/nodered-azure/meta-nodered-azure.png']
 layout: PostLayout
 authors: ['default']
@@ -21,14 +22,14 @@ own cloud-based IoT solutions.
 - Microsoft Azure account
 
 <Admonition type="tip">
-  If possible, register to the Azure account as
+  If possible, register for the Azure account as
   [student](https://azure.microsoft.com/en-us/free/students/) to claim the free [$100
   credit](https://twitter.com/iqfareez/status/1620274582400954370?s=20&t=H302GPqXBl3cTJlAznxnrg).
 </Admonition>
 
-## Create a new Virtual Machine (VM) instances
+## Create a new Virtual Machine (VM) instance
 
-Virtual machine is basically a computer that lives in Azure infrastructure. Open [Azure portal](https://portal.azure.com/#home)
+A virtual machine is basically a computer that lives in Azure infrastructure. Open [Azure portal](https://portal.azure.com/#home)
 and click on **Virtual Machine**.
 
 ![Azure Virtual Machine selector](/static/blog/nodered-azure/azure-portal-vm.png)
@@ -43,7 +44,7 @@ In the Create a virtual machine form, fill in the particulars. Below are some im
 | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Resource group        | Create new or select existing resources                                                                                                                                                                                                                                                                                                                           |
 | Virtual machine name  | Give any name. Eg: `my-node-red-vm`                                                                                                                                                                                                                                                                                                                               |
-| Image                 | `Ubuntu Server 20.04 LTS` (Ubuntu 18.04 will cause some issue when installing node) ![Select Ubuntu Server 20.04](/static/blog/nodered-azure/ubuntu-server-2004.png)                                                                                                                                                                                              |
+| Image                 | `Ubuntu Server 20.04 LTS` (Ubuntu 18.04 will cause some issues when installing node) ![Select Ubuntu Server 20.04](/static/blog/nodered-azure/ubuntu-server-2004.png)                                                                                                                                                                                              |
 | Size                  | The [docs](https://nodered.org/docs/getting-started/azure) suggest `A1 Basic`, but I couldn't find it. So, I'll go with `Standard_B1s`. _Keep in mind that Node.js operates on a single thread, so having multiple cores in a Node-RED instance will not bring any advantage._ ![Azure VM Sizes and pricing](/static/blog/nodered-azure/azure-select-vm-size.png) |
 | Administrator account | You can leave it as default ![Azure Administrator account](/static/blog/nodered-azure/azure-administrator-account.png)                                                                                                                                                                                                                                            |
 | Inbound port rules    | Leave it as default ![Azure Inbound Rules](/static/blog/nodered-azure/azure-inbound-rules.png)                                                                                                                                                                                                                                                                    |
@@ -52,7 +53,7 @@ Next, go to the **Networking tab**.
 
 ![Networking tab](/static/blog/nodered-azure/networking-tab.png)
 
-in the **NIC network security group**, change the option from Basic to **Advanced**. Then, in the
+In the **NIC network security group**, change the option from Basic to **Advanced**. Then, in the
 **Configure network security group**, click on <kbd>Create new</kbd>.
 
 ![NIC Advanced option](/static/blog/nodered-azure/nic-advanced.png)
@@ -72,16 +73,16 @@ Then, click on <kbd>Review + create</kbd> to finalize your VM creation.
 
 ![Azure review](/static/blog/nodered-azure/azure-review-create.png)
 
-In will take a moment to validate the information. Once it's done, click on <kbd>Create</kbd>. A dialog **Generate new key pair**
+It will take a moment to validate the information. Once it's done, click on <kbd>Create</kbd>. A dialog **Generate new key pair**
 should pop out to let you download your private key. Go ahead and click on the <kbd>Download private key and create
 resources</kbd>.
 
 ![Azure download key pair](/static/blog/nodered-azure/azure-validation-passed-key-pair.png)
 
-A `.pem` file will be downloaded, and Azure deployment worker will start kicked in to start your VM deployment. You can see the progress from
+A `.pem` file will be downloaded, and the Azure deployment worker will start kicking in to start your VM deployment. You can see the progress from
 the notification panel. Once it's done, click on <kbd>Go to resource</kbd> to view your freshly created VM.
 
-Then, go to **Connect**, copy the `<username>@<public ip address>` from the example command. For example, mine is
+Then, go to **Connect**, and copy the `<username>@<public ip address>` from the example command. For example, mine is
 `azureuser@20.115.54.38`.
 
 ![Azure VM Connect SSH](/static/blog/nodered-azure/azure-vm-connect-ssh.png)
@@ -91,12 +92,12 @@ Then, go to **Connect**, copy the `<username>@<public ip address>` from the exam
 ### Key conversion
 
 <Admonition type={'note'}>
-  As soon I finish writing this tutorial, I realized that you can connect to the VM's shell by just
+  As soon as I finish writing this tutorial, I realized that you can connect to the VM's shell by just
   using PowerShell on Windows (on Linux/MacOS, I know they have CLI ssh). Demo video
   [here](https://youtu.be/un-MObQ5_Bo).
 </Admonition>
 
-We'll be using PuTTY go access your VM. But, first, we are first going to convert the downloaded `.pem` file into something that
+We'll be using PuTTY to access your VM. But, first, we are first going to convert the downloaded `.pem` file into something that
 PuTTY can understand. Open **PuTTYgen** to get started.
 
 ![PuTTY gen](/static/blog/nodered-azure/puttygen-start-menu.png)
@@ -126,28 +127,28 @@ In the **Private key file for authentication**, browse the generated `.ppk` file
   Read more [here](https://help.thorntech.com/docs/sftp-gateway-azure/azure-ssh-using-putty/).
 </Admonition>
 
-Go back to **Session**, in the **Host name** textbox, paste the `<username>@<public ip address>` that we've copied from Azure
+Go back to **Session**, in the **Host name** textbox, paste the `<username>@<public ip address>` that we've copied from the Azure
 portal before. Leave other settings as default and click on <kbd>Open</kbd>.
 
 ![Putty init session](/static/blog/nodered-azure/putty-config-session.png)
 
-A warning dialog might be appeared, click on <kbd>Accept</kbd> to proceed.
+A warning dialog might appear, click on <kbd>Accept</kbd> to proceed.
 
 <Admonition type="tip">
-  You may wanted to save the PuTTY session, so next time you want to access the Shell, just load the
-  session from disk
+  You may want to save the PuTTY session, so next time you want to access the Shell, just load the
+  session from the disk
 </Admonition>
 
-PuTTY will connect you to the Azure VM. Within a few seconds, BOOM! 💥. We've gain access
+PuTTY will connect you to the Azure VM. Within a few seconds, BOOM! 💥. We've gained access
 to our VM's Shell. Congratulations, you are now a [hacker](https://www.meme-arsenal.com/memes/31a7b7745fb9c08b9db9bb1e981df25f.jpg).
 
-You can verify by typing command `uname -a` to get the OS information.
+You can verify it by typing the command `uname -a` to get the OS information.
 
 ![putty Uname Azure](/static/blog/nodered-azure/putty-uname.png)
 
 ## Install Node-RED
 
-First, install the [recommended](https://nodered.org/docs/faq/node-versions) version of Node to the machine.
+First, install the [recommended](https://nodered.org/docs/faq/node-versions) version of Node on the machine.
 
 ```bash
 curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
@@ -174,7 +175,7 @@ After it has been started, open your **browser** and go to `<public ip address>:
 
 <Admonition type="tip">
   You can find your public IP address from the Azure Portal (in
-  [here](/static/blog/nodered-azure/azure-vm-public-ip.png)) or using command like
+  [here](/static/blog/nodered-azure/azure-vm-public-ip.png)) or using a command like
   [here](https://stackoverflow.com/a/34567038/13617136)
 </Admonition>
 
@@ -182,31 +183,31 @@ With that, you now have the Node-RED **running** on your Azure cloud infrastruct
 
 ![NodeRED on cloud Azure](/static/blog/nodered-azure/node-red-welcome.png)
 
-At this point, you already can start to design your flows and can deploy instantly at the cloud. But, if you already have developed
-a flows before this locally, why not just importing the flows to the Azure VM? Continue reading...
+At this point, you already can start to design your flows and can deploy instantly in the cloud. But, if you already have developed
+flows before this locally, why not just import the flows to the Azure VM? Continue reading...
 
 ## Import existing flows to Node-RED
 
 Before we proceed, let's define:
 
-- Local Node-RED : Node-RED instance that we run on our local machine
-- Cloud Node-RED : Node-RED instance that we've just deployed to the Azure VM
+- Local Node-RED: Node-RED instance that we run on our local machine
+- Cloud Node-RED: Node-RED instance that we've just deployed to the Azure VM
 
 <Admonition type="note">
-  The steps outlined here is similar then you wnat to transfer the Node-RED flows from one machine
+  The steps outlined here are similar to when you want to transfer the Node-RED flows from one machine
   to another
 </Admonition>
 
-We'll need our exported `.json` file first (learn how to export Node-RED flows to JSON is [previous article](../get-started-on-iot-with-nodered-esp32#export-flows)).
+We can create new flows, but in this article, I will reuse the [flows.json](https://gist.github.com/iqfareez/80a9c3ae246ffcbcf58dc2ea6c4cb115) that we have created from the [previous article](./get-started-on-iot-with-nodered-esp32#conclusion).
 
 Then, we'll need to list out the palettes used in the current flows because we'll need to install them. So, on the Local Node-RED > Menu > Manage Palettes. Take
-notes of the installed palettes. In my case, I only have one additional palettes: `node-red-dashboard`.
+notes of the installed palettes. In my case, I only have one additional palette: `node-red-dashboard`.
 
 ![Nodered palettes installed](/static/blog/nodered-azure/local-node-red-palettes.png)
 
 Now, back to Cloud Node-RED, click on Menu > Manage Palettes > Install to install all palettes you need.
 
-Then, click on Menu > Import. You can paste the json content or import the `.json` file. Then, click on <kbd>Import</kbd>.
+Then, click on Menu > Import. You can paste the JSON content or import the `.json` file. Then, click on <kbd>Import</kbd>.
 
 ![Nodered import json dialog](/static/blog/nodered-azure/nodered-import-json.png)
 
@@ -220,7 +221,7 @@ Open the dashboard UI, connect ESP32 like we did before and the result is someth
 
 <ReactPlayer url="https://i.imgur.com/aQmba1Q.mp4" playing={true} controls={true} />
 
-Notice that there are few milliseconds delay between ESP32 and the Node-RED dashboard. Perhaps because we are using free public
+Notice that there are a few milliseconds delay between ESP32 and the Node-RED dashboard. Perhaps because we are using a free public
 mqtt broker, so the connection speed is throttled.
 
 <Admonition type={'important'} title={'shameless plug'}>
@@ -233,9 +234,9 @@ mqtt broker, so the connection speed is throttled.
 That's it. You now can continue to develop your flow on the cloud and deploy it right
 away so that you, or anyone can access it. The process is long, but easy to understand, right? 😉
 
-Remember to watch out your Azure usages & quotas to avoid extra charges.
+Remember to watch out for your Azure usages & quotas to avoid extra charges.
 
-You may ask, how do I want to do similar like this using AWS? IMO, the process maybe similar here and there. Just try that out. If I have time,
+You may ask, how do I want to do something similar like this using AWS? IMO, the process may be similar here and there. Just try that out. If I have time,
 I want to make a YouTube tutorial InshaAllah.
 
 ## References

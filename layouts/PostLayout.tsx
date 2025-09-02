@@ -21,6 +21,12 @@ const postDateTemplate: Intl.DateTimeFormatOptions = {
   day: 'numeric',
 }
 
+const postEditedDateTemplate: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+}
+
 interface LayoutProps {
   content: CoreContent<Blog>
   authorDetails: CoreContent<Authors>[]
@@ -30,7 +36,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags } = content
+  const { filePath, path, slug, date, title, tags, lastmod } = content
   const basePath = path.split('/')[0]
 
   return (
@@ -48,6 +54,21 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                       {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                     </time>
                   </dd>
+                  {lastmod && (
+                    <div>
+                      <dt className="sr-only">Published on</dt>
+                      <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                        <span>(Last revised </span>
+                        <time dateTime={lastmod}>
+                          {new Date(lastmod).toLocaleDateString(
+                            siteMetadata.locale,
+                            postEditedDateTemplate
+                          )}
+                          <span>)</span>
+                        </time>
+                      </dd>
+                    </div>
+                  )}
                 </div>
               </dl>
               <div>
