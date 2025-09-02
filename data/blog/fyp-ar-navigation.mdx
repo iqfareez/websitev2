@@ -75,7 +75,7 @@ To narrow the scope, I focused on the KOE Building Block E1, Level 2. I began co
 
 After that, I looked for a tool/algorithm to train the data. I had the idea to use PyTorch or TensorFlow, like a normal image classification project. But, upon further research, I found a method called [Hierarchical Localization](https://github.com/cvg/Hierarchical-Localization) to localize the image and predict where the image is. It sounded like a suitable method for my AR Navigation project.
 
-I won't go into details on how the Hierarchical Localization works, but in short, it uses a two alogorithm, [SuperPoint](https://arxiv.org/abs/1712.07629) and [SuperGlue](https://psarlin.com/superglue/). SuperPoint is used to extract features from the image, while SuperGlue is used to match the features from the image to the map.
+I won't go into details on how the Hierarchical Localization works, but in short, it uses two algorithms, [SuperPoint](https://arxiv.org/abs/1712.07629) and [SuperGlue](https://psarlin.com/superglue/). SuperPoint is used to extract features from the image, while SuperGlue is used to match the features from the image to the map.
 
 ![HL pipeline](https://github.com/cvg/Hierarchical-Localization/raw/master/doc/hloc.png)
 
