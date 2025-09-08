@@ -112,6 +112,11 @@ module.exports = () => {
           destination: '/api/publickeys',
           permanent: true,
         },
+        {
+          source: '/blog/acces-proxomox-remotely-with-tailscale',
+          destination: '/blog/access-proxmox-remotely-with-tailscale',
+          permanent: true,
+        },
       ]
     },
     webpack: (config, options) => {
