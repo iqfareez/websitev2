@@ -88,7 +88,6 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     addVariablesForColors,
-    require('tailwindcss-dotted-background'),
   ],
 }
 
