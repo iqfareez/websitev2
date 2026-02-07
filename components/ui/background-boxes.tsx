@@ -10,15 +10,15 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
   const rows = new Array(150).fill(1)
   const cols = new Array(100).fill(1)
   const colors = [
-    '--sky-300',
-    '--pink-300',
-    '--green-300',
-    '--yellow-300',
-    '--red-300',
-    '--purple-300',
-    '--blue-300',
-    '--indigo-300',
-    '--violet-300',
+    'rgb(125, 211, 252)',
+    'rgb(249, 168, 212)',
+    'rgb(134, 239, 172)',
+    'rgb(253, 224, 71)',
+    'rgb(252, 165, 165)',
+    'rgb(196, 181, 253)',
+    'rgb(147, 197, 253)',
+    'rgb(165, 180, 252)',
+    'rgb(196, 181, 253)',
   ]
   const getRandomColor = () => {
     return colors[Math.floor(Math.random() * colors.length)]
@@ -43,14 +43,12 @@ export const BoxesCore = ({ className, ...rest }: { className?: string }) => {
           {cols.map((_, j) => (
             <motion.div
               whileHover={{
-                backgroundColor: `var(${getRandomColor()})`,
+                backgroundColor: getRandomColor(),
                 transition: { duration: 0 },
               }}
-              animate={{
-                transition: { duration: 2 },
-              }}
               key={`col` + j}
-              className="border-slate-250 relative h-8 w-16 border-t border-r dark:border-slate-600 dark:opacity-50"
+              className="border-slate-250 pointer-events-auto relative h-8 w-16 cursor-pointer border-t border-r dark:border-slate-600 dark:opacity-50"
+              style={{ pointerEvents: 'auto' }}
             >
               {j % 2 === 0 && i % 2 === 0 ? (
                 <svg
