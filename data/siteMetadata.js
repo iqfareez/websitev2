@@ -14,7 +14,7 @@ const siteMetadata = {
   // mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'hello@iqfareez.com',
   github: 'https://github.com/iqfareez',
-  twitter: 'https://twitter.com/iqfareez',
+  x: 'https://x.com/iqfareez',
   // facebook: 'https://facebook.com/iqfareez',
   // youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com/in/iqfareez',
@@ -77,7 +77,7 @@ const siteMetadata = {
   search: {
     provider: 'kbar', // kbar or algolia
     kbarConfig: {
-      searchDocumentsPath: 'search.json', // path to load documents to search
+      searchDocumentsPath: `${process.env.BASE_PATH || ''}/search.json`, // path to load documents to search
     },
     // provider: 'algolia',
     // algoliaConfig: {
