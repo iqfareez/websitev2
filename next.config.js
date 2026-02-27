@@ -111,7 +111,7 @@ module.exports = () => {
         },
         {
           source: '/analytics',
-          destination: 'https://umami.iqfareez.com/share/BUznIQbk5H0yaZIp/iqfareez.com',
+          destination: 'https://umami.iqfareez.com/share/vzWzprkhFCOtthSp',
           permanent: true,
         },
         {
