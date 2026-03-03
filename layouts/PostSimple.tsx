@@ -17,7 +17,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, next, prev, children }: LayoutProps) {
-  const { path, slug, date, title } = content
+  const { path, slug, date, lastmod, title } = content
 
   return (
     <SectionContainer>
@@ -33,6 +33,14 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
                     <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
                   </dd>
                 </div>
+                {lastmod && lastmod !== date && (
+                  <div>
+                    <dt className="sr-only">Last modified on</dt>
+                    <dd className="text-sm leading-6 font-medium text-gray-400 dark:text-gray-500">
+                      Updated: <time dateTime={lastmod}>{formatDate(lastmod, siteMetadata.locale)}</time>
+                    </dd>
+                  </div>
+                )}
               </dl>
               <div>
                 <PageTitle>{title}</PageTitle>
