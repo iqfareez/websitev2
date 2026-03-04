@@ -1,7 +1,7 @@
 ---
 title: Spinning up MySQL Server & PhpMyAdmin container with Docker
 date: '2024-10-1'
-lastmod: '2025-3-4'
+lastmod: '2026-3-5'
 tags: ['tutorial', 'mysql', 'docker']
 draft: false
 summary: Create MySQL & PhpMyAdmin instances within minutes!
@@ -10,10 +10,9 @@ layout: PostSimple
 authors: ['default']
 ---
 
-Setting up MySQL and PhpMyAdmin doesn't have to be a hassle—especially for developers. With Docker, you can launch both 
+Setting up MySQL and PhpMyAdmin doesn't have to be a hassle. With Docker, you can launch both 
 in just a few commands, creating a powerful database environment right on your machine. In this guide, I'll show you 
 how to quickly get everything running, making your development process smoother and faster. Let's get started!
-
 
 ## Prerequisites
 
@@ -22,13 +21,51 @@ interact with Docker using GUI or CLI.
 
 ## Create containers
 
-Open terminal, run the command to create a Docker **network**.
+**Update March 2026:** I've made a docker compose file:
+
+```yaml:docker-compose.yml
+services:
+  mysql-container:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    ports:
+      - "3306:3306"
+    networks:
+      - mynetwork1
+
+  phpmyadmin-container:
+    image: phpmyadmin
+    environment:
+      PMA_HOST: mysql-container
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
+    networks:
+      - mynetwork1
+    depends_on:
+      - mysql-container
+
+networks:
+  mynetwork1:
+    driver: bridge
+```
+
+To start the containers, simply run the following command in the terminal. The services should be available immediately.
+
+```bash
+docker compose up -d
+```
+
+Read on for the details, or if you don't prefer using Docker Compose.
+
+(1) Open terminal, run the command to create a Docker **network**.
 
 ```bash
 docker network create mynetwork1
 ```
 
-You can rename `mynetwork` with your own name, but make sure all the commands following use the same name.
+You can change the network name `mynetwork1` to your own, but make sure all the commands that follow use the same name.
 
 <Admonition type="note">
 The `--network` flag is used to create and manage container networks. When you create 
@@ -36,7 +73,7 @@ containers on the same custom Docker network, they can communicate with each oth
 container names as hostnames.
 </Admonition>
 
-Next, create a MySQL container.
+(2) Next, create a MySQL container.
 
 ```bash
 docker run -d --name mysql-container --network mynetwork1 -e MYSQL_ALLOW_EMPTY_PASSWORD=true -p 3306:3306 mysql:latest
@@ -49,7 +86,7 @@ You'll need to specify one of the following as an **environment variable** (the 
 
 Read more about MySQL environment [here](https://hub.docker.com/_/mysql#:~:text=tag%20%2D%2Dverbose%20%2D%2Dhelp-,Environment%20Variables,-When%20you%20start).
 
-Then, create a PhpMyAdmin container instance.
+(3) Then, create a PhpMyAdmin container instance.
 
 ```bash
 docker run -d --name phpmyadmin-container --network mynetwork1 -e PMA_HOST=mysql-container -e PMA_PORT=3306 -p 8080:80 phpmyadmin
