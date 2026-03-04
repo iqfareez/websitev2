@@ -37,7 +37,8 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
                   <div>
                     <dt className="sr-only">Last modified on</dt>
                     <dd className="text-sm leading-6 font-medium text-gray-400 dark:text-gray-500">
-                      Updated: <time dateTime={lastmod}>{formatDate(lastmod, siteMetadata.locale)}</time>
+                      Updated:{' '}
+                      <time dateTime={lastmod}>{formatDate(lastmod, siteMetadata.locale)}</time>
                     </dd>
                   </div>
                 )}
