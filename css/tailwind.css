@@ -102,8 +102,25 @@
       font-weight: 600;
     }
 
-    & :where(code):not(pre code) {
+    & code:not(pre code) {
       color: var(--color-indigo-500);
+      font-weight: 600 !important;
+      font-size: 1rem;
+      background-color: var(--color-gray-100);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-sm);
+      padding: 0.15em 0.35em;
+
+      .dark & {
+        color: #79c0ff;
+        background-color: #161b22;
+        border-color: #30363d;
+      }
+    }
+
+    & code:not(pre code)::before,
+    & code:not(pre code)::after {
+      content: '';
     }
   }
 
