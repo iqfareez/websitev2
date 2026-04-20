@@ -1,0 +1,115 @@
+---
+title: My PC issues is finally fixed & optimized
+summary: My PC build finally can run with its advertised EXPO profile, reclaimed a bit of my hardware reserved RAM space. Also, my PC no longer hangs after changing this one settings.
+date: '2026-04-28'
+images: ['/static/blog/proxmox-tailscale-lxc/proxmox-tailscale-meta-image.png']
+draft: false
+layout: PostSimple
+tags: ['pc-build']
+authors: ['default']
+---
+
+In this post, I'll breakdown **three** fixes/optimization that I recently did to my PC. You can jump to any section anytime:
+- [Reclaiming hardware reserved RAM space](#reclaiming-hardware-reserved-ram-space)
+- [Update BIOS fixes RAM issues](#update-bios-fixes-ram-issues)
+- [Change automatic SWAP drive settings](#change-automatic-swap-drive-settings)
+
+## Reclaiming hardware reserved RAM space
+
+Take a look at my Task Manager screenshot below.
+
+<figure className="mx-auto w-full max-w-4xl">
+  <img
+    className="w-full h-auto"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776691232/website/ram-issue-blog-post/ram-hardware-reserved-before_n2j86j.png"
+    alt="Task Manager screenshot showing hardware reserved RAM space before enabling dGPU only mode"
+  />
+  <figcaption className='text-center'>Ram before enabling dGPU only mode.</figcaption>
+</figure>
+
+Look at the **Hardware reserved** section, it taking 936 Mb of my RAM. While it is not that big, but in this econonomy where all computer components are ridiculously expensive, **0.9 Gb space** is still a space that I don't want to waste. I understand that hardware reserved is often for the integrated GPU. But since my system has a dedicated GPU, why leave it unused? So, I wanted to reclaim that space.
+
+I searched online and found one post from [Reddit](https://www.reddit.com/r/ASRock/comments/1ij6840/i_fixed_my_hardware_reserved_ram_problem/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button). I could not find the specific setting the OP mentioned. So, I turned to an LLM to guide me. Below are steps to disable iGPU and claim back a bit of the hardware reserved RAM space. The steps might be specific to my motherboard, the ASRock A620M-HDVM.2, but you can try to find similar settings in your BIOS if you have the same issue.
+
+1. Boot into BIOS settings.
+2. Go to the **Advanced** tab.
+3. Enter the `AMD CBS` menu. *(CBS stands for **C**ommon **B**IOS **S**ettings)*
+4. Enter the `NBIO Common Options` menu. *(NBIO stands for **N**orth**B**ridge **I**nput/**O**utput)*
+5. Enter the `GFX Configuration` menu.
+6. Find the `dGPU Only Mode` setting, and change it from `Auto` to `Enabled`.
+
+<figure className="mx-auto w-full max-w-3xl">
+  <img
+    className="w-full h-auto"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776692169/website/ram-issue-blog-post/dGPU_only_mode_ASrock_ommtdu.jpg"
+    alt="Turn on dGPU only mode in ASRock BIOS"
+  />
+  <figcaption className='text-center'>The settings originally set to Auto. Change it to Enabled</figcaption>
+</figure>
+
+Save the settings and exit BIOS. After booting into Windows, check your Task Manager again. The hardware reserved RAM space should be reduced, and I now have 15.6 Gb of usable RAM instead of 15.1 Gb. I admit that this is not a huge difference, but at least now the previously reserved RAM space is being useful to the system.
+
+<figure className="mx-auto w-full max-w-4xl">
+  <img
+    className="w-full h-auto"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776692606/website/ram-issue-blog-post/ram-hardware-reserved-after_sa79md.png"
+    alt="Task Manager screenshot showing reduced hardware reserved RAM space after enabling dGPU only mode"
+  />
+  <figcaption className='text-center'>Hardware reserved now become 425 Mb. Notice that we no longer have integrated GPU shown on the side.</figcaption>
+</figure>
+
+I hope RAM prices would drop soon. End~
+
+## Update BIOS fixes RAM issues
+
+For the longest time since I built my first PC on 2024, I cannot configure my RAM to run at its advertised speed. I have a single 16 GB RAM Adata XPG Lander DDR5 that is advertised to run at 6000 MT/s. It have an EXPO profile that I can enable in the BIOS. However, when I activate the profile, my PC will randomly crashes or stopped responding while using it. I had to force shutdown it before starting it again. 
+
+<figure className="mx-auto w-full max-w-3xl">
+  <img
+    className="w-full h-auto"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776688482/website/ram-issue-blog-post/IMG_20240924_153007_l0k8us.jpg"
+    alt="BSOD error throwing stop code FAULTY_HARDWARE_CORRUPTED_PAGE"
+  />
+  <figcaption className='text-center'>The BSOD screen I'm getting, and the error message sometimes changes</figcaption>
+</figure>
+
+This, of course, very annoying to me. I searched everywhere for a solution, but couldn't found someone that had the same issue as me. I ran memory test, and it didn't show any error. I analyzed the crashdump but found nothing helpful. I also tried to update my BIOS, but the issue still persist.
+
+I thought that perhaps I received *lemon-unit*[^1] RAM, I accepted the fate. I turn down the speed manually to 5400 MT/s, and my PC ran without any issue. Despite not running at its max speed, it's not the end of the world, and I can live with it. Because finally I can work and play games without random crashes.
+
+<figure className="mx-auto w-full max-w-2xl">
+  <img
+    className="w-full h-auto"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776689454/website/ram-issue-blog-post/IMG_20260307_162813005_u1zvc0.jpg"
+    alt="RAM Bios turned down to 5400 MT/s"
+  />
+  <figcaption className='text-center'>My modified RAM settings in BIOS</figcaption>
+</figure>
+
+Recently, ASRock (my motherboard manufacturer) released a new BIOS update. It mentioned about 'Improved memory compatibility'. Huh, this is their first time mentioning a fix about memory in their [bios updates](https://www.asrock.com/MB/AMD/A620M-HDVM.2/index.asp#BIOS) history. I put high hopes on it, hoping that it will fix my RAM issue, so I updated my BIOS. I enabled the EXPO profile again.
+
+<figure>
+  <img
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776689959/website/ram-issue-blog-post/Screenshot_2026-04-20_205607_ueznee.png"
+    alt="ASrock bios update page"
+  />
+  <figcaption className='text-center'>ASRock BIOS update page for my motherboard</figcaption>
+</figure>
+
+After few days of gaming, programming, and doing some work, I didn't encounter anymore crashes or hangs. I can say that the issue is finally fixed! I can run my RAM at its advertised speed without any random crash or hanging issue. I'm so happy that I can finally use my RAM at its full potential. 
+
+<figure className="mx-auto w-full max-w-3xl">
+  <img
+    className="w-full h-auto"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776690767/website/ram-issue-blog-post/Screenshot_2026-04-20_211148_luaq0v.png"
+    alt="RAM Task Manager showing 6000 MT/s speed"
+  />
+  <figcaption className='text-center'>RAM Task Manager showing 6000 MT/s speed</figcaption>
+</figure>
+
+This is a huge relief for me, and I'm glad that ASRock finally fixed this issue in their latest BIOS update. Turns out this was a motherboard issue after all.
+
+End~
+
+
+[^1]: Lemon-unit is a term used to describe a defective vehicle shortly after purchase. In this context, I used it to describe my RAM that is not working properly at its advertised speed.
