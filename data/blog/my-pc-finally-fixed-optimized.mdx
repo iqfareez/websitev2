@@ -111,5 +111,47 @@ This is a huge relief for me, and I'm glad that ASRock finally fixed this issue 
 
 End~
 
+## Change automatic SWAP drive settings
+
+When doing heavy work, such as compiling code with the emulator running, my PC will stutter. The UI will freeze including the mouse cursor. I have to wait for few seconds before it can respond again, but half the time, it never responded again and I had to force shutdown it. 
+
+This happens somewhat rare, but when it happens, it is very annoying. One time I managed to open Task Manager while the stuttering is happening, I found out that my disk usage is at 100%. And who's using it? The **System**. Huh?
+
+I looked up online, one Reddit post says it's normal because Windows might doing maintainance in the background, eg defragmenting the disk, or updates. But I don't think that's the case. It only happens when I'm doing heavy work, even after I restarted my PC!
+
+Again, I turned to an LLM to ask for help. It it gives me some possible causes, the number 3 stands out to me.
+
+<figure className="mx-auto w-full max-w-3xl">
+  <img
+    className="w-full h-auto"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776726889/website/ram-issue-blog-post/chatgpt-ram-pressure_czmhck.png"
+    alt="ChatGPT response about possible causes of high disk usage by System process, with number 3 being 'Paging on HDD + Memory pressure'"
+  />
+  <figcaption className='text-center'>One of the ChatGPT response about possible causes of high disk usage by System process</figcaption>
+</figure>
+
+Now, how do I prevent Windows from using my HDD as a SWAP? You can follow this steps:
+
+1. Search `View advanced system settings`. Open it.
+2. Go to `Advanced` tab, and click `Settings` in the `Performance` section.
+3. Go to `Advanced` tab, and click `Change` in the `Virtual memory` section.
+4. Uncheck `Automatically manage paging file size for all drives`. This is the culprit that causing the issue. Windows is using the HDD. I think it looks the most free space available.
+
+You need to select which drive you allow Windows to use as a SWAP. I select only my SSD drive.
+
+<figure className="mx-auto w-full max-w-lg">
+  <img
+    className="w-full h-auto"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776727325/website/ram-issue-blog-post/virtual-memory-windows-not-managed-automatically_z6r1gp.png"
+    alt="Virtual memory settings in Windows"
+  />
+  <figcaption className='text-center'>This is my settings that fixes the issue.</figcaption>
+</figure>
+
+After I restarted the PC. I recompiled my app. The compilation success and I didn't encounter any stuttering or freezing issue. I can say that the issue is finally fixed! 
+
+So, here's what I think is originally happening. When I'm compiling a codebase, my RAM is under pressure (my RAM is only 16 GB). Windows will try to use the SWAP drive to offload some of the data from RAM to the disk. However, since my SWAP drive is on an HDD, it will cause high disk usage and stuttering.
+
+End~
 
 [^1]: Lemon-unit is a term used to describe a defective vehicle shortly after purchase. In this context, I used it to describe my RAM that is not working properly at its advertised speed.
