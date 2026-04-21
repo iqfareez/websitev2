@@ -27,7 +27,7 @@ Take a look at my Task Manager screenshot below.
   <figcaption className='text-center'>Ram before enabling dGPU only mode.</figcaption>
 </figure>
 
-Look at the **Hardware reserved** section, it taking 936 Mb of my RAM. While it is not that big, but in this econonomy where all computer components are ridiculously expensive, **0.9 Gb space** is still a space that I don't want to waste. I understand that hardware reserved is often for the integrated GPU. But since my system has a dedicated GPU, why leave it unused? So, I wanted to reclaim that space.
+Look at the **Hardware reserved** section, it taking 936 Mb of my RAM. While it is not that big, but in this economy where all computer components are ridiculously expensive, **0.9 Gb space** is still a space that I don't want to waste. I understand that hardware reserved is often for the integrated GPU. But since my system has a dedicated GPU, why leave it unused? So, I wanted to reclaim that space.
 
 I searched online and found one post from [Reddit](https://www.reddit.com/r/ASRock/comments/1ij6840/i_fixed_my_hardware_reserved_ram_problem/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button). I could not find the specific setting the OP mentioned. So, I turned to an LLM to guide me. Below are steps to disable iGPU and claim back a bit of the hardware reserved RAM space. The steps might be specific to my motherboard, the ASRock A620M-HDVM.2, but you can try to find similar settings in your BIOS if you have the same issue.
 
@@ -113,6 +113,10 @@ End~
 
 ## Change automatic SWAP drive settings
 
+<Admonition type="note">
+  In this section, I will call Windows Pagefile as SWAP, the one that Linux uses.
+</Admonition>
+
 When doing heavy work, such as compiling code with the emulator running, my PC will stutter. The UI will freeze including the mouse cursor. I have to wait for few seconds before it can respond again, but half the time, it never responded again and I had to force shutdown it. 
 
 This happens somewhat rare, but when it happens, it is very annoying. One time I managed to open Task Manager while the stuttering is happening, I found out that my disk usage is at 100%. And who's using it? The **System**. Huh?
@@ -121,7 +125,7 @@ I looked up online, one Reddit post says it's normal because Windows might doing
 
 Again, I turned to an LLM to ask for help. It it gives me some possible causes, the number 3 stands out to me.
 
-<figure className="mx-auto w-full max-w-3xl">
+<figure className="mx-auto w-full max-w-2xl">
   <img
     className="w-full h-auto"
     src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776726889/website/ram-issue-blog-post/chatgpt-ram-pressure_czmhck.png"
@@ -150,8 +154,26 @@ You need to select which drive you allow Windows to use as a SWAP. I select only
 
 After I restarted the PC. I recompiled my app. The compilation success and I didn't encounter any stuttering or freezing issue. I can say that the issue is finally fixed! 
 
-So, here's what I think is originally happening. When I'm compiling a codebase, my RAM is under pressure (my RAM is only 16 GB). Windows will try to use the SWAP drive to offload some of the data from RAM to the disk. However, since my SWAP drive is on an HDD, it will cause high disk usage and stuttering.
+So, here's what I think is originally happening. When I'm compiling a codebase, my RAM is under pressure, i.e. when a lot of data goes in and out. Windows will try to use the SWAP drive to offload some of the data from RAM to the disk.
 
-End~
+Unfortunately, Windows is 'smart' to choose my HDD as the SWAP drive, for whatever reason. Due to HDD is slower compared to SSD, it will cause high disk usage as the IO operation goes which slows the whole computer down.
+
+Illustration below shows how the SWAP/Pagefile system works. So, when the computer feels short in RAM, it will look for a drive to offload the RAM data to the disk. 
+
+<figure className="mx-auto w-full max-w-4xl">
+  <img
+    className="block w-full h-auto dark:hidden"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776779809/website/ram-issue-blog-post/swap-work-how-ilustration_c554dj.svg"
+    alt="Illustration showing how SWAP/Pagefile system works, with RAM and Disk, and how data is moved between them when RAM is under pressure"
+  />
+  <img
+    className="hidden w-full h-auto dark:block"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776779435/website/ram-issue-blog-post/swap-work-how-ilustration-dark_k9pmqa.svg"
+    alt="Illustration showing how SWAP/Pagefile system works, with RAM and Disk, and how data is moved between them when RAM is under pressure"
+  />
+  <figcaption className='text-center'>This is how a SWAP/Pagefile system works, in essence.</figcaption>
+</figure>
+
+Thanks for reading this post, I hope it can help you if you have the same issue as me. If you have any question, feel free to leave a comment below.
 
 [^1]: Lemon-unit is a term used to describe a defective vehicle shortly after purchase. In this context, I used it to describe my RAM that is not working properly at its advertised speed.
