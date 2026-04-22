@@ -10,7 +10,7 @@ export default function Footer() {
             <Link href="/about">{siteMetadata.author}</Link>
           </div>
           <div>{` • `}</div>
-          <div>{`© 2025`}</div>
+          <div>{`© 2026`}</div>
         </div>
       </div>
     </footer>
