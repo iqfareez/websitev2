@@ -1,6 +1,6 @@
 ---
 title: My PC issues is finally fixed & optimized
-summary: My PC build finally can run with its advertised EXPO profile, reclaimed a bit of my hardware reserved RAM space. Also, my PC no longer hangs after changing this one settings.
+summary: Prevent PC hangs when doing intensive tasks by changing this one settings. Also, reclaimed a bit of my hardware reserved RAM space. But there is one issue that I've yet to find the solution.
 date: '2026-04-28'
 images: ['/static/blog/my-pc-finally-fixed-optimized/meta-my-pc-finally-fixed-optimized.jpg']
 draft: false
@@ -11,8 +11,8 @@ authors: ['default']
 
 In this post, I'll breakdown **three** fixes/optimization that I recently did to my PC. You can jump to any section anytime:
 - [Reclaiming hardware reserved RAM space](#reclaiming-hardware-reserved-ram-space)
-- [Update BIOS fixes RAM issues](#update-bios-fixes-ram-issues)
 - [Change automatic SWAP drive settings](#change-automatic-swap-drive-settings)
+- [Unresolved issue: Unable to run RAM at its advertised speed](#unresolved-issue-unable-to-run-ram-at-its-advertised-speed)
 
 ## Reclaiming hardware reserved RAM space
 
@@ -24,12 +24,12 @@ Take a look at my Task Manager screenshot below.
     src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776691232/website/ram-issue-blog-post/ram-hardware-reserved-before_n2j86j.png"
     alt="Task Manager screenshot showing hardware reserved RAM space before enabling dGPU only mode"
   />
-  <figcaption className='text-center'>Ram before enabling dGPU only mode.</figcaption>
+  <figcaption className='text-center'>My RAM section in task manager</figcaption>
 </figure>
 
-Look at the **Hardware reserved** section, it taking 936 Mb of my RAM. While it is not that big, but in this economy where all computer components are ridiculously expensive, **0.9 Gb space** is still a space that I don't want to waste. I understand that hardware reserved is often for the integrated GPU. But since my system has a dedicated GPU, why leave it unused? So, I wanted to reclaim that space.
+Look at the **Hardware reserved** section, it taking 936 Mb of my RAM. While it is not that big, but if it's left unused, better if we could utilize it. After all, in this economy where all computer components are ridiculously expensive, **0.9 Gb space** is still a space that I don't want to waste. I understand that hardware reserved is often for the integrated GPU. But since my system has already a dedicated GPU, so the reserved space is no longer needed that much. So, I wanted to reclaim that space.
 
-I searched online and found one post from [Reddit](https://www.reddit.com/r/ASRock/comments/1ij6840/i_fixed_my_hardware_reserved_ram_problem/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button). I could not find the specific setting the OP mentioned. So, I turned to an LLM to guide me. Below are steps to disable iGPU and claim back a bit of the hardware reserved RAM space. The steps might be specific to my motherboard, the ASRock A620M-HDVM.2, but you can try to find similar settings in your BIOS if you have the same issue.
+I searched online and found one post from [Reddit](https://www.reddit.com/r/ASRock/comments/1ij6840/i_fixed_my_hardware_reserved_ram_problem/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button). I could not find the specific setting the OP mentioned. So, I turned to an LLM to guide me. Below are steps to disable iGPU and claim back a bit of the hardware reserved RAM space. The steps might be specific to my motherboard, the [ASRock A620M-HDVM.2](https://www.asrock.com/MB/AMD/A620M-HDVM.2/index.asp), but you can try to find similar settings in your BIOS if you have the same issue.
 
 1. Boot into BIOS settings.
 2. Go to the **Advanced** tab.
@@ -60,7 +60,7 @@ Save the settings and exit BIOS. After booting into Windows, check your Task Man
 
 I hope RAM prices would drop soon. End~
 
-## Update BIOS fixes RAM issues
+## Unresolved issue: Unable to run RAM at its advertised speed
 
 For the longest time since I built my first PC on 2024, I cannot configure my RAM to run at its advertised speed. I have a single 16 GB RAM Adata XPG Lander DDR5 that is advertised to run at 6000 MT/s. It have an EXPO profile that I can enable in the BIOS. However, when I activate the profile, my PC will randomly crashes or stopped responding while using it. I had to force shutdown it before starting it again. 
 
