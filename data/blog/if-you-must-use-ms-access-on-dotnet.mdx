@@ -1,0 +1,84 @@
+---
+title: If you *must* use Microsoft Access on .NET
+date: '2026-06-01'
+tags: ['.NET', 'Microsoft Access', 'UCanAccess', 'IKVM']
+draft: false
+summary: I never imagine myself write Java code inside .NET? But desperate times call for desperate measures. Here I setup Microsoft Access on .NET app using UCanAccess & IKVM so it can run cross platform. 
+images: ['/static/blog/if-u-must-use-ms-access/meta-blog-ucanaccess-ikvm.png']
+layout: PostSimple
+authors: ['default']
+---
+
+I am writing a .NET Web API App, and one of the requirements is to generate an Access database file (.mdb) with data. Ok, no problem, I can use OleDb connection to do that, so I did just that. Tested the app and it works as expected on my machine. However, our deployments are on Linux, so I tested the app using Docker as well. At this moment I realized that the Microsoft Access thingy doesn't work at all on Linux! 
+
+After reading something online, there are few options that I can try; 1. Migrate to other database (pgsql, mysql etc,) - not very useful at all. 2. Use [mdb-tools](https://github.com/mdbtools/mdbtools) - Tested, this tool can be used to read from Access, but not write to it. 3. Deploy a access-connector-kinda-app on Windows container, and let my .NET app call it via API to do whatever it need to do - Well this might works, but added complexity to maintain different apps. 4. Use [UCanAccess](https://ucanaccess.sourceforge.net/site.html), which is a Java library that can read/write Access database files.
+
+I actually used UCanAccess previously, but not directly. UCanAccess is included in Dbeaver, the database management tool that I use, so it proven to be able to write/read the Access file. Tested both on Windows and Ubuntu (WSL) to ensure it works cross platform; it is. Now, I **just** need to make it work on my .NET app.
+
+But, ucanaccess is a Java library, so how do we use it in .NET? Meet [IKVM](https://www.ikvm.net/), a tool that allows you to translate Jar file to a .NET assembly (.dll).
+
+First, you'll need to UCanAccess Jar files. You can get them from the [UCanAccess download page](https://sourceforge.net/projects/ucanaccess/files/) (Download the `*bin.zip`, not `*-src.zip`, ). The version as of writing is `5.0.1`. Extract the file.
+
+Before letting IKVM doing the conversion, we need to merge all the Jar files into one Jar file, so we only need to convert one file instead of 5. 
+
+Run `jar` in your terminal to see if you have JDK installed. If not, run the command below to install it.
+
+Debian/Ubuntu:
+
+```bash
+sudo apt install default-jdk
+```
+
+macos:
+
+```bash
+brew install java
+echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+Then, `cd` into the `UCanAccess-5.0.1.bin` folder, and run the command below to create 'fat' jar file.
+
+```bash
+mkdir merged && cd merged && jar xf ../ucanaccess-5.0.1.jar && jar xf ../loader/ucanload.jar && for j in ../lib/*.jar; do jar xf "$j"; done && jar cf ../ucanaccess-all.jar . && cd .. && rm -rf merged
+```
+
+This command will create a new file called `ucanaccess-all.jar` in the same folder. This file contains all the classes from the original UCanAccess Jar files.
+
+<figure>
+    <img src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1777312438/website/ucanaccess-ikvm-dotnet/Screenshot_2026-04-28_at_1.53.05_AM_lfdchk.png" />
+    <figcaption className='text-center'>UCanAccess Jar files</figcaption>
+</figure>
+
+Now on your .NET project. First, install [IKVM](https://www.nuget.org/packages/ikvm/) from Nuget. Put the file `ucanaccess-all.jar` somewhere in your project folder, then reference it in your `.csproj` file like below:
+
+```xml
+<ItemGroup>
+  <IkvmReference Include="UCanAccessBin\UCanAccess-5.0.1.bin\ucanaccess-all.jar">
+    <AssemblyName>ucanaccess</AssemblyName>
+    <AssemblyVersion>5.0.1.0</AssemblyVersion>
+    <AssemblyFileVersion>5.0.1.0</AssemblyFileVersion>
+  </IkvmReference>
+</ItemGroup>
+```
+When you build the project, IKVM will convert the the jar file into a `ucanaccess.dll` file in the output folder. You can then reference this dll in your code and use it to read/write Access database files.
+
+Basic usage example to connect the database.
+
+```csharp
+// load ucanaccess dll
+ikvm.runtime.Startup.addBootClassPathAssembly(System.Reflection.Assembly.Load("ucanaccess"));
+
+// Load driver
+java.lang.Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+
+// build the connection string
+var accessPath = "/Users/fareez/Downloads/Access_sample.mdb";
+var connectionString = $"jdbc:ucanaccess://{accessPath}";
+var connection = java.sql.DriverManager.getConnection(connectionString);
+
+// do something with the connection
+// var statement = connection.createStatement();
+```
+
+That's all. Please see [this repo](https://github.com/iqfareez/NetUCanAccessApp) for full code example and results. It's a bit peculiar to see Java code inside .NET, but this the only way to use UCanAccess in a .NET codebase. I hope this can help you if you are in the same situation as me.
