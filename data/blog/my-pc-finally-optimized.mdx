@@ -73,22 +73,13 @@ I hope RAM prices will drop soon. End~
 
 When doing heavy work, such as compiling code with the emulator running, **my PC would stutter**. The UI would freeze, including the mouse cursor. I had to wait for a few seconds before it responded again, but half the time, it never responded and I had to force it to shut down.
 
-This happened somewhat rarely, but when it did, it was very annoying. One time, I managed to open Task Manager while the stuttering was happening, and I found that my disk usage was at 100%. And who was using it? The **`System`** process. Huh?
+Although infrequent, the freezes were severe. During one incident, Task Manager showed 100% disk usage. And who was using it? The **`System`** process. Huh?
 
 I looked it up online, and one Reddit post said it was normal because Windows might be doing maintenance in the background, e.g., defragmenting the disk or installing updates. But I don't think that's the case. It happened everytime when I was doing heavy work, even after I restarted my PC!
 
-Again, I turned to an LLM to ask for help. It gave me some possible causes, and number 3 stood out to me.
+Again, I turned to an LLM to ask for help. It gave me some possible causes, and I think one on the reason hit a bullseye:
 
-<figure className="mx-auto w-full max-w-2xl">
-  <img
-    className="h-auto w-full"
-    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1776726889/website/ram-issue-blog-post/chatgpt-ram-pressure_czmhck.png"
-    alt="ChatGPT response about possible causes of high disk usage by System process, with number 3 being 'Paging on HDD + Memory pressure'"
-  />
-  <figcaption className="text-center">
-    One of ChatGPT's responses about possible causes of high disk usage by the System process
-  </figcaption>
-</figure>
+> ...If pagefile is on this HDD, Windows may be swapping memory to that slow drive, making everything worse.
 
 Now, how do I prevent Windows from using my HDD as SWAP? You can follow these steps:
 
@@ -108,7 +99,7 @@ You need to select which drive you allow Windows to use as SWAP. I selected only
   <figcaption className="text-center">These are the settings that fixed the issue.</figcaption>
 </figure>
 
-After restarting the PC, I try to see if the issue is still reprocible by running Flutter build (basically a code compilation to trigger high memory usage). The compilation was successful, and **I didn't encounter any stuttering** or freezing issues. I can say that the issue is finally fixed!
+After restarting the PC, I try to see if the issue is still reproducible by running Flutter build (basically a code compilation to trigger high memory usage). The compilation was successful, and **I didn't encounter any stuttering** or freezing issues. I can say that the issue is finally fixed!
 
 So, here's what I think originally happened. When I'm compiling a codebase, my RAM is under pressure, that is, a lot of data is moving in and out. Windows will try to use the SWAP drive to offload some of the data from RAM to the disk.
 
@@ -137,10 +128,9 @@ End~
 ## Unresolved issue: Unable to run RAM at its advertised speed
 
 <Admonition type="note" >
-I thought I had solved this specific issue in this section. But while finalizing this article, my PC crashed with a similar error to the one described in this issue. Yeah... very sad.
-I prevented it from crashing again by tuning down the RAM speed to 5600 MHz. No more crashes after that. The computer is still fast, and I assume the speed difference is negligible anyway, so I'm good.
+I thought I had solved this issue, but my PC crashed again while I was finalizing this article. I prevented further crashes by lowering the RAM speed to 5600 MT/s. The computer is still fast, and the performance difference is negligible.
 
-I'm keeping the text below as is nevertheless, for future reference.
+The text below documents the BIOS update and the temporary improvement it provided.
 
 </Admonition>
 
@@ -170,7 +160,7 @@ I thought that perhaps I had received a _lemon unit_[^1] RAM module, so I accept
   <figcaption className="text-center">My modified RAM settings in BIOS</figcaption>
 </figure>
 
-Recently, ASRock (my motherboard manufacturer) released a new BIOS update. It mentioned 'Improved memory compatibility'. Huh, this was the first time they had mentioned a memory-related fix in their [BIOS update history](https://www.asrock.com/MB/AMD/A620M-HDVM.2/index.asp#BIOS). I put high hopes in it, hoping that it would fix my RAM issue, so I updated my BIOS. I enabled the EXPO profile again.
+Recently, ASRock (my motherboard manufacturer) released a BIOS update mentioning 'Improved memory compatibility'. This was the first memory-related fix listed in its [BIOS update history](https://www.asrock.com/MB/AMD/A620M-HDVM.2/index.asp#BIOS), so I updated the BIOS and enabled the EXPO profile again.
 
 <figure>
   <img
@@ -180,7 +170,7 @@ Recently, ASRock (my motherboard manufacturer) released a new BIOS update. It me
   <figcaption className="text-center">ASRock BIOS update page for my motherboard</figcaption>
 </figure>
 
-After a few days of gaming, programming, and doing some work, I hadn't encountered any more crashes or hangs. I can say that the issue is finally fixed! I can run my RAM at its advertised speed without any random crashes or hangs. I'm so happy that I can finally use my RAM at its full potential.
+For a few days, I could use the RAM at its advertised 6000 MT/s speed without crashes or hangs. However, the problem eventually returned, so the BIOS update did not provide a permanent fix.
 
 <figure className="mx-auto w-full max-w-3xl">
   <img
@@ -190,8 +180,6 @@ After a few days of gaming, programming, and doing some work, I hadn't encounter
   />
   <figcaption className="text-center">RAM Task Manager showing 6000 MT/s speed</figcaption>
 </figure>
-
-This is a huge relief for me, and I'm glad that ASRock finally fixed this issue in its latest BIOS update. It turns out this was a motherboard issue after all.
 
 End~
 
