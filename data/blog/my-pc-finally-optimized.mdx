@@ -71,11 +71,11 @@ I hope RAM prices will drop soon. End~
   In this section, I may refer to the Windows page file as SWAP interchangeably.
 </Admonition>
 
-When doing heavy work, such as compiling code with the emulator running, my PC would stutter. The UI would freeze, including the mouse cursor. I had to wait for a few seconds before it responded again, but half the time, it never responded and I had to force it to shut down.
+When doing heavy work, such as compiling code with the emulator running, **my PC would stutter**. The UI would freeze, including the mouse cursor. I had to wait for a few seconds before it responded again, but half the time, it never responded and I had to force it to shut down.
 
-This happened somewhat rarely, but when it did, it was very annoying. One time, I managed to open Task Manager while the stuttering was happening, and I found that my disk usage was at 100%. And who was using it? The **System**. Huh?
+This happened somewhat rarely, but when it did, it was very annoying. One time, I managed to open Task Manager while the stuttering was happening, and I found that my disk usage was at 100%. And who was using it? The **`System`** process. Huh?
 
-I looked it up online, and one Reddit post said it was normal because Windows might be doing maintenance in the background, e.g., defragmenting the disk or installing updates. But I don't think that's the case. It only happened when I was doing heavy work, even after I restarted my PC!
+I looked it up online, and one Reddit post said it was normal because Windows might be doing maintenance in the background, e.g., defragmenting the disk or installing updates. But I don't think that's the case. It happened everytime when I was doing heavy work, even after I restarted my PC!
 
 Again, I turned to an LLM to ask for help. It gave me some possible causes, and number 3 stood out to me.
 
@@ -108,7 +108,7 @@ You need to select which drive you allow Windows to use as SWAP. I selected only
   <figcaption className="text-center">These are the settings that fixed the issue.</figcaption>
 </figure>
 
-After restarting the PC, I recompiled my app. The compilation was successful, and I didn't encounter any stuttering or freezing issues. I can say that the issue is finally fixed!
+After restarting the PC, I try to see if the issue is still reprocible by running Flutter build (basically a code compilation to trigger high memory usage). The compilation was successful, and **I didn't encounter any stuttering** or freezing issues. I can say that the issue is finally fixed!
 
 So, here's what I think originally happened. When I'm compiling a codebase, my RAM is under pressure, that is, a lot of data is moving in and out. Windows will try to use the SWAP drive to offload some of the data from RAM to the disk.
 
@@ -132,7 +132,7 @@ The illustration below shows how the SWAP/page file system works. When the compu
   </figcaption>
 </figure>
 
-Thanks for reading this post. I hope it can help you if you have the same issue as me. If you have any questions, feel free to leave a comment below.
+End~
 
 ## Unresolved issue: Unable to run RAM at its advertised speed
 
@@ -194,5 +194,9 @@ After a few days of gaming, programming, and doing some work, I hadn't encounter
 This is a huge relief for me, and I'm glad that ASRock finally fixed this issue in its latest BIOS update. It turns out this was a motherboard issue after all.
 
 End~
+
+___
+
+Thanks for reading this post. I hope it can help you if you have the same issue as me. If you have any questions, feel free to leave a comment below.
 
 [^1]: Lemon unit is a term used to describe a defective vehicle shortly after purchase.
