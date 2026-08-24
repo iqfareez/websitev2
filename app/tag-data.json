@@ -12,6 +12,7 @@
   "docker": 1,
   "git": 1,
   "github": 1,
+  "pc-build": 1,
   "android": 2,
   "adb": 1,
   "raspberry-pi": 1,
