@@ -1,120 +1,82 @@
 ---
 title: Spinning up MySQL Server & PhpMyAdmin container with Docker
 date: '2024-10-1'
-lastmod: '2026-3-5'
+lastmod: '2026-6-11'
 tags: ['tutorial', 'mysql', 'docker']
 draft: false
-summary: Create MySQL & PhpMyAdmin instances within minutes!
+summary: Create MySQL & PhpMyAdmin instances for development using docker compose within minutes!
 images: ['/static/blog/setup-docker-mysql/meta-cover.png']
 layout: PostSimple
 authors: ['default']
 ---
 
-Setting up MySQL and PhpMyAdmin doesn't have to be a hassle. With Docker, you can launch both 
-in just a few commands, creating a powerful database environment right on your machine. In this guide, I'll show you 
-how to quickly get everything running, making your development process smoother and faster. Let's get started!
+In this guide, I'll show you how to quickly get a **MySQL** database and **phpMyAdmin** (the database management tool) running, making your development process smoother and faster. Let's get started!
 
-## Prerequisites
+Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) if you haven't already. It makes it easier to interact with Docker using GUI or CLI. I'll be using **`docker compose`**, which I think is the easiest way to get the services up and running.
 
-Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) if you haven't already. It makes it easier to
-interact with Docker using GUI or CLI.
+## Create the stacks
 
-## Create containers
+Create a new file `compose.yml` and put the following content in it. I usually put it in a specified folder to store all my docker compose files, for example: `E:\Stacks\mysql-pma\compose.yml`.
 
-**Update March 2026:** I've made a docker compose file:
-
-```yaml:docker-compose.yml
+```yaml:compose.yml
+name: mysql-phpmyadmin
 services:
-  mysql-container:
+  mysql:
     image: mysql:latest
+    restart: unless-stopped
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
     ports:
       - "3306:3306"
-    networks:
-      - mynetwork1
+    volumes:
+      - mysql-data:/var/lib/mysql
 
-  phpmyadmin-container:
-    image: phpmyadmin
+  phpmyadmin:
+    image: phpmyadmin:latest
     environment:
-      PMA_HOST: mysql-container
+      PMA_HOST: mysql
       PMA_PORT: 3306
     ports:
       - "8080:80"
-    networks:
-      - mynetwork1
     depends_on:
-      - mysql-container
+      - mysql
 
-networks:
-  mynetwork1:
-    driver: bridge
+volumes:
+  mysql-data:
 ```
 
-To start the containers, simply run the following command in the terminal. The services should be available immediately.
+To start the containers, simply run the following command in the terminal. The services should be available immediately. That's it, simple, isn't it!
 
 ```bash
 docker compose up -d
 ```
 
-Read on for the details, or if you don't prefer using Docker Compose.
-
-(1) Open terminal, run the command to create a Docker **network**.
-
-```bash
-docker network create mynetwork1
-```
-
-You can change the network name `mynetwork1` to your own, but make sure all the commands that follow use the same name.
-
-<Admonition type="note">
-The `--network` flag is used to create and manage container networks. When you create 
-containers on the same custom Docker network, they can communicate with each other using 
-container names as hostnames.
-</Admonition>
-
-(2) Next, create a MySQL container.
-
-```bash
-docker run -d --name mysql-container --network mynetwork1 -e MYSQL_ALLOW_EMPTY_PASSWORD=true -p 3306:3306 mysql:latest
-```
-
-You'll need to specify one of the following as an **environment variable** (the `-e` flag):
-- **MYSQL_ROOT_PASSWORD**
-- **MYSQL_ALLOW_EMPTY_PASSWORD** (Used in the example above to allow login to MySQL without a password)
-- **MYSQL_RANDOM_ROOT_PASSWORD**
-
-Read more about MySQL environment [here](https://hub.docker.com/_/mysql#:~:text=tag%20%2D%2Dverbose%20%2D%2Dhelp-,Environment%20Variables,-When%20you%20start).
-
-(3) Then, create a PhpMyAdmin container instance.
-
-```bash
-docker run -d --name phpmyadmin-container --network mynetwork1 -e PMA_HOST=mysql-container -e PMA_PORT=3306 -p 8080:80 phpmyadmin
-```
-
-In the `PMA_HOST` variable above, we set the name of the MySQL container we have created above.
-
-Now, both of the containers should be running. You can check their status by running `docker ps`.
-```bash
-CONTAINER ID   IMAGE          COMMAND                  CREATED        STATUS              PORTS                               NAMES
-11db916fa868   phpmyadmin     "/docker-entrypoint.…"   10 hours ago   Up About a minute   0.0.0.0:8080->80/tcp                phpmyadmin-container
-1ed0cec416c5   mysql:latest   "docker-entrypoint.s…"   10 hours ago   Up 22 seconds       0.0.0.0:3306->3306/tcp, 33060/tcp   mysql-container
-```
+![docker desktop screenshot stack](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1781189989/website/docker-mysql/1dcdfde5-026f-45ed-b924-c6bc38952331.png)
 
 Now, let's try to log into PhpMyAdmin. Launch http://localhost:8080 on your web browser. If you didn't specify the username
 in the step above, the default one will be `root`.
 
+In the above `compose.yml` file, I use `MYSQL_ALLOW_EMPTY_PASSWORD`. This is fine for local development purposes. If you prefer to have password protection for your database, read the [documentation](https://hub.docker.com/_/mysql#environment-variables) for details. But, in essence, here are the alternative options to choose from:
+- `MYSQL_ROOT_PASSWORD` : Specify the password for the MySQL root user.
+- `MYSQL_RANDOM_ROOT_PASSWORD` : A random password will be generated for the MySQL root user and printed to stdout.
+
 ![phpMyAdmin Dashboard](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1727601196/website/docker-mysql/Screenshot_2024-09-29_at_6.59.26_AM_lmgucy.png)
+
+## Update the stacks
+
+Later on, if you want to update the containers to use latest image versions, run the following command to pull the latest images and restart them. Your current data in the database will not be lost even after updates because we already set up a volume to persist the data.
+
+```bash
+docker compose pull && docker compose up -d
+```
 
 ## Import existing database to MySQL
 
-You can now interact with the database including importing an existing `.sql` file using PhpMyAdmin interface. But sometimes, if you 
-upload a large file, an error will occur like below.
+You can now interact with the database, including importing existing `.sql` files through the PhpMyAdmin interface. But sometimes, if you upload a large file, an error may occur like the one shown below.
 
 ![PhpMyAdmin Import error](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1727601197/website/docker-mysql/Screenshot_2024-09-29_at_6.47.54_AM_ghjfgn.png)
 
-To fix this kind of error, you may need to inspect the PhpMyAdmin container and modify some php configs etc. But what 
-I found easier is to use **mysql CLI** from the mysql container. Here's how you can do it using Docker Desktop GUI.
+To fix this kind of error, you may need to inspect the PhpMyAdmin container and modify various PHP configurations. However, what I found easier was to use the **MySQL CLI** from the MySQL container. Here's how you can do it using Docker Desktop GUI.
 
 Open the `mysql-container` container.
 
@@ -124,7 +86,7 @@ Navigate to the **Files** tab.
 
 ![Docker Files tab](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1727601197/website/docker-mysql/Screenshot_2024-09-29_at_6.48.54_AM_awr88n.png)
 
-It will show the container's filesystem files. Find the `home` folder, right-click on it and choose <kbd>Import</kbd>.
+It will show the container's filesystem. Find the `home` folder, right-click on it, and choose <kbd>Import</kbd>.
 
 ![Docker files import](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1727601195/website/docker-mysql/Screenshot_2024-09-29_at_6.50.04_AM_lad5k1.png)
 
@@ -138,7 +100,7 @@ Now, navigate to the **Exec** tab and run the following command:
 mysql -u root -p smartquran < home/smartquran.sql
 ```
 
-The `-p` flag is the table name, you can create one using PhpMyAdmin console.
+Here, `smartquran` is the database name. You can create it using the PhpMyAdmin console if it doesn't already exist.
 
 ![Docker Exec mysql](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1727601196/website/docker-mysql/Screenshot_2024-09-29_at_6.58.05_AM_kqlbua.png)
 
