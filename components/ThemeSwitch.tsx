@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment } from 'react'
+import { Fragment, useSyncExternalStore } from 'react'
 import { useTheme } from 'next-themes'
 import {
   Menu,
@@ -56,7 +56,11 @@ const Blank = () => <svg className="h-6 w-6" />
 
 const ThemeSwitch = () => {
   const { theme, setTheme, resolvedTheme } = useTheme()
-  const mounted = Boolean(resolvedTheme)
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  )
 
   return (
     <div className="flex items-center">
