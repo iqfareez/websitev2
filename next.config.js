@@ -67,6 +67,7 @@ const nextConfig = () => {
   return plugins.reduce((acc, next) => next(acc), {
     output,
     basePath,
+    cacheComponents: true,
     reactStrictMode: true,
     trailingSlash: false,
     turbopack: {

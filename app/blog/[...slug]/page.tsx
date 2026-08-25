@@ -13,6 +13,7 @@ import PostBanner from '@/layouts/PostBanner'
 import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
+import { Suspense } from 'react'
 
 const defaultLayout = 'PostLayout'
 const layouts = {
@@ -77,7 +78,15 @@ export const generateStaticParams = async () => {
   return allBlogs.map((p) => ({ slug: p.slug.split('/').map((name) => decodeURI(name)) }))
 }
 
-export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
+export default function Page(props: { params: Promise<{ slug: string[] }> }) {
+  return (
+    <Suspense fallback={null}>
+      <BlogPostPage params={props.params} />
+    </Suspense>
+  )
+}
+
+async function BlogPostPage(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
   // Filter out drafts in production

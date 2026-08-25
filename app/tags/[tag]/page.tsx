@@ -6,6 +6,7 @@ import { allBlogs } from 'contentlayer/generated'
 import tagData from 'app/tag-data.json'
 import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 
 const POSTS_PER_PAGE = 5
 
@@ -34,7 +35,15 @@ export const generateStaticParams = async () => {
   }))
 }
 
-export default async function TagPage(props: { params: Promise<{ tag: string }> }) {
+export default function TagPage(props: { params: Promise<{ tag: string }> }) {
+  return (
+    <Suspense fallback={null}>
+      <TagContent params={props.params} />
+    </Suspense>
+  )
+}
+
+async function TagContent(props: { params: Promise<{ tag: string }> }) {
   const params = await props.params
   const tag = decodeURI(params.tag)
   const title = tag[0].toUpperCase() + tag.split(' ').join('-').slice(1)
