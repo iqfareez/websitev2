@@ -53,6 +53,9 @@ importers:
       image-size:
         specifier: 2.0.2
         version: 2.0.2
+      katex:
+        specifier: ^0.16.47
+        version: 0.16.47
       keen-slider:
         specifier: ^6.8.6
         version: 6.8.6
