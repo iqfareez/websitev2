@@ -1,6 +1,7 @@
-const { withContentlayer } = require('next-contentlayer2')
+import { withContentlayer } from 'next-contentlayer2'
+import bundleAnalyzer from '@next/bundle-analyzer'
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })
 
@@ -61,17 +62,22 @@ const unoptimized = process.env.UNOPTIMIZED ? true : undefined
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
-module.exports = () => {
+const nextConfig = () => {
   const plugins = [withContentlayer, withBundleAnalyzer]
   return plugins.reduce((acc, next) => next(acc), {
     output,
     basePath,
     reactStrictMode: true,
     trailingSlash: false,
-    pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-    eslint: {
-      dirs: ['app', 'components', 'layouts', 'scripts'],
+    turbopack: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
     },
+    pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
     images: {
       remotePatterns: [
         {
@@ -126,7 +132,7 @@ module.exports = () => {
         },
       ]
     },
-    webpack: (config, options) => {
+    webpack: (config) => {
       config.module.rules.push({
         test: /\.svg$/,
         use: ['@svgr/webpack'],
@@ -136,3 +142,5 @@ module.exports = () => {
     },
   })
 }
+
+export default nextConfig

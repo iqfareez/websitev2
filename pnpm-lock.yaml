@@ -21,10 +21,10 @@ importers:
         specifier: ^0.5.11
         version: 0.5.11(tailwindcss@4.3.3)
       '@tailwindcss/postcss':
-        specifier: ^4.2.1
+        specifier: ^4.3.3
         version: 4.3.3
       '@tailwindcss/typography':
-        specifier: ^0.5.19
+        specifier: ^0.5.20
         version: 0.5.20(tailwindcss@4.3.3)
       body-scroll-lock:
         specifier: ^4.0.0-beta.0
@@ -57,7 +57,7 @@ importers:
         specifier: ^6.8.6
         version: 6.8.6
       mermaid:
-        specifier: ^10.9.5
+        specifier: ^10.9.8
         version: 10.9.8(supports-color@7.2.0)
       next:
         specifier: 16.3.2
@@ -72,7 +72,7 @@ importers:
         specifier: 0.4.1
         version: 0.4.1(@algolia/client-search@5.57.0)(@types/react@19.2.18)(esbuild@0.25.12)(next@16.3.2(@babel/core@7.29.7(supports-color@7.2.0))(@opentelemetry/api@1.9.1)(@types/node@26.2.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(search-insights@2.17.3)(supports-color@7.2.0)
       postcss:
-        specifier: ^8.5.8
+        specifier: ^8.5.26
         version: 8.5.26
       prop-types:
         specifier: ^15.8.1
@@ -129,29 +129,29 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1
       tailwindcss:
-        specifier: ^4.2.1
+        specifier: ^4.3.3
         version: 4.3.3
       unist-util-visit:
         specifier: ^5.1.0
         version: 5.1.0
     devDependencies:
       '@eslint/js':
-        specifier: ^9.39.3
+        specifier: ^9.39.5
         version: 9.39.5
       '@svgr/webpack':
         specifier: ^8.1.0
         version: 8.1.0(supports-color@7.2.0)(typescript@5.9.3)
       '@types/mdx':
-        specifier: ^2.0.13
+        specifier: ^2.0.14
         version: 2.0.14
       '@types/react':
         specifier: 19.2.18
         version: 19.2.18
       '@typescript-eslint/eslint-plugin':
-        specifier: ^8.56.1
+        specifier: ^8.67.0
         version: 8.67.0(@typescript-eslint/parser@8.67.0(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3))(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
       '@typescript-eslint/parser':
-        specifier: ^8.56.1
+        specifier: ^8.67.0
         version: 8.67.0(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.9.3)
       cross-env:
         specifier: ^7.0.3
@@ -169,7 +169,7 @@ importers:
         specifier: ^6.10.2
         version: 6.10.2(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0))
       eslint-plugin-prettier:
-        specifier: ^5.5.5
+        specifier: ^5.5.6
         version: 5.5.6(eslint-config-prettier@9.1.2(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0)))(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0))(prettier@3.9.6)
       globals:
         specifier: ^15.15.0
@@ -181,7 +181,7 @@ importers:
         specifier: ^13.3.0
         version: 13.3.0(supports-color@7.2.0)
       prettier:
-        specifier: ^3.8.1
+        specifier: ^3.9.6
         version: 3.9.6
       prettier-plugin-tailwindcss:
         specifier: ^0.6.14
