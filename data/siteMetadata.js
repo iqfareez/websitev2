@@ -14,7 +14,7 @@ const siteMetadata = {
   // mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'hello@iqfareez.com',
   github: 'https://github.com/iqfareez',
-  twitter: 'https://twitter.com/iqfareez',
+  x: 'https://x.com/iqfareez',
   // facebook: 'https://facebook.com/iqfareez',
   // youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com/in/iqfareez',
@@ -26,7 +26,7 @@ const siteMetadata = {
     umamiAnalytics: {
       // We use an env variable for this site to avoid other users cloning our analytics ID
       umamiWebsiteId: process.env.NEXT_PUBLIC_UMAMI_ID, // e.g. 123e4567-e89b-12d3-a456-426614174000
-      src: 'https://umami.iqfareez.com/script.js',
+      src: 'https://umami.iqfareez.com/analitik.js',
     },
     // plausibleAnalytics: {
     //   plausibleDataDomain: '', // e.g. tailwind-nextjs-starter-blog.vercel.app
@@ -77,7 +77,7 @@ const siteMetadata = {
   search: {
     provider: 'kbar', // kbar or algolia
     kbarConfig: {
-      searchDocumentsPath: 'search.json', // path to load documents to search
+      searchDocumentsPath: `${process.env.BASE_PATH || ''}/search.json`, // path to load documents to search
     },
     // provider: 'algolia',
     // algoliaConfig: {
