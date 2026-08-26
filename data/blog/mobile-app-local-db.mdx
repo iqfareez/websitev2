@@ -1,6 +1,6 @@
 ---
-title: Choosing the right local database for Flutter? Choose SQLite!
-date: 2025-03-24
+title: Looking for suitable database for Flutter app? Choose SQLite!
+date: 2026-09-24
 summary: Why SQLite should be your go-to choice for local mobile databases in Flutter, despite the allure of shiny new alternatives.
 tags: [Flutter, SQLite, Mobile, Database]
 ---
@@ -20,27 +20,26 @@ First two items is more a key-value store than a database. It's great to store t
 
 Firebase Firestore is a cloud-based database that is great for real-time data synchronization. I think it supports offline mode, but I haven't used it much. It's a document based database, which is great for storing unstructured data. It also great if you want to fully rely on cloud to store your data.
 
-Now we are left with three databases: Hive, Isar and Drift. Hive & Isar once were the good & easy options for local database. But now, I think they are not the best options anymore just because of a problem; maintainance. You see, Hive & Isar is maintained by a single person. 
+Now we are left with three databases: Hive, Isar and Drift. Hive & Isar once were the good & easy options for local database. But now, I think they are not the best options anymore just because of a problem; maintainance. You see, Hive & Isar is maintained by a single person.
 
 Problem https://github.com/iiumschedule/iium_schedule/releases/tag/1.1.0-pre.1%2B19
 https://github.com/isar/isar/issues/1219
 
-
 ## Why SQLite?
 
-SQLite has been around for decades and is one of the most widely used database engines in the world. This maturity translates to stability, extensive documentation, and a large community providing support and solutions to common problems. It's also incredibly portable as a single-file database that can be easily copied and moved between different platforms and devices. This makes it an excellent choice for Flutter apps targeting both Android and iOS, as well as desktop or web platforms. 
+SQLite has been around for decades and is one of the most widely used database engines in the world. This maturity translates to stability, extensive documentation, and a large community providing support and solutions to common problems. It's also incredibly portable as a single-file database that can be easily copied and moved between different platforms and devices. This makes it an excellent choice for Flutter apps targeting both Android and iOS, as well as desktop or web platforms.
 
 As an industry standard, you'll find libraries and tools to support SQLite in virtually every programming language and environment, making it easier to integrate with existing systems and services. SQLite supports standard SQL syntax, allowing you to perform complex queries and data manipulations. If you already know SQL, you'll be productive with SQLite immediately.
 
 ## Benefits of Using SQLite in Flutter
 
-SQLite provides reliable data persistence, ensuring that your app's data is stored locally and available even when the user is offline. As a relational database, it allows you to structure your data into tables with relationships between them, which is essential for complex data models. 
+SQLite provides reliable data persistence, ensuring that your app's data is stored locally and available even when the user is offline. As a relational database, it allows you to structure your data into tables with relationships between them, which is essential for complex data models.
 
 Despite what some might think, SQLite is surprisingly performant for many mobile use cases. While it may not be as fast as some specialized NoSQL databases for certain operations, it's generally more than adequate for most mobile apps. SQLite also gives you fine-grained control over your data - you can optimize queries, manage indexes, and tune the database for your specific needs.
 
 ## Catches and Considerations
 
-Working with SQLite in Flutter often involves writing boilerplate code for database setup, query execution, and data mapping. However, libraries like `sqflite` can help reduce this boilerplate. Database operations should always be performed asynchronously to avoid blocking the main thread and causing UI freezes. 
+Working with SQLite in Flutter often involves writing boilerplate code for database setup, query execution, and data mapping. However, libraries like `sqflite` can help reduce this boilerplate. Database operations should always be performed asynchronously to avoid blocking the main thread and causing UI freezes.
 
 As your app evolves, you'll likely need to update your database schema. Managing schema migrations can be challenging, but libraries like `drift` can help automate this process.
 
