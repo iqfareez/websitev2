@@ -62,7 +62,6 @@ const basePath: NextConfig['basePath'] = process.env.BASE_PATH || undefined
 const config: NextConfig = {
   output,
   basePath,
-  cacheComponents: true,
   reactStrictMode: true,
   trailingSlash: false,
   turbopack: {
