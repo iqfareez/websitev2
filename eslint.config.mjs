@@ -19,7 +19,7 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...nextTypescript,
   {
-    ignores: ['node_modules', '.eslintrc.js'],
+    ignores: ['node_modules'],
     // eslint-disable-next-line prettier/prettier
   }, js.configs.recommended, ...compat.extends("plugin:@typescript-eslint/eslint-recommended"), ...compat.extends("plugin:@typescript-eslint/recommended"), ...compat.extends("plugin:prettier/recommended"), ...next, ...nextCoreWebVitals, {
     plugins: {
