@@ -139,9 +139,21 @@ At the end, I have the following specification, and I think it is enough to host
 
 [Content to be filled in]
 
-## Lessons Learned & Future Plans
+## Limitations
 
-[Content to be filled in]
+After a few months using it, I can say it works flawlessly of low to medium load application. But, I discover one weaknesses that worth noting, and it's is regarding the CPU.
+
+As mentioned above, the CPU AMD T56N is **more than a decade old CPU**. It's from the first generation of AMD's Embedded G-Series System-on-Chip (SOC) released back in 2011.
+
+The microarchitecture is based on [Bobcat](<https://en.wikipedia.org/wiki/Bobcat_(microarchitecture)>). Most CPUs, even the old ones, support `AVX`, `AVX2`, `AVX512`, `SSE4`, and `SSE4.2`. The T56N supports **none** of these, it doesn't have any [`AVX`](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions) instructions set and the [`SSE`](https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions) instruction set is only implemented up until `SSE3`. Some modern applications and media codecs **simply won't run, or will run very slowly** (using software fallback), on this machine.
+
+I have encountered several real issues due to lacking of CPU instruction sets. The first being the the [bun](https://bun.com/), the Javascript runtime, [require SSE4.2 and AVX support](https://bun.com/docs/installation#cpu-requirements). Some application that we build around bun cannot run on my machine.
+
+Second, I cannot run [MySQL Docker image](https://hub.docker.com/_/mysql) version 8 and had to fallback older version of MySQL.
+
+Third, I had issue my Jellyfin was crashing randomly during usage version upgrades. Some people were [reporting](https://github.com/jellyfin/jellyfin/issues/15148#issuecomment-3446563763) the same thing and turns out it's the sqlite library they use start requiring `SSE4.1`, which this machine doesn't have. The workaround is to replace the sqlite binary from older jellyfin versions.
+
+Some issue do have some workarounds to solve this, but more and more apps and platforms are **phasing out CPU this old** (very sad). For example, **.NET 11** have updated their baseline requirement [to require AVX and modern SSE instruction sets](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/runtime#x86x64-requirements). I guess this is the limitation I'll have to live until I got a newer server in the future.
 
 ## Conclusion
 
