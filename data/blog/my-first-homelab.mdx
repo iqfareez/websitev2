@@ -9,13 +9,22 @@ layout: PostBanner
 authors: ['default']
 ---
 
-There's something uniquely satisfying about breathing new life into old hardware. I was doom-scrolling on Carousell one day to find cheap or free items people wanted to let go. Then, I stumbled upon an HP T610 thin client for just RM 60 (about USD ~13 converted), quite cheap! I was looking for few candidates previously but couldn't fit my budget, so I think this time is a good oppurtunity to grab one. I bought one.
+There's something uniquely satisfying about breathing new life into old hardware. I was doom-scrolling on Carousell one day to find cheap or free items people wanted to let go. Then, I stumbled upon an old office computer for **just RM 60** (about USD ~13 converted), quite cheap! I was looking for few candidates previously but didn't fit my budget, so I think this time is a good oppurtunity to grab one. I bought one.
 
-I liked the form factor that wouldn't take up much space, and the specs were quite OK in my opinion.
+I liked the form factor that **wouldn't take up much space**, and the specs were quite OK for a beginner person (like me) who just **started on homelabbing**.
 
-![HP T610 Thin Client](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1742057473/website/homelab-t610/IMG_4908_b9kdkc.jpg)
+<figure className="mx-auto w-full max-w-lg">
+  <img
+    className="h-auto w-full"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1742057473/website/homelab-t610/IMG_4908_b9kdkc.jpg"
+    alt="1TB NV2 Kingston SSD & ADATA SU650 512 GB"
+  />
+  <figcaption className="text-center">HP T610</figcaption>
+</figure>
 
-This post documents my journey of transforming this modest machine into a capable home server—complete with hardware upgrades, software configuration, and the occasional troubleshooting adventure. If you're considering starting your own homelab on a budget, I hope my experience provides both inspiration and practical guidance.
+The model I've gotten is an **HP T610**. Rocking an **AMD T56N** (dual core) processor, comes with 4 GB RAM and 16 GB flash disk. I've upgraded some of the components. I figure the RAM and storage were quite small and limited, which leads to some upgrades!
+
+This post documents my journey of transforming this modest machine into a capable home server, complete with hardware upgrades, software configuration, and the occasional troubleshooting adventure. If you're considering starting your own homelab, I hope my experience provides both inspiration and practical guidance.
 
 ## Project Overview
 
@@ -59,7 +68,64 @@ This post documents my journey of transforming this modest machine into a capabl
 
 ## Hardware Upgrades
 
-[Content to be filled in]
+Recall that it comes with 4 GB RAM and 16 GB Flash disk originally.
+
+<figure className="mx-auto w-full max-w-5xl">
+  <div className="grid gap-4 sm:grid-cols-2">
+    <img
+      className="h-auto w-full"
+      src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788152538/website/homelab-t610/IMG_4913-original-ram_bsmmsh.jpg"
+      alt="4 GB RAM DDR3L"
+    />
+    <img
+      className="h-auto w-full"
+      src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788152540/website/homelab-t610/IMG_4903-16gb-flash_cyyegr.jpg"
+      alt="16 GB Flash"
+    />
+  </div>
+  <figcaption className="mt-0 text-center">Original components before upgrade</figcaption>
+</figure>
+
+I've purchased a **120 GB SSD** and a **4 GB RAM** stick on Shopee. The plan is to make the 120 drive as boot/main drive. This drive will store Proxmox host and VM(s) drive. I also have a **500 GB HDD** unused from an old laptop that I'll repurposed here as a storage drive.
+
+<figure className="mx-auto w-full max-w-5xl">
+  <div className="grid gap-4 sm:grid-cols-2">
+    <img
+      className="aspect-4/3 w-full object-cover"
+      src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788153529/website/homelab-t610/ssd-in-case_wsdamg.jpg"
+      alt="SSD module from casing"
+    />
+    <img
+      className="aspect-4/3 w-full object-cover"
+      src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788153529/website/homelab-t610/ssd-upgraded_z1cl9r.jpg"
+      alt="SSD module installed"
+    />
+  </div>
+  <figcaption className="mt-0 text-center">
+    I had to take out the SSD module from it's casing
+  </figcaption>
+</figure>
+
+This machine had one extra **SATA slot** so I add another hard disk I've taken from an unused old laptop I have. It has **500 GB of storage** and I plan to use it as **storage drive**, ie to store data like movies, backups, large files etc.
+
+I designed and 3D-printed a _stopper thingy_ (the purple stuff) to prevent the hard disk from moving and possibly disconnects from its port. This idea was inspired from other peoples from [this forum](https://www.parkytowers.me.uk/thin/hp/t610/mods.shtml).
+
+<figure className="mx-auto w-full max-w-2xl">
+  <img
+    className="h-auto w-full"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788153528/website/homelab-t610/drive-with-3d-printed-thingy_ivj0dk.jpg"
+    alt="Hard disk stopper"
+  />
+  <figcaption className="text-center">Hard disk installed on top of the SSD assembly</figcaption>
+</figure>
+
+At the end, I have this specification:
+
+| Item        | Description             |
+| ----------- | ----------------------- |
+| **CPU**     | AMD T56N (dual core)    |
+| **RAM**     | 4 GB DDR3L              |
+| **Storage** | 120 GB SSD + 500 GB HDD |
 
 ## Proxmox Installation & Setup
 
