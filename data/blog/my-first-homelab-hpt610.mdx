@@ -11,7 +11,7 @@ authors: ['default']
 
 There's something uniquely satisfying about breathing new life into old hardware. I was doom-scrolling on Carousell one day to find cheap or free items people wanted to let go. Then, I stumbled upon an old office computer for **just RM 60** (about USD ~13 converted), quite cheap! I was looking for few candidates previously but didn't fit my budget, so I think this time is a good oppurtunity to grab one. I bought one.
 
-I liked the form factor that **wouldn't take up much space**, and the specs were quite OK for a beginner person (like me) who just **started on homelabbing**.
+First impression, I liked the form factor that **wouldn't take up much space**, and the specs were quite OK for a beginner person (like me) who just **started on homelabbing**.
 
 <figure className="mx-auto w-full max-w-lg">
   <img
@@ -22,49 +22,33 @@ I liked the form factor that **wouldn't take up much space**, and the specs were
   <figcaption className="text-center">HP T610</figcaption>
 </figure>
 
-The model I've gotten is an **HP T610**. Rocking an **AMD T56N** (dual core) processor, comes with 4 GB RAM and 16 GB flash disk. I've upgraded some of the components. I figure the RAM and storage were quite small and limited, which leads to some upgrades!
-
 This post documents my journey of transforming this modest machine into a capable home server, complete with hardware upgrades, software configuration, and the occasional troubleshooting adventure. If you're considering starting your own homelab, I hope my experience provides both inspiration and practical guidance.
 
-## Project Overview
+## Unboxing
 
-1. [Hardware Upgrades](#hardware-upgrades)
-2. Proxmox Installation
-3. Open Media Vault Setup
-4. Container Applications with Portainer
-5. Lessons Learned & Future Plans
-6. Conclusion
+The model I've gotten is an **HP T610**. Rocking an **AMD T56N** (dual core) processor, comes with **4 GB RAM** and **16 GB flash disk**. I've upgraded some of the components. I figure the RAM and storage were quite small and limited, which leads to some upgrades!
 
-7. **Hardware Acquisition & Upgrades**
-   - Finding the HP T610 on Carousell
-   - Adding an SSD for the operating system
-   - Installing a larger HDD for storage
-   - Upgrading RAM to a total of 8GB
-   - Modding the case with additional cooling
+What's come in the box? Complete set including power adapter, stand base, and the computer itself. Lucky it comes with power adapter because HP is using proprietary jack for their power supply input.
 
-8. **Proxmox Installation & Setup**
-   - Why I chose Proxmox as my hypervisor
-   - Installation process and initial configuration
-   - Network configuration challenges and solutions
-   - Resource allocation planning
+<figure className="mx-auto w-full max-w-lg">
+  <img
+    className="h-auto w-full"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788357153/website/homelab-t610/8ae887cd-8f64-453b-a42c-436489680525.png"
+    alt="HP T610 Box"
+  />
+  <figcaption className="text-center">HP T610 Unboxing</figcaption>
+</figure>
 
-9. **Open Media Vault Implementation**
-   - Setting up OMV as a virtual machine
-   - Storage configuration and management
-   - File sharing setup (SMB/NFS)
-   - Backup strategies
+When first power up the device, it boots into Windows 10. I was suprised modern Windows could run on such modest hardware!
 
-10. **Container Applications with Portainer**
-    - Why I chose containerization over more VMs
-    - Setting up Portainer for container management
-    - Essential services I'm running (e.g., Plex, Home Assistant, etc.)
-    - Resource management and performance considerations
-
-11. **Lessons Learned & Future Plans**
-    - What worked well and what didn't
-    - Performance observations and bottlenecks
-    - Power consumption analysis
-    - Future upgrades and expansions I'm considering
+<figure className="mx-auto w-full max-w-md">
+  <img
+    className="h-auto w-full"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788357341/website/homelab-t610/4f7c6641-3021-41e7-aa84-87a1df0cf7cb.png"
+    alt="Windows 10 boot"
+  />
+  <figcaption className="text-center">Computer booted into Windows 10</figcaption>
+</figure>
 
 ## Hardware Upgrades
 
@@ -127,17 +111,27 @@ At the end, I have the following specification, and I think it is enough to host
 | **RAM**     | 8 GB DDR3L              |
 | **Storage** | 120 GB SSD + 500 GB HDD |
 
+## Mods
+
+{/* TODO */}
+
 ## Proxmox Installation & Setup
 
-[Content to be filled in]
-
-## Open Media Vault Implementation
-
-[Content to be filled in]
-
-## Container Applications with Portainer
-
-[Content to be filled in]
+<figure className="mx-auto w-full max-w-5xl">
+  <div className="grid gap-4 sm:grid-cols-2">
+    <img
+      className="aspect-4/3 w-full object-cover"
+      src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788358567/website/homelab-t610/681e9a22-bbe8-44b0-aa6b-cba242d73cc8.png"
+      alt="SSD module from casing"
+    />
+    <img
+      className="aspect-4/3 w-full object-cover"
+      src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788358663/website/homelab-t610/IMG_5181_ykzhqz.jpg"
+      alt="SSD module installed"
+    />
+  </div>
+  <figcaption className="mt-0 text-center">Proxmox installation and setup</figcaption>
+</figure>
 
 ## Limitations
 
@@ -155,6 +149,35 @@ Third, I had issue my Jellyfin was crashing randomly during usage version upgrad
 
 Some issue do have some workarounds to solve this, but more and more apps and platforms are **phasing out CPU this old** (very sad). For example, **.NET 11** have updated their baseline requirement [to require AVX and modern SSE instruction sets](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/runtime#x86x64-requirements). I guess this is the limitation I'll have to live until I got a newer server in the future.
 
+## What's on it & how I use it
+
+I have a few services on it, the ones I primarily use are:
+
+- Jellyfin
+- Orb
+- Tailscale
+- Gitea
+
+And there are some experimental services I am testing out:
+
+- Home Assistant for home automation
+- Docker for running various containerized applications
+
+<figure className="mx-auto w-full max-w-2xl">
+  <img
+    className="h-auto w-full"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788358068/website/homelab-t610/Screenshot_2026-09-02_at_10.07.42_PM_jfjtin.png"
+    alt="HP T610 Setup"
+  />
+  <figcaption className="text-center">Services running on the server</figcaption>
+</figure>
+
+I try to not let is continuously run 24/7 because non of the components are rated for actual server use. For example, the HDD I've added is from a laptop, which is not designed for constant operation like server-grade drives. Hence, those components may fail early if subjected to continuous heavy usage.
+
+One my my friend had an issue where the hard disk fail on him after few years using it. He was using non server grade HDD either. This made me cautious about the longevity of my own setup.
+
+But if I wanted to use it, I don't hold myself back from doing so, nothing live forever so might as well enjoy it while it lasts.
+
 ## Conclusion
 
-[Content to be filled in]
+I put the server at the living room because that's where my router is. The server connected to the router via ethernet. Here it is, sitting quitely and serve it purposes when I need it.
