@@ -117,6 +117,10 @@ At the end, I have the following specification, and I think it is enough to host
 
 ## Proxmox Installation & Setup
 
+I can't remember where I heard about Proxmox, but I decided to give it a try for managing my homelab. Proxmox is a hypervisor platform that allows you to run and **manage multiple virtual machines and containers** on a single physical server.
+
+I flashed the Proxmox ISO onto a USB drive and booted my homelab machine from it to start the installation process. Had to bring the monitor and a keyboard along. I had some minor bumps along the way, for example, I don't know what to put when it asked for my gateway IP. Lucky I had a network engineer wife that helps me figure that out 😉.
+
 <figure className="mx-auto w-full max-w-5xl">
   <div className="grid gap-4 sm:grid-cols-2">
     <img
@@ -135,19 +139,28 @@ At the end, I have the following specification, and I think it is enough to host
 
 ## Limitations
 
-After a few months using it, I can say it works flawlessly of low to medium load application. But, I discover one weaknesses that worth noting, and it's is regarding the CPU.
+After a few months using it, I can say it works flawlessly of low to medium load application. But, I discover one weaknesses that worth noting, and it's is regarding the **CPU**.
 
-As mentioned above, the CPU AMD T56N is **more than a decade old CPU**. It's from the first generation of AMD's Embedded G-Series System-on-Chip (SOC) released back in 2011.
+AMD T56N in this machine is **more than a decade old CPU**. It's from the first generation of AMD's Embedded G-Series System-on-Chip (SOC) released back in 2011.
 
-The microarchitecture is based on [Bobcat](<https://en.wikipedia.org/wiki/Bobcat_(microarchitecture)>). Most CPUs, even the old ones, support `AVX`, `AVX2`, `AVX512`, `SSE4`, and `SSE4.2`. The T56N supports **none** of these, it doesn't have any [`AVX`](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions) instructions set and the [`SSE`](https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions) instruction set is only implemented up until `SSE3`. Some modern applications and media codecs **simply won't run, or will run very slowly** (using software fallback), on this machine.
+The microarchitecture is based on [Bobcat](<https://en.wikipedia.org/wiki/Bobcat_(microarchitecture)>). Most CPUs, even the old ones, support `AVX`, `AVX2`, `AVX512`, `SSE4`, and `SSE4.2` instruction sets. This CPU supports **none** of these, it **doesn't have any** [`AVX`](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions) instructions set and the [`SSE`](https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions) instruction set is only implemented up until `SSE3`. Some modern applications and media codecs **simply won't run, or will run very slowly** (using software fallback), on this machine.
 
-I have encountered several real issues due to lacking of CPU instruction sets. The first being the the [bun](https://bun.com/), the Javascript runtime, [require SSE4.2 and AVX support](https://bun.com/docs/installation#cpu-requirements). Some application that we build around bun cannot run on my machine.
+I have encountered several real issues due to some instruction set not present. The first being the [bun](https://bun.com/), the Javascript runtime. It [requires SSE4.2 and AVX support](https://bun.com/docs/installation#cpu-requirements). So some application that have been build and configure around bun cannot run on my machine.
 
 Second, I cannot run [MySQL Docker image](https://hub.docker.com/_/mysql) version 8 and had to fallback older version of MySQL.
 
-Third, I had issue my Jellyfin was crashing randomly during usage version upgrades. Some people were [reporting](https://github.com/jellyfin/jellyfin/issues/15148#issuecomment-3446563763) the same thing and turns out it's the sqlite library they use start requiring `SSE4.1`, which this machine doesn't have. The workaround is to replace the sqlite binary from older jellyfin versions.
+Third, I had issue my **Jellyfin was randomly crashing** during usage after a recent version upgrades. Some people reported the same problem on GitHub and turns out it's the sqlite library that they depends on start requiring `SSE4.1`, which this machine doesn't have. [This guy here](https://github.com/jellyfin/jellyfin/issues/15148#issuecomment-3446563763) made a detailed findings. The workaround is to replace the sqlite binary from older jellyfin versions, that does not require `SSE4.1`.
 
-Some issue do have some workarounds to solve this, but more and more apps and platforms are **phasing out CPU this old** (very sad). For example, **.NET 11** have updated their baseline requirement [to require AVX and modern SSE instruction sets](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/runtime#x86x64-requirements). I guess this is the limitation I'll have to live until I got a newer server in the future.
+Sure, some issues like the one presented have wide community supports so workarounds are often available, but more apps and platforms are **phasing out CPU this old** (very sad). For example, **.NET 11** have updated their baseline requirement [to require AVX and modern SSE instruction sets](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/runtime#x86x64-requirements). If in the future Jellyfin adapted .NET 11, guess I need to find another workaround, or just find a newer machine 😶‍🌫️.
+
+<figure className="mx-auto w-full max-w-3xl">
+  <img
+    className="h-auto w-full"
+    src="https://res.cloudinary.com/iqfareez-cloud/image/upload/v1788434153/website/homelab-t610/a54c15de-1f49-45fb-8891-d3e0dc6127f6.png"
+    alt="My Jellyfin instance"
+  />
+  <figcaption className="text-center">My Jellyfin instance to watch some movies</figcaption>
+</figure>
 
 ## What's on it & how I use it
 
@@ -172,11 +185,11 @@ And there are some experimental services I am testing out:
   <figcaption className="text-center">Services running on the server</figcaption>
 </figure>
 
-I try to not let is continuously run 24/7 because non of the components are rated for actual server use. For example, the HDD I've added is from a laptop, which is not designed for constant operation like server-grade drives. Hence, those components may fail early if subjected to continuous heavy usage.
+I try not to let the server run continuously 24/7 because non of the components are rated for actual server use. For example, the HDD I've added is from a laptop, which is not designed for constant operation like server-grade drives. Hence, those components may fail early if subjected to continuous heavy usage.
 
-One my my friend had an issue where the hard disk fail on him after few years using it. He was using non server grade HDD either. This made me cautious about the longevity of my own setup.
+One of my friends already had an issue where the hard disk fail on him after few years using it. He was using non server grade HDD either. This made me cautious about the longevity of my own setup.
 
-But if I wanted to use it, I don't hold myself back from doing so, nothing live forever so might as well enjoy it while it lasts.
+But, nevertheless, if I wanted to use it, I don't hold myself back from doing so, nothing live forever so **might as well enjoy it while it lasts**.
 
 ## Conclusion
 
