@@ -3,15 +3,15 @@ title: 'My first homelab'
 date: '2026-09-12'
 tags: ['homelab', 'server', 'proxmox', 'DIY']
 draft: false
-summary: How I transformed a used mini PC into a versatile homelab server running Proxmox, act as storage and central hub for my self hosted applications.
+summary: How I transformed a used mini PC into a homelab server running Proxmox and some applications
 images: ['/static/blog/my-first-homelab-hpt610/homelab-hpt610-meta.jpg']
 layout: PostBanner
 authors: ['default']
 ---
 
-There's something uniquely satisfying about breathing new life into old hardware. I was doom-scrolling on Carousell one day to find cheap or free items people wanted to let go. Then, I stumbled upon an old office computer for **just RM 60** (about USD ~13 converted), quite cheap! I was looking for few candidates previously but didn't fit my budget, so I think this time is a good oppurtunity to grab one. I bought one.
+There's something uniquely satisfying about breathing new life into old hardware. I was doom-scrolling on Carousell one day, looking for cheap or free items people wanted to let go. Then I stumbled upon an old office computer for **just RM 60** (about USD ~13 converted), which was quite cheap! I had been looking at a few candidates previously, but they didn't fit my budget, so I thought this was a good opportunity to grab one. I bought it.
 
-First impression, I liked the form factor that **wouldn't take up much space**, and the specs were quite OK for a beginner person (like me) who just **started on homelabbing**.
+My first impression was that I liked the form factor, which **wouldn't take up much space**, and the specs were quite OK for a beginner like me who had just **started homelabbing**.
 
 <figure className="mx-auto w-full max-w-lg">
   <img
@@ -26,9 +26,9 @@ This post documents my journey of transforming this modest machine into a capabl
 
 ## Unboxing
 
-The model I've gotten is an **HP T610**. Rocking an **AMD T56N** (dual core) processor, comes with **4 GB RAM** and **16 GB flash disk**. I've upgraded some of the components. I figure the RAM and storage were quite small and limited, which leads to some upgrades!
+The model I got is an **HP T610**. It has an **AMD T56N** (dual-core) processor, **4 GB RAM**, and **16 GB of flash storage**. I've upgraded some of the components. I figured the RAM and storage were quite small and limited, which led to some upgrades!
 
-What's come in the box? Complete set including power adapter, stand base, and the computer itself. Lucky it comes with power adapter because HP is using proprietary jack for their power supply input.
+What's in the box? A complete set including the power adapter, stand base, and the computer itself. Luckily, it came with a power adapter because HP uses a proprietary jack for its power supply input.
 
 <figure className="mx-auto w-full max-w-lg">
   <img
@@ -39,7 +39,7 @@ What's come in the box? Complete set including power adapter, stand base, and th
   <figcaption className="text-center">HP T610 Unboxing</figcaption>
 </figure>
 
-When first power up the device, it boots into Windows 10. I was suprised modern Windows could run on such modest hardware!
+When I first powered up the device, it booted into Windows 10. I was surprised modern Windows could run on such modest hardware!
 
 <figure className="mx-auto w-full max-w-md">
   <img
@@ -52,7 +52,7 @@ When first power up the device, it boots into Windows 10. I was suprised modern 
 
 ## Hardware Upgrades
 
-Recall that it comes with 4 GB RAM and 16 GB Flash disk originally.
+Recall that it originally came with 4 GB RAM and a 16 GB flash disk.
 
 <figure className="mx-auto w-full max-w-5xl">
   <div className="grid gap-4 sm:grid-cols-2">
@@ -70,7 +70,7 @@ Recall that it comes with 4 GB RAM and 16 GB Flash disk originally.
   <figcaption className="mt-0 text-center">Original components before upgrade</figcaption>
 </figure>
 
-I've purchased a **120 GB SSD** and a **4 GB RAM** stick on Shopee. The plan is to make the 120 drive as boot/main drive. This drive will store Proxmox host and VM(s) drive. I also have a **500 GB HDD** unused from an old laptop that I'll repurposed here as a storage drive.
+I've purchased a **120 GB SSD** and a **4 GB RAM** stick on Shopee. The plan is to use the 120 GB drive as the boot and main drive. This drive will store the Proxmox host and VM drives. I also have a **500 GB HDD** left unused from an old laptop that I repurposed here as a storage drive.
 
 <figure className="mx-auto w-full max-w-5xl">
   <div className="grid gap-4 sm:grid-cols-2">
@@ -86,13 +86,13 @@ I've purchased a **120 GB SSD** and a **4 GB RAM** stick on Shopee. The plan is 
     />
   </div>
   <figcaption className="mt-0 text-center">
-    I had to take out the SSD module from it's casing
+    I had to take the SSD module out of its casing
   </figcaption>
 </figure>
 
-This machine had one extra **SATA slot** so I add another hard disk I've taken from an unused old laptop I have. It has **500 GB of storage** and I plan to use it as **storage drive**, ie to store data like movies, backups, large files etc.
+This machine had one extra **SATA slot**, so I added another hard disk that I took from an unused old laptop. It has **500 GB of storage**, and I plan to use it as a **storage drive**, i.e. to store data like movies, backups, large files, etc.
 
-I designed and 3D-printed a _stopper thingy_ (the purple stuff) to prevent the hard disk from moving and possibly disconnects from its port. This idea was inspired from other peoples from [this forum](https://www.parkytowers.me.uk/thin/hp/t610/mods.shtml).
+I designed and 3D-printed a _stopper thingy_ (the purple part) to prevent the hard disk from moving and possibly disconnecting from its port. This idea was inspired by other people on [this forum](https://www.parkytowers.me.uk/thin/hp/t610/mods.shtml).
 
 <figure className="mx-auto w-full max-w-2xl">
   <img
@@ -103,7 +103,7 @@ I designed and 3D-printed a _stopper thingy_ (the purple stuff) to prevent the h
   <figcaption className="text-center">Hard disk installed on top of the SSD assembly</figcaption>
 </figure>
 
-At the end, I have the following specification, and I think it is enough to hosts several non-production application I already had in mind.
+In the end, I had the following specification, and I think it is enough to host several non-production applications I already had in mind.
 
 | Item        | Description             |
 | ----------- | ----------------------- |
@@ -117,9 +117,9 @@ At the end, I have the following specification, and I think it is enough to host
 
 ## Proxmox Installation & Setup
 
-I can't remember where I heard about Proxmox, but I decided to give it a try for managing my homelab. Proxmox is a hypervisor platform that allows you to run and **manage multiple virtual machines and containers** on a single physical server.
+I can't remember where I first heard about Proxmox, but I decided to give it a try for managing my homelab. Proxmox is a hypervisor platform that allows you to run and **manage multiple virtual machines and containers** on a single physical server.
 
-I flashed the Proxmox ISO onto a USB drive and booted my homelab machine from it to start the installation process. Had to bring the monitor and a keyboard along. I had some minor bumps along the way, for example, I don't know what to put when it asked for my gateway IP. Lucky I had a network engineer wife that helps me figure that out 😉.
+I flashed the Proxmox ISO onto a USB drive and booted my homelab machine from it to start the installation process. I had to bring the monitor and a keyboard along. I had some minor bumps along the way; for example, I didn't know what to enter when it asked for my gateway IP. Luckily, I had a network engineer wife who helped me figure that out 😉.
 
 <figure className="mx-auto w-full max-w-5xl">
   <div className="grid gap-4 sm:grid-cols-2">
@@ -139,19 +139,19 @@ I flashed the Proxmox ISO onto a USB drive and booted my homelab machine from it
 
 ## Limitations
 
-After a few months using it, I can say it works flawlessly of low to medium load application. But, I discover one weaknesses that worth noting, and it's is regarding the **CPU**.
+After a few months of using it, I can say it works flawlessly for low- to medium-load applications. But I discovered one weakness that is worth noting, and it is related to the **CPU**.
 
-AMD T56N in this machine is **more than a decade old CPU**. It's from the first generation of AMD's Embedded G-Series System-on-Chip (SOC) released back in 2011.
+The AMD T56N in this machine is **more than a decade old**. It is from the first generation of AMD's Embedded G-Series System-on-Chip (SoC), released back in 2011.
 
-The microarchitecture is based on [Bobcat](<https://en.wikipedia.org/wiki/Bobcat_(microarchitecture)>). Most CPUs, even the old ones, support `AVX`, `AVX2`, `AVX512`, `SSE4`, and `SSE4.2` instruction sets. This CPU supports **none** of these, it **doesn't have any** [`AVX`](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions) instructions set and the [`SSE`](https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions) instruction set is only implemented up until `SSE3`. Some modern applications and media codecs **simply won't run, or will run very slowly** (using software fallback), on this machine.
+The microarchitecture is based on [Bobcat](<https://en.wikipedia.org/wiki/Bobcat_(microarchitecture)>). Most CPUs, even old ones, support the `AVX`, `AVX2`, `AVX512`, `SSE4`, and `SSE4.2` instruction sets. This CPU supports **none** of these; it **doesn't have any** [`AVX`](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions) instructions, and the [`SSE`](https://en.wikipedia.org/wiki/Streaming_SIMD_Extensions) instruction set is only implemented up to `SSE3`. Some modern applications and media codecs **simply won't run, or will run very slowly** using software fallback on this machine.
 
-I have encountered several real issues due to some instruction set not present. The first being the [bun](https://bun.com/), the Javascript runtime. It [requires SSE4.2 and AVX support](https://bun.com/docs/installation#cpu-requirements). So some application that have been build and configure around bun cannot run on my machine.
+I have encountered several real issues because some instruction sets are not present. The first was [Bun](https://bun.com/), the JavaScript runtime. It [requires SSE4.2 and AVX support](https://bun.com/docs/installation#cpu-requirements), so some applications that have been built and configured around Bun cannot run on my machine.
 
-Second, I cannot run [MySQL Docker image](https://hub.docker.com/_/mysql) version 8 and had to fallback older version of MySQL.
+Second, I cannot run [MySQL Docker image](https://hub.docker.com/_/mysql) version 8 and had to fall back to an older version of MySQL.
 
-Third, I had issue my **Jellyfin was randomly crashing** during usage after a recent version upgrades. Some people reported the same problem on GitHub and turns out it's the sqlite library that they depends on start requiring `SSE4.1`, which this machine doesn't have. [This guy here](https://github.com/jellyfin/jellyfin/issues/15148#issuecomment-3446563763) made a detailed findings. The workaround is to replace the sqlite binary from older jellyfin versions, that does not require `SSE4.1`.
+Third, I had an issue where my **Jellyfin was randomly crashing** during use after a recent version upgrade. Some people reported the same problem on GitHub, and it turned out that the SQLite library they depend on started requiring `SSE4.1`, which this machine doesn't have. [This person here](https://github.com/jellyfin/jellyfin/issues/15148#issuecomment-3446563763) made a detailed finding. The workaround is to replace the SQLite binary with one from an older Jellyfin version that does not require `SSE4.1`.
 
-Sure, some issues like the one presented have wide community supports so workarounds are often available, but more apps and platforms are **phasing out CPU this old** (very sad). For example, **.NET 11** have updated their baseline requirement [to require AVX and modern SSE instruction sets](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/runtime#x86x64-requirements). If in the future Jellyfin adapted .NET 11, guess I need to find another workaround, or just find a newer machine 😶‍🌫️.
+Sure, issues like this have broad community support, so workarounds are often available, but more apps and platforms are **phasing out CPUs this old** (very sad). For example, **.NET 11** has updated its baseline requirement [to require AVX and modern SSE instruction sets](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-11/runtime#x86x64-requirements). If Jellyfin adopts .NET 11 in the future, I guess I will need to find another workaround, or just find a newer machine 😶‍🌫️.
 
 <figure className="mx-auto w-full max-w-3xl">
   <img
@@ -164,7 +164,7 @@ Sure, some issues like the one presented have wide community supports so workaro
 
 ## What's on it & how I use it
 
-I have a few services on it, the ones I primarily use are:
+I have a few services on it, and the ones I primarily use are:
 
 - Jellyfin
 - Orb
@@ -185,12 +185,12 @@ And there are some experimental services I am testing out:
   <figcaption className="text-center">Services running on the server</figcaption>
 </figure>
 
-I try not to let the server run continuously 24/7 because non of the components are rated for actual server use. For example, the HDD I've added is from a laptop, which is not designed for constant operation like server-grade drives. Hence, those components may fail early if subjected to continuous heavy usage.
+I try not to let the server run continuously 24/7 because none of the components are rated for actual server use. For example, the HDD I've added is from a laptop, which is not designed for constant operation like server-grade drives. Hence, those components may fail early if subjected to continuous heavy usage.
 
-One of my friends already had an issue where the hard disk fail on him after few years using it. He was using non server grade HDD either. This made me cautious about the longevity of my own setup.
+One of my friends already had an issue where the hard disk failed on him after a few years of use. He was using a non-server-grade HDD as well. This made me cautious about the longevity of my own setup.
 
-But, nevertheless, if I wanted to use it, I don't hold myself back from doing so, nothing live forever so **might as well enjoy it while it lasts**.
+Nevertheless, if I want to use it, I don't hold myself back from doing so. Nothing lasts forever, so **might as well enjoy it while it lasts**.
 
 ## Conclusion
 
-I put the server at the living room because that's where my router is. The server connected to the router via ethernet. Here it is, sitting quitely and serve it purposes when I need it.
+I put the server in the living room because that's where my router is. The server is connected to the router via Ethernet. Here it is, sitting quietly and serving its purpose when I need it.
