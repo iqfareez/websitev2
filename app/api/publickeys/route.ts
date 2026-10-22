@@ -1,14 +1,7 @@
-import { NextResponse } from 'next/server'
-
 export async function GET() {
-  const res = await fetch('https://api.github.com/users/iqfareez/keys')
-  if (!res.ok) {
-    return NextResponse.json({ error: 'Failed to fetch keys' }, { status: 500 })
-  }
-  const data = await res.json()
-  // data is an array of objects with a 'key' property
-  const keys = data.map((item: { key: string }) => item.key)
-  const body = keys.join('\n')
+  const body = `ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPsKPXQ53fP82+PCzkAnsEnFl0kXiEZxeEy+OdP/1gkn iqmal@First-Fortress
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJAOFzQRcPvWjGfR6mCRP7dFYX0dBC2DLnfrQ91f2oxK fareez@Fareez-Macbook.local
+`
   return new Response(body, {
     status: 200,
     headers: {
