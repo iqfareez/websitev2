@@ -1,7 +1,7 @@
 ---
 title: Headless Pi - For dummies
 date: '2024-03-30'
-lastmod: '2025-3-4'
+lastmod: '2026-10-24'
 tags: ['raspberry-pi', 'homelab', 'wifi']
 draft: false
 summary: Finally got one Raspberry to tinker around. It's going to be my homelab practice device. Here's a way to set up the Pi in headless mode (without monitor, keyboard & mouse).
@@ -19,7 +19,7 @@ For the **host machine**, I'm using Windows 11. Connected to the same Wi-Fi netw
 
 ## Create boot media
 
-Grab a microSD card; 16-32Gb is fine. Download [Raspberry Pi Imager](https://www.raspberrypi.com/software/), or other imager tools like [Balena Etcher](https://www.balena.io/etcher/) to burn the OS Image to the microSD card. 
+Grab a microSD card; 16-32Gb is fine. Download [Raspberry Pi Imager](https://www.raspberrypi.com/software/), or other imager tools like [Balena Etcher](https://www.balena.io/etcher/) to burn the OS Image to the microSD card.
 I'm using the latest Raspberry Pi Bookworm 64-bit OS. Before installing, customize the OS by setting the hostname, Wi-Fi SSID & Password, enabling SSH, etc. For more info, read
 the docs [here](https://www.raspberrypi.com/documentation/computers/getting-started.html#raspberry-pi-imager).
 
@@ -46,9 +46,11 @@ Approximate round trip times in milli-seconds:
     Minimum = 7ms, Maximum = 60ms, Average = 25ms
 ```
 
-<Admonition type="note" >
-`raspi` is the **hostname** I set when creating the boot media. You can replace it with your hostname. The discovery is possible
-because the Raspberry Pi is using mDNS that works out of the box using avahi. If you can't ping it, try to find the IP address of the Pi using your router admin page.
+<Admonition type="note">
+  `raspi` is the **hostname** I set when creating the boot media. You can replace it with your
+  hostname. The discovery is possible because the Raspberry Pi is using mDNS that works out of the
+  box using avahi. If you can't ping it, try to find the IP address of the Pi using your router
+  admin page.
 </Admonition>
 
 Now, SSH into the Pi:
@@ -57,9 +59,7 @@ Now, SSH into the Pi:
 ssh iqmal@raspi.local
 ```
 
-<Admonition type="note" >
-`iqmal` is the **username** I set when creating the boot media. 
-</Admonition>
+<Admonition type="note">`iqmal` is the **username** I set when creating the boot media.</Admonition>
 
 You will be prompted to enter the password. Enter the password you set when creating the boot media. For the first time connection, you may be asked
 to trust the device, etc. Then, you should now be connected to the Pi.
@@ -71,15 +71,15 @@ Great, now you access the Pi terminal which you can install software, configure,
 ### Enable VNC
 
 This is an optional step if you want to use the Raspberry Pi by its GUI desktop interface. This desktop interface is what you'll see
-if you connect your Pi to the external monitor. Since we don't have any monitor connected physically, we can access it remotely using VNC (Virtual 
-Network Computing). 
+if you connect your Pi to the external monitor. Since we don't have any monitor connected physically, we can access it remotely using VNC (Virtual
+Network Computing).
 
-Good to note that, in Bookworm, they migrated to [**Wayland** as the display system](https://www.raspberrypi.com/news/bookworm-the-new-version-of-raspberry-pi-os/#:~:text=notice%20some%20differences.-,Wayland,-The%20most%20important) rather 
+Good to note that, in Bookworm, they migrated to [**Wayland** as the display system](https://www.raspberrypi.com/news/bookworm-the-new-version-of-raspberry-pi-os/#:~:text=notice%20some%20differences.-,Wayland,-The%20most%20important) rather
 than X11 used in the previous OS generation.
 
-> Similarly, the Wayland security model prevents traditional remote desktop access, and so a new VNC server, called wayvnc, is being used instead of 
-RealVNC. This is a bit more restrictive in terms of the client applications which can connect to it — we have had good results with the TigerVNC 
-client, available [here](https://tigervnc.org/).
+> Similarly, the Wayland security model prevents traditional remote desktop access, and so a new VNC server, called wayvnc, is being used instead of
+> RealVNC. This is a bit more restrictive in terms of the client applications which can connect to it — we have had good results with the TigerVNC
+> client, available [here](https://tigervnc.org/).
 
 To enable VNC, run the following command:
 
@@ -88,11 +88,12 @@ sudo raspi-config
 ```
 
 <Admonition type="warning">
-I notice that, when I enable VNC **after** I do the [set default boot mode to CLI](#set-default-boot-mode-to-cli), it will create VNC config based 
-on X11 backend, not wayland. This will cause the VNC viewer to show a blank screen.
+  I notice that, when I enable VNC **after** I do the [set default boot mode to
+  CLI](#set-default-boot-mode-to-cli), it will create VNC config based on X11 backend, not wayland.
+  This will cause the VNC viewer to show a blank screen.
 </Admonition>
 
-Navigate to `Interfacing Options` > `VNC` > `Yes`. Reboot the Pi.
+Navigate to `Interface Options` > `VNC` > `Yes`. Reboot the Pi.
 
 ![VNC raspi config](https://res.cloudinary.com/iqfareez-cloud/image/upload/v1711806703/website/RaspberryPi/Screenshot_2024-03-30_215130_dsacaf.png)
 
