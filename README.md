@@ -1,3 +1,7 @@
+> [!NOTE]
+> This site will be rewritten using Astro https://github.com/iqfareez/websitev3
+____
+
 ![iqfareez-blog-banner](/public/static/images/twitter-card.png)
 
 # iqfareez website & blog
