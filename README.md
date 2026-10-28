@@ -1,8 +1,8 @@
 > [!NOTE]
-> This site will be rewritten using Astro https://github.com/iqfareez/websitev3
+> This site will be rewritten using **Astro** in https://github.com/iqfareez/websitev3. This repository will be archived.
 ____
 
-![iqfareez-blog-banner](/public/static/images/twitter-card.png)
+<img width="2145" height="1206" alt="Screenshot website 2026" src="https://github.com/user-attachments/assets/71cd6f5e-491b-4047-9fb7-d1493182a4b6" />
 
 # iqfareez website & blog
 
